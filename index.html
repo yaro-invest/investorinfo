@@ -5,123 +5,212 @@
 :root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mut:#667085;--ac:#1d6fe8;--bd:#e3e6eb;--g:#0a8f4e;--r:#d1303a}
 @media(prefers-color-scheme:dark){:root{--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--ac:#4c93ff;--bd:#272d38;--g:#3ccf88;--r:#ff6670}}
 *{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--bd)}
+.logo{font-weight:700;font-size:18px;cursor:pointer}.lk{background:none;border:0;color:var(--tx);cursor:pointer;font:inherit;padding:6px 10px}
+.hero{text-align:center;padding:64px 16px 40px;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 14%,var(--bg)),var(--bg))}
+.hero h1{font-size:clamp(28px,5vw,46px);margin:0 0 12px}.hero p{max-width:680px;margin:0 auto 20px;color:var(--mut);font-size:17px}
+.big{padding:13px 24px!important;font-size:16px}.alt{background:var(--card)!important;color:var(--tx)!important;border:1px solid var(--bd)!important}
+.wide{max-width:1050px;margin:0 auto;padding:0 16px 24px}.ctr{text-align:center}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:16px 0 28px}
+.fc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px}.fc .ic{font-size:26px}.fc h3{margin:8px 0 4px}.fc p{margin:0;color:var(--mut)}
+.authbox{max-width:520px;margin:0 auto 24px}
 main{max-width:1050px;margin:0 auto;padding:24px 16px}h1{margin:0 0 4px}p.s{color:var(--mut);margin:0 0 20px}
 .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tabs button{padding:8px 14px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer}
 .tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px}
 input,select{padding:9px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;min-width:0}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row input[type=text]{flex:1}
-button.go{padding:9px 16px;background:var(--ac);color:#fff;border:0;border-radius:8px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row input[type=text],.row input[type=password]{flex:1}
+button.go{padding:9px 16px;background:var(--ac);color:#fff;border:0;border-radius:8px;cursor:pointer;font:inherit}button.sm{padding:4px 12px}
 details{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;margin-bottom:12px;color:var(--mut);font-size:14px}summary{cursor:pointer;color:var(--tx);font-weight:500}
 .res a{display:inline-block;margin:8px 8px 0 0;padding:5px 10px;border:1px solid var(--bd);border-radius:20px;cursor:pointer;color:var(--ac)}
 .wrap{overflow-x:auto;margin-top:8px}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}
 th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koop,.pos{color:var(--g)}.Verkocht,.Verminderd,.Verkoop,.neg{color:var(--r)}
-.note{color:var(--mut);font-size:13px}.err{color:var(--r)}
-.ln{fill:none;stroke-width:1.6}.l1{stroke:var(--ac)}.l2{stroke:#e8890c}.l3{stroke:#9b59d0}.ax{font-size:11px;fill:var(--mut)}
-.stats{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0}.stats b{display:block;font-size:18px}
-#authPanel{max-width:720px}#authPanel h2{margin:0 0 6px}#authForm .row{align-items:stretch}#authEmail,#authPassword{flex:1;min-width:220px}#authStatus{display:block;margin-top:10px}#signOut{margin-left:auto}
-</style></head><body><main>
-<h1>Investor Tool</h1><p class="s">Gratis, publieke marktdata op één plek. Open bij elk onderdeel het kopje "Wat is dit?" voor uitleg.</p>
-<section class="card" id="authPanel" aria-live="polite">
-  <h2>Portefeuille veilig opslaan</h2>
-  <p class="note">Maak een account aan of log in. Je portefeuille wordt in Supabase opgeslagen en is alleen zichtbaar voor jouw account.</p>
-  <form id="authForm"><div class="row"><input id="authEmail" type="email" autocomplete="email" required placeholder="E-mailadres"><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Wachtwoord (minimaal 8 tekens)"><button class="go" id="authSubmit" type="submit">Inloggen</button></div></form>
-  <div class="row" style="margin-top:10px"><button class="go" id="authMode" type="button" style="background:var(--mut)">Account aanmaken</button><button class="go" id="signOut" type="button" hidden>Uitloggen</button></div>
-  <p class="note" id="authStatus">Log in of maak een account aan om je eigen portefeuille te openen.</p>
+.note{color:var(--mut);font-size:13px}.err{color:var(--r)}.stats{display:flex;gap:22px;flex-wrap:wrap;margin:8px 0 12px}.stats b{display:block;font-size:18px}.stats>div{max-width:230px}
+.cw{position:relative}svg{touch-action:pan-y;cursor:crosshair;user-select:none}.ln{fill:none;stroke-width:1.6}.l1{stroke:var(--ac)}.l2{stroke:#e8890c}.l3{stroke:#9b59d0}
+.ax{font-size:11px;fill:var(--mut)}.gr{stroke:var(--bd);stroke-width:1}.axl{stroke:var(--mut);stroke-width:1}.cx{stroke:var(--mut);stroke-dasharray:3 3}.cdot{fill:var(--ac)}.sel{fill:var(--ac);opacity:.18}
+.tip{position:absolute;top:8px;pointer-events:none;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 2px 8px #0003;white-space:nowrap}
+</style></head><body>
+<header class="top"><span class="logo" id="logo">📈 Investor Tool</span>
+<div class="row"><button class="lk" id="nh" data-i="home"></button><button class="lk" id="nd" data-i="dash"></button>
+<select id="lang"><option value="nl">Nederlands</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option></select></div></header>
+
+<section id="landing">
+  <div class="hero"><h1 data-i="h_title"></h1><p data-i="h_sub"></p>
+    <div class="row" style="justify-content:center"><button class="go big" id="c1" data-i="cta1"></button><button class="go big alt" id="c2" data-i="cta2"></button></div>
+    <p class="note" style="margin-top:14px" data-i="h_note"></p></div>
+  <div class="wide"><h2 class="ctr" data-i="ft"></h2><div class="feat" id="feat"></div>
+    <div class="card authbox" id="authbox"><h2 style="margin-top:0" data-i="a_title"></h2><p class="note" data-i="a_sub"></p><div id="acc"></div></div>
+    <p class="note ctr" data-i="foot"></p></div>
 </section>
-<div id="appContent" hidden>
+
+<main id="app" hidden>
+<h1 data-i="dash"></h1><p class="s" data-i="app_sub"></p>
 <div class="tabs" id="tabs"></div>
 
-<div id="p0" class="card">
-  <details open><summary>Wat is dit? Insider trades</summary>Bestuurders, managers en aandeelhouders met meer dan 10% moeten elke aan- of verkoop van aandelen van hun eigen bedrijf binnen 2 werkdagen melden bij de SEC (Form 4). Kopen insiders veel, dan gelooft de top vaak in het bedrijf. Verkopen hoeft niets te betekenen: het kan om belasting, een toegekend pakket of persoonlijke redenen gaan. De transactiedatum heeft geen kloktijd; de tijd is het moment waarop de melding bij de SEC binnenkwam.</details>
-  <div class="row"><input type="text" id="0q" placeholder="Zoek bedrijf of ticker, bijv. AAPL"><button class="go" id="0sq">Zoek</button></div>
-  <div class="res" id="0res"></div><div class="wrap" id="o0"></div>
-</div>
+<div id="p0" class="card"><details open><summary data-i="what"></summary><span data-i="d0"></span></details>
+  <div class="row"><input type="text" id="0q" data-p="ph_co"><button class="go" id="0sq" data-i="b_search"></button></div>
+  <div class="res" id="0res"></div><div class="wrap" id="o0"></div></div>
 
-<div id="p1" class="card" hidden>
-  <details open><summary>Wat is dit? Fondsen (13F)</summary>Grote beleggers (fondsen, banken, vermogensbeheerders) met meer dan 100 miljoen dollar aan Amerikaanse aandelen moeten elk kwartaal hun posities melden (Form 13F), uiterlijk 45 dagen na kwartaaleinde. Zo zie je wat bijvoorbeeld Berkshire Hathaway bezit en wat het ten opzichte van het vorige kwartaal kocht (Nieuw, Vermeerderd) of verkocht (Verminderd, Verkocht). De data loopt dus altijd achter.</details>
-  <div class="row"><select id="fs"></select><input type="text" id="cik" placeholder="of vul een CIK in"><button class="go" id="sh">Toon</button></div>
-  <div class="wrap" id="o1"></div>
-</div>
+<div id="p1" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d1"></span></details>
+  <div class="row"><select id="fs"></select><input type="text" id="cik" data-p="ph_cik"><button class="go" id="sh" data-i="b_show"></button></div>
+  <div class="wrap" id="o1"></div></div>
 
-<div id="p2" class="card" hidden>
-  <details open><summary>Wat is dit? Koersen &amp; grafiek</summary>Dagelijkse slotkoersen met een grafiek. Het 20- en 50-daags gemiddelde (SMA) is het gemiddelde slot van de laatste 20 of 50 handelsdagen: het vlakt schommelingen af en toont de trend. Ligt de koers erboven, dan is de trend meestal positief. Gebruik een Amerikaanse ticker (AAPL) of een Stooq-symbool met landcode, zoals ASML.NL.</details>
-  <div class="row"><input type="text" id="t2" value="AAPL" placeholder="Ticker"><select id="per2"><option value="3m">3 maanden</option><option value="1y" selected>1 jaar</option><option value="5y">5 jaar</option><option value="max">Alles</option></select>
-  <label class="note"><input type="checkbox" id="sma2" checked> Gemiddelden</label><button class="go" id="b2">Toon</button></div>
-  <div id="o2"></div>
-</div>
+<div id="p2" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d2"></span></details>
+  <div class="row"><input type="text" id="t2" value="AAPL" data-p="ph_tk" style="max-width:150px"><select id="per2"><option value="3m" data-i="p3m"></option><option value="1y" selected data-i="p1y"></option><option value="5y" data-i="p5y"></option><option value="max" data-i="pmax"></option></select>
+  <label class="note"><input type="checkbox" id="sma2" checked> <span data-i="avg"></span></label><button class="go" id="b2" data-i="b_show"></button></div><div id="o2"></div></div>
 
-<div id="p3" class="card" hidden>
-  <details open><summary>Wat is dit? Financiële cijfers</summary>De jaarcijfers die Amerikaanse beursbedrijven in hun 10-K bij de SEC indienen. Omzet is wat het bedrijf verkoopt, nettowinst wat er na kosten en belasting overblijft, EPS de winst per aandeel. Activa is alles wat het bedrijf bezit, schulden wat het verschuldigd is, en eigen vermogen het verschil. Een bedrijf met stijgende omzet, groeiende winst en beheersbare schulden is meestal gezonder. Bedragen staan in miljoenen dollars.</details>
-  <div class="row"><input type="text" id="3q" placeholder="Zoek bedrijf of ticker, bijv. MSFT"><button class="go" id="3sq">Zoek</button></div>
-  <div class="res" id="3res"></div><div class="wrap" id="o3"></div>
-</div>
+<div id="p3" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d3"></span></details>
+  <div class="row"><input type="text" id="3q" data-p="ph_co"><button class="go" id="3sq" data-i="b_search"></button></div>
+  <div class="res" id="3res"></div><div class="wrap" id="o3"></div></div>
 
-<div id="p4" class="card" hidden>
-  <details open><summary>Wat is dit? Valuta</summary>Wisselkoersen tussen de belangrijkste valuta, op basis van de dagelijkse referentiekoersen van de Europese Centrale Bank (ECB). Handig om te zien wat een dollar-aandeel in euro kost en hoe valutaschommelingen je rendement beïnvloeden. Dit zijn geen live handelskoersen.</details>
-  <div class="row"><select id="base4"><option>EUR</option><option>USD</option><option>GBP</option><option>CHF</option><option>JPY</option></select><input type="number" id="amt4" value="1" min="0"><button class="go" id="b4">Toon</button></div>
-  <div class="wrap" id="o4"></div>
-</div>
+<div id="p4" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d4"></span></details>
+  <div class="row"><select id="base4"><option>EUR</option><option>USD</option><option>GBP</option><option>CHF</option><option>JPY</option></select><input type="number" id="amt4" value="1" min="0"><button class="go" id="b4" data-i="b_show"></button></div>
+  <div class="wrap" id="o4"></div></div>
 
-<div id="p5" class="card" hidden>
-  <details open><summary>Wat is dit? Crypto</summary>De 20 grootste cryptomunten op marktkapitalisatie (de totale waarde van alle munten samen), met de prijsverandering van de laatste dag en week. Crypto beweegt veel sterker dan aandelen, dus zie dit als een overzicht en niet als signaal.</details>
-  <div class="wrap" id="o5"></div>
-</div>
+<div id="p5" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d5"></span></details><div class="wrap" id="o5"></div></div>
 
-<div id="p6" class="card" hidden>
-  <details open><summary>Wat is dit? Macro &amp; rente</summary>Economische cijfers van de Amerikaanse centrale bank van St. Louis (FRED). De rente op staatsobligaties (10 jaar) bepaalt hoe duur lenen is en drukt vaak op aandelenkoersen als ze stijgt. De rentecurve (10 jaar min 2 jaar) wordt negatief vóór veel recessies. Inflatie (CPI), werkloosheid en de olieprijs laten zien hoe de economie ervoor staat.</details>
-  <div class="row"><select id="ser6"></select><select id="per6"><option value="1y">1 jaar</option><option value="5y" selected>5 jaar</option><option value="max">Alles</option></select><button class="go" id="b6">Toon</button></div>
-  <div id="o6"></div>
-</div>
+<div id="p6" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d6"></span></details>
+  <div class="row"><select id="ser6"></select><select id="per6"><option value="1y" data-i="p1y"></option><option value="5y" selected data-i="p5y"></option><option value="max" data-i="pmax"></option></select><button class="go" id="b6" data-i="b_show"></button></div><div id="o6"></div></div>
 
-<div id="p7" class="card" hidden>
-  <details open><summary>Wat is dit? Portefeuille</summary>Houd bij wat je bezit: ticker, aantal en gemiddelde aankoopprijs. De site berekent de actuele waarde en je winst of verlies (op basis van de laatste slotkoers). Posities worden online opgeslagen en zijn door row-level security alleen zichtbaar voor jouw account. Het is een hulpmiddel en geen echte broker.</details>
-  <div class="row"><input type="text" id="t7" placeholder="Ticker" style="max-width:110px"><input type="number" id="sh7" placeholder="Aantal" style="max-width:110px"><input type="number" id="px7" placeholder="Aankoopprijs" style="max-width:140px"><button class="go" id="b7">Toevoegen</button></div>
-  <div class="wrap" id="o7"></div>
-</div>
+<div id="p7" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d7"></span></details>
+  <div class="row"><input type="text" id="t7" data-p="ph_tk" style="max-width:110px"><input type="number" id="sh7" data-p="ph_sh" style="max-width:110px"><input type="number" id="px7" data-p="ph_px" style="max-width:150px"><button class="go" id="b7" data-i="b_add"></button></div>
+  <div class="wrap" id="o7"></div></div>
 
-<p class="note">Bronnen: SEC EDGAR, Stooq (koersen), ECB via Frankfurter (valuta), CoinGecko (crypto), FRED (macro). Data kan vertraagd of onvolledig zijn. Geen beleggingsadvies.</p>
-</div>
+<div id="p8" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d8"></span></details><div id="acc2"></div></div>
+<p class="note" data-i="foot"></p>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+const SB_URL="https://tsnmqrgvfrxnksaliiwf.supabase.co"; // Supabase > Project Settings > API > Project URL
+const SB_KEY="sb_publishable_2N1sy9GoWNugZhuKw4E2WA_R7lOcyMw"; // "anon" / "publishable" key (NOOIT de service_role key)
 const PROXY="https://investor.yaro-biesmans-zakelijk.workers.dev";
-const SB_URL="https://tsnmqrgvfrxnksaliiwf.supabase.co";
-const SB_KEY="sb_publishable_2N1sy9GoWNugZhuKw4E2WA_R7lOcyMw";
-const sb=window.supabase.createClient(SB_URL,SB_KEY);
-const FUNDS={"Berkshire Hathaway":"1067983","Bridgewater":"1350694","Pershing Square":"1336528","Scion (Burry)":"1649339","Renaissance Tech":"1037389","Vanguard":"102909","BlackRock":"1364742","Citadel Advisors":"1423053","Norges Bank":"1374170"};
-const SERIES=[["DGS10","VS 10-jaars rente (%)"],["DGS2","VS 2-jaars rente (%)"],["T10Y2Y","Rentecurve 10j min 2j (%)"],["FEDFUNDS","Fed-beleidsrente (%)"],["CPIAUCSL","Consumentenprijzen (CPI-index)"],["UNRATE","Werkloosheid VS (%)"],["DCOILWTICO","Olie WTI ($/vat)"],["DCOILBRENTEU","Olie Brent ($/vat)"],["SP500","S&P 500-index"],["DEXUSEU","Dollar per euro"]];
-const $=i=>document.getElementById(i),fmt=(n,d=0)=>(+n).toLocaleString('nl-NL',{maximumFractionDigits:d}),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const FUNDS={"Berkshire Hathaway":"1067983","BlackRock":"2012383","Vanguard":"102909","Bridgewater":"1350694","Pershing Square":"1336528","Scion (Burry)":"1649339","Renaissance Tech":"1037389","Citadel Advisors":"1423053","Norges Bank":"1374170"};
+const SERIES=[["DGS10","%","d"],["DGS2","%","d"],["T10Y2Y","pp","d"],["FEDFUNDS","%","m"],["CPIAUCSL","index","m"],["UNRATE","%","m"],["DCOILWTICO","$/bbl","d"],["DCOILBRENTEU","$/bbl","d"],["SP500","pts","d"],["DEXUSEU","$/€","d"]];
+
+/* ===== Vertalingen: [nl, en, fr, de] ===== */
+const D={
+home:['Home','Home','Accueil','Start'],dash:['Dashboard','Dashboard','Tableau de bord','Dashboard'],
+h_title:['Beleggingsdata voor iedereen','Investment data for everyone','Les données d’investissement pour tous','Anlagedaten für alle'],
+h_sub:['Zie wat grote beleggers kopen en verkopen, analyseer bedrijven en houd je portefeuille bij, met gratis en openbare data.','See what big investors buy and sell, analyse companies and track your portfolio, using free public data.','Voyez ce que les grands investisseurs achètent et vendent, analysez les entreprises et suivez votre portefeuille avec des données publiques gratuites.','Sehen Sie, was große Investoren kaufen und verkaufen, analysieren Sie Unternehmen und verwalten Sie Ihr Portfolio mit kostenlosen öffentlichen Daten.'],
+cta1:['Inloggen of account maken','Log in or sign up','Se connecter ou créer un compte','Anmelden oder registrieren'],cta2:['Probeer zonder account','Try without an account','Essayer sans compte','Ohne Konto testen'],
+h_note:['Gratis · Geen beleggingsadvies · Data van o.a. SEC, ECB en FRED','Free · Not investment advice · Data from SEC, ECB, FRED and more','Gratuit · Pas un conseil en investissement · Données SEC, BCE, FRED et autres','Kostenlos · Keine Anlageberatung · Daten u. a. von SEC, EZB und FRED'],
+ft:['Wat kun je met deze site?','What can you do here?','Que pouvez-vous faire ici ?','Was können Sie hier tun?'],
+f0t:['Insider trades','Insider trades','Transactions d’initiés','Insider-Transaktionen'],f0d:['Zie wanneer bestuurders aandelen van hun eigen bedrijf kopen of verkopen.','See when executives buy or sell shares of their own company.','Voyez quand les dirigeants achètent ou vendent des actions de leur société.','Sehen Sie, wann Vorstände Aktien ihres eigenen Unternehmens kaufen oder verkaufen.'],
+f1t:['Grote fondsen (13F)','Big funds (13F)','Grands fonds (13F)','Große Fonds (13F)'],f1d:['Bekijk wat fondsen als Berkshire en BlackRock bezitten en wat ze wijzigden.','See what funds like Berkshire and BlackRock own and what they changed.','Voyez ce que possèdent des fonds comme Berkshire et BlackRock et ce qu’ils ont modifié.','Sehen Sie, was Fonds wie Berkshire und BlackRock halten und geändert haben.'],
+f2t:['Koersen & grafieken','Prices & charts','Cours et graphiques','Kurse & Charts'],f2d:['Interactieve grafieken met zoom en trendlijnen.','Interactive charts with zoom and trend lines.','Graphiques interactifs avec zoom et tendances.','Interaktive Charts mit Zoom und Trendlinien.'],
+f3t:['Financiële cijfers','Financial statements','Chiffres financiers','Finanzkennzahlen'],f3d:['Omzet, winst, schulden en cashflow over de laatste jaren.','Revenue, profit, debt and cash flow over recent years.','Chiffre d’affaires, bénéfice, dettes et trésorerie des dernières années.','Umsatz, Gewinn, Schulden und Cashflow der letzten Jahre.'],
+f4t:['Markten & macro','Markets & macro','Marchés et macro','Märkte & Makro'],f4d:['Rente, inflatie, olie, valuta en crypto op één plek.','Interest rates, inflation, oil, currencies and crypto in one place.','Taux, inflation, pétrole, devises et crypto au même endroit.','Zinsen, Inflation, Öl, Währungen und Krypto an einem Ort.'],
+f5t:['Portefeuille','Portfolio','Portefeuille','Portfolio'],f5d:['Houd je posities bij en zie je winst of verlies.','Track your positions and see your profit or loss.','Suivez vos positions et vos gains ou pertes.','Verfolgen Sie Ihre Positionen und Ihren Gewinn oder Verlust.'],
+a_title:['Inloggen of account maken','Log in or create an account','Connexion ou création de compte','Anmelden oder Konto erstellen'],a_sub:['Met een account staat je portefeuille veilig in de cloud.','With an account your portfolio is stored safely in the cloud.','Avec un compte, votre portefeuille est stocké dans le cloud.','Mit einem Konto wird Ihr Portfolio sicher in der Cloud gespeichert.'],
+foot:['Bronnen: SEC EDGAR, Stooq, ECB (Frankfurter), Coinpaprika/CoinGecko, FRED. Data kan vertraagd of onvolledig zijn. Geen beleggingsadvies.','Sources: SEC EDGAR, Stooq, ECB (Frankfurter), Coinpaprika/CoinGecko, FRED. Data may be delayed or incomplete. Not investment advice.','Sources : SEC EDGAR, Stooq, BCE (Frankfurter), Coinpaprika/CoinGecko, FRED. Données possiblement retardées ou incomplètes. Pas un conseil en investissement.','Quellen: SEC EDGAR, Stooq, EZB (Frankfurter), Coinpaprika/CoinGecko, FRED. Daten können verzögert oder unvollständig sein. Keine Anlageberatung.'],
+app_sub:['Open bij elk onderdeel “Wat is dit?” voor uitleg.','Open “What is this?” in each section for an explanation.','Ouvrez « De quoi s’agit-il ? » dans chaque section.','Öffnen Sie in jedem Bereich „Was ist das?“ für eine Erklärung.'],
+what:['Wat is dit?','What is this?','De quoi s’agit-il ?','Was ist das?'],
+tn0:['Insider trades','Insider trades','Transactions d’initiés','Insider-Trades'],tn1:['Fondsen (13F)','Funds (13F)','Fonds (13F)','Fonds (13F)'],tn2:['Koersen & grafiek','Prices & chart','Cours et graphique','Kurse & Chart'],tn3:['Financiële cijfers','Financials','Chiffres financiers','Kennzahlen'],tn4:['Valuta','Currencies','Devises','Währungen'],tn5:['Crypto','Crypto','Crypto','Krypto'],tn6:['Macro & rente','Macro & rates','Macro et taux','Makro & Zinsen'],tn7:['Portefeuille','Portfolio','Portefeuille','Portfolio'],tn8:['Account','Account','Compte','Konto'],
+d0:['Bestuurders en aandeelhouders met meer dan 10% melden elke aan- of verkoop van aandelen van hun eigen bedrijf binnen 2 werkdagen bij de SEC (Form 4). Veel kopen door insiders kan vertrouwen tonen; verkopen heeft vaak andere redenen (belasting, toegekende aandelen). De transactiedatum heeft geen kloktijd; de tijd is het moment waarop de melding bij de SEC binnenkwam.','Executives and shareholders with over 10% must report every purchase or sale of their own company’s shares to the SEC within 2 business days (Form 4). Heavy insider buying can signal confidence; sales often have other reasons (taxes, granted shares). The transaction date has no clock time; the time shown is when the SEC received the report.','Les dirigeants et actionnaires de plus de 10 % déclarent chaque achat ou vente d’actions de leur société à la SEC sous 2 jours ouvrés (Form 4). Beaucoup d’achats peuvent signaler la confiance ; les ventes ont souvent d’autres raisons (impôts, actions attribuées). La date de transaction n’a pas d’heure ; l’heure indiquée est celle de réception par la SEC.','Vorstände und Aktionäre mit über 10 % melden jeden Kauf oder Verkauf von Aktien ihres Unternehmens binnen 2 Werktagen an die SEC (Form 4). Viele Insiderkäufe können Vertrauen zeigen; Verkäufe haben oft andere Gründe (Steuern, zugeteilte Aktien). Das Transaktionsdatum hat keine Uhrzeit; die angezeigte Zeit ist der Eingang bei der SEC.'],
+d1:['Grote beleggers met meer dan 100 miljoen dollar aan Amerikaanse aandelen melden elk kwartaal hun posities (Form 13F), uiterlijk 45 dagen na kwartaaleinde. Je ziet wat ze bezitten en wat er sinds het vorige kwartaal is gekocht (Nieuw, Vermeerderd) of verkocht (Verminderd, Verkocht). Grote fondsen zoals BlackRock hebben bestanden van meer dan 20 MB; laden kan een halve minuut duren.','Large investors with over $100 million in US stocks report their positions every quarter (Form 13F), within 45 days after quarter-end. You see what they own and what was bought (New, Increased) or sold (Reduced, Sold) since the previous quarter. Big funds like BlackRock have files over 20 MB; loading can take half a minute.','Les grands investisseurs détenant plus de 100 M$ d’actions américaines déclarent leurs positions chaque trimestre (Form 13F), sous 45 jours. Vous voyez ce qu’ils possèdent et ce qui a été acheté (Nouveau, Augmenté) ou vendu (Réduit, Vendu). Les gros fonds comme BlackRock ont des fichiers de plus de 20 Mo ; le chargement peut prendre 30 secondes.','Große Investoren mit über 100 Mio. $ in US-Aktien melden ihre Positionen quartalsweise (Form 13F), spätestens 45 Tage nach Quartalsende. Sie sehen Bestände und Käufe (Neu, Erhöht) oder Verkäufe (Reduziert, Verkauft) seit dem Vorquartal. Große Fonds wie BlackRock haben Dateien über 20 MB; das Laden kann 30 Sekunden dauern.'],
+d2:['Dagelijkse slotkoersen met een interactieve grafiek. Sleep over de grafiek om in te zoomen en beweeg om exacte waarden te zien. Het 20- en 50-daags gemiddelde is de gemiddelde slotkoers van de laatste 20 of 50 handelsdagen en toont de trend. Gebruik een Amerikaanse ticker (AAPL) of een Stooq-symbool met landcode (ASML.NL).','Daily closing prices with an interactive chart. Drag across the chart to zoom and hover to see exact values. The 20- and 50-day average is the mean closing price of the last 20 or 50 trading days and shows the trend. Use a US ticker (AAPL) or a Stooq symbol with country code (ASML.NL).','Cours de clôture quotidiens avec graphique interactif. Glissez pour zoomer et survolez pour les valeurs exactes. La moyenne sur 20 et 50 jours est la clôture moyenne des 20 ou 50 derniers jours de bourse et montre la tendance. Utilisez un ticker américain (AAPL) ou un symbole Stooq avec code pays (ASML.NL).','Tägliche Schlusskurse mit interaktivem Chart. Ziehen Sie zum Zoomen und fahren Sie darüber für genaue Werte. Der 20- und 50-Tage-Schnitt ist der mittlere Schlusskurs der letzten 20 bzw. 50 Handelstage und zeigt den Trend. Verwenden Sie einen US-Ticker (AAPL) oder ein Stooq-Symbol mit Ländercode (ASML.NL).'],
+d3:['Jaarcijfers uit het 10-K dat Amerikaanse beursbedrijven bij de SEC indienen. Omzet is wat het bedrijf verkoopt, nettowinst wat er na kosten en belasting overblijft, EPS de winst per aandeel, activa alles wat het bezit en schulden wat het verschuldigd is. Bedragen in miljoenen dollars.','Annual figures from the 10-K that US listed companies file with the SEC. Revenue is what the company sells, net income what remains after costs and tax, EPS the profit per share, assets everything it owns and liabilities what it owes. Amounts in millions of dollars.','Chiffres annuels du 10-K déposé par les sociétés cotées américaines auprès de la SEC. Le chiffre d’affaires est ce que la société vend, le résultat net ce qui reste après coûts et impôts, le BPA le bénéfice par action, les actifs ce qu’elle possède et les dettes ce qu’elle doit. Montants en millions de dollars.','Jahreszahlen aus dem 10-K, das US-börsennotierte Unternehmen bei der SEC einreichen. Umsatz ist, was das Unternehmen verkauft, Nettogewinn, was nach Kosten und Steuern bleibt, EPS der Gewinn je Aktie, Vermögen alles, was es besitzt, und Verbindlichkeiten, was es schuldet. Beträge in Mio. Dollar.'],
+d4:['Wisselkoersen op basis van de dagelijkse referentiekoersen van de Europese Centrale Bank. Handig om te zien wat een dollar-aandeel in euro kost. Dit zijn geen live handelskoersen.','Exchange rates based on the daily reference rates of the European Central Bank. Useful to see what a dollar share costs in euros. These are not live trading rates.','Taux de change basés sur les taux de référence quotidiens de la Banque centrale européenne. Utile pour voir ce que coûte une action en dollars en euros. Ce ne sont pas des taux en direct.','Wechselkurse auf Basis der täglichen Referenzkurse der Europäischen Zentralbank. Nützlich, um zu sehen, was eine Dollar-Aktie in Euro kostet. Dies sind keine Live-Handelskurse.'],
+d5:['De 20 grootste cryptomunten op marktkapitalisatie (totale waarde van alle munten), met prijsverandering over 24 uur en 7 dagen. Crypto schommelt veel sterker dan aandelen.','The 20 largest cryptocurrencies by market cap (total value of all coins), with price change over 24 hours and 7 days. Crypto swings far more than stocks.','Les 20 plus grandes cryptomonnaies par capitalisation (valeur totale de toutes les pièces), avec variation sur 24 h et 7 jours. La crypto fluctue bien plus que les actions.','Die 20 größten Kryptowährungen nach Marktkapitalisierung (Gesamtwert aller Coins), mit Preisänderung über 24 Stunden und 7 Tage. Krypto schwankt weit stärker als Aktien.'],
+d6:['Economische cijfers van de centrale bank van St. Louis (FRED). De 10-jaars rente bepaalt hoe duur lenen is en drukt vaak op aandelenkoersen als ze stijgt. De rentecurve (10 jaar min 2 jaar) wordt vaak negatief vóór een recessie. Sleep over de grafiek om in te zoomen.','Economic data from the St. Louis Fed (FRED). The 10-year yield sets how expensive borrowing is and often weighs on stocks when it rises. The yield curve (10y minus 2y) often turns negative before a recession. Drag across the chart to zoom.','Données économiques de la Fed de Saint-Louis (FRED). Le taux à 10 ans détermine le coût du crédit et pèse souvent sur les actions quand il monte. La courbe des taux (10 ans moins 2 ans) devient souvent négative avant une récession. Glissez sur le graphique pour zoomer.','Wirtschaftsdaten der Fed St. Louis (FRED). Die 10-Jahres-Rendite bestimmt, wie teuer Kredit ist, und belastet oft Aktien, wenn sie steigt. Die Zinskurve (10J minus 2J) wird oft vor einer Rezession negativ. Ziehen Sie über das Diagramm zum Zoomen.'],
+d7:['Houd ticker, aantal en aankoopprijs bij; de site berekent waarde en winst of verlies op basis van de laatste slotkoers. Zonder account staat alles alleen in deze browser; met een account staat het veilig in de cloud. Dit is geen echte broker.','Track ticker, quantity and purchase price; the site calculates value and profit or loss from the latest closing price. Without an account everything stays in this browser; with an account it is stored safely in the cloud. This is not a real broker.','Suivez ticker, quantité et prix d’achat ; le site calcule la valeur et le gain ou la perte à partir du dernier cours de clôture. Sans compte, tout reste dans ce navigateur ; avec un compte, c’est stocké dans le cloud. Ce n’est pas un vrai courtier.','Erfassen Sie Ticker, Anzahl und Kaufpreis; die Seite berechnet Wert und Gewinn oder Verlust anhand des letzten Schlusskurses. Ohne Konto bleibt alles in diesem Browser; mit Konto sicher in der Cloud. Dies ist kein echter Broker.'],
+d8:['Beheer je account: uitloggen of je account en alle data definitief verwijderen. Opgeslagen worden alleen je e-mailadres en je portefeuilleposities; je wachtwoord wordt versleuteld door Supabase.','Manage your account: log out or permanently delete your account and all data. Only your email address and portfolio positions are stored; your password is encrypted by Supabase.','Gérez votre compte : déconnexion ou suppression définitive du compte et des données. Seuls votre e-mail et vos positions sont stockés ; votre mot de passe est chiffré par Supabase.','Verwalten Sie Ihr Konto: abmelden oder Konto und alle Daten endgültig löschen. Gespeichert werden nur Ihre E-Mail-Adresse und Portfoliopositionen; Ihr Passwort wird von Supabase verschlüsselt.'],
+ph_co:['Zoek bedrijf of ticker, bijv. AAPL','Search company or ticker, e.g. AAPL','Rechercher société ou ticker, p. ex. AAPL','Unternehmen oder Ticker suchen, z. B. AAPL'],ph_cik:['of vul een CIK in','or enter a CIK','ou saisissez un CIK','oder CIK eingeben'],ph_tk:['Ticker','Ticker','Ticker','Ticker'],ph_sh:['Aantal','Shares','Quantité','Anzahl'],ph_px:['Aankoopprijs','Purchase price','Prix d’achat','Kaufpreis'],ph_em:['E-mailadres','Email address','Adresse e-mail','E-Mail-Adresse'],ph_pw:['Wachtwoord (minimaal 8 tekens)','Password (min. 8 characters)','Mot de passe (8 caractères min.)','Passwort (mind. 8 Zeichen)'],ph_npw:['Nieuw wachtwoord','New password','Nouveau mot de passe','Neues Passwort'],
+b_search:['Zoek','Search','Chercher','Suchen'],b_show:['Toon','Show','Afficher','Anzeigen'],b_add:['Toevoegen','Add','Ajouter','Hinzufügen'],b_save:['Opslaan','Save','Enregistrer','Speichern'],
+p3m:['3 maanden','3 months','3 mois','3 Monate'],p1y:['1 jaar','1 year','1 an','1 Jahr'],p5y:['5 jaar','5 years','5 ans','5 Jahre'],pmax:['Alles','All','Tout','Alles'],avg:['Gemiddelden','Averages','Moyennes','Durchschnitte'],
+loading:['Laden… (kan even duren)','Loading… (may take a moment)','Chargement… (peut prendre un moment)','Laden… (kann dauern)'],bigload:['Groot bestand wordt geladen (tot 25 MB), dit kan een halve minuut duren…','Loading a large file (up to 25 MB), this can take half a minute…','Chargement d’un gros fichier (jusqu’à 25 Mo), cela peut prendre 30 secondes…','Große Datei wird geladen (bis 25 MB), das kann 30 Sekunden dauern…'],
+searching:['Zoeken…','Searching…','Recherche…','Suche…'],none:['Niets gevonden','Nothing found','Aucun résultat','Nichts gefunden'],srcerr:['Bron gaf fout','Source returned error','Erreur de la source','Quelle meldet Fehler'],
+fetched:['Opgehaald op','Fetched on','Récupéré le','Abgerufen am'],srcupd:['Bron laatst gewijzigd','Source last modified','Source modifiée le','Quelle zuletzt geändert'],
+noform4:['Geen recente Form 4-meldingen.','No recent Form 4 filings.','Aucun formulaire 4 récent.','Keine aktuellen Form-4-Meldungen.'],no13f:['Geen 13F-HR gevonden voor deze CIK','No 13F-HR found for this CIK','Aucun 13F-HR trouvé pour ce CIK','Kein 13F-HR für diese CIK gefunden'],
+h_tdate:['Transactiedatum','Transaction date','Date de transaction','Transaktionsdatum'],h_filed:['Gemeld bij SEC (datum en tijd)','Reported to SEC (date & time)','Déclaré à la SEC (date et heure)','An SEC gemeldet (Datum & Uhrzeit)'],h_who:['Persoon','Person','Personne','Person'],h_role:['Rol','Role','Rôle','Rolle'],h_type:['Type','Type','Type','Typ'],h_sh:['Aandelen','Shares','Actions','Aktien'],h_price:['Prijs','Price','Prix','Preis'],h_val:['Waarde','Value','Valeur','Wert'],h_after:['Daarna in bezit','Held afterwards','Détenues après','Danach gehalten'],
+h_co:['Bedrijf','Company','Société','Unternehmen'],h_valusd:['Waarde ($)','Value ($)','Valeur ($)','Wert ($)'],h_chg:['Verandering','Change','Variation','Änderung'],h_status:['Status','Status','Statut','Status'],
+ty_Koop:['Koop','Buy','Achat','Kauf'],ty_Verkoop:['Verkoop','Sell','Vente','Verkauf'],ty_Toekenning:['Toekenning','Award','Attribution','Zuteilung'],'ty_Optie-uitoefening':['Optie-uitoefening','Option exercise','Exercice d’option','Optionsausübung'],'ty_Belasting-inhouding':['Belasting-inhouding','Tax withholding','Retenue fiscale','Steuereinbehalt'],ty_Gift:['Gift','Gift','Don','Schenkung'],
+st_Nieuw:['Nieuw','New','Nouveau','Neu'],st_Vermeerderd:['Vermeerderd','Increased','Augmenté','Erhöht'],st_Verminderd:['Verminderd','Reduced','Réduit','Reduziert'],st_Verkocht:['Verkocht','Sold','Vendu','Verkauft'],st_Gelijk:['Gelijk','Unchanged','Inchangé','Unverändert'],
+f13a:['Positie per','Position as of','Position au','Position zum'],f13b:['ingediend op','filed on','déposé le','eingereicht am'],f13c:['vergeleken met','compared with','comparé à','verglichen mit'],f13d:['Top 200 posities','Top 200 positions','200 premières positions','Top 200 Positionen'],
+s_last:['Laatste slotkoers','Last close','Dernier cours de clôture','Letzter Schlusskurs'],s_close:['slotkoers, geen live koers','closing price, not live','clôture, pas en direct','Schlusskurs, nicht live'],s_chg:['Verandering over periode','Change over period','Variation sur la période','Änderung im Zeitraum'],s_hi52:['52-weeks hoog','52-week high','Plus haut 52 sem.','52-Wochen-Hoch'],s_lo52:['52-weeks laag','52-week low','Plus bas 52 sem.','52-Wochen-Tief'],
+lg_px:['koers','price','cours','Kurs'],lg_20:['gemiddelde 20 dagen','20-day average','moyenne 20 jours','20-Tage-Schnitt'],lg_50:['gemiddelde 50 dagen','50-day average','moyenne 50 jours','50-Tage-Schnitt'],
+zoomhint:['Sleep over de grafiek om in te zoomen; beweeg voor exacte waarden.','Drag across the chart to zoom; hover for exact values.','Glissez sur le graphique pour zoomer ; survolez pour les valeurs exactes.','Ziehen Sie über das Diagramm zum Zoomen; Mauszeiger für genaue Werte.'],reset:['Reset zoom','Reset zoom','Réinitialiser le zoom','Zoom zurücksetzen'],
+nodata:['Geen data gevonden voor','No data found for','Aucune donnée pour','Keine Daten gefunden für'],
+fh_post:['Post (mln $)','Item ($ million)','Poste (M$)','Posten (Mio. $)'],fh_fy:['Boekjaar tot','Fiscal year to','Exercice clos le','Geschäftsjahr bis'],fh_filed:['Gemeld bij SEC op','Reported to SEC on','Déclaré à la SEC le','An SEC gemeldet am'],nofin:['Geen jaarcijfers gevonden (geen Amerikaans 10-K-bedrijf?)','No annual figures found (not a US 10-K filer?)','Aucun chiffre annuel (pas une société 10-K américaine ?)','Keine Jahreszahlen gefunden (kein US-10-K-Unternehmen?)'],
+r_rev:['Omzet','Revenue','Chiffre d’affaires','Umsatz'],r_ni:['Nettowinst','Net income','Résultat net','Nettogewinn'],r_eps:['Winst per aandeel (EPS, $)','Earnings per share (EPS, $)','Bénéfice par action (BPA, $)','Gewinn je Aktie (EPS, $)'],r_cf:['Operationele cashflow','Operating cash flow','Flux de trésorerie opérationnel','Operativer Cashflow'],r_as:['Totale activa','Total assets','Total des actifs','Gesamtvermögen'],r_li:['Schulden','Liabilities','Dettes','Verbindlichkeiten'],r_ca:['Cash','Cash','Trésorerie','Liquidität'],r_eq:['Eigen vermogen','Equity','Capitaux propres','Eigenkapital'],
+x_cur:['Valuta','Currency','Devise','Währung'],x_rate:['Koers voor 1','Rate for 1','Taux pour 1','Kurs für 1'],x_is:['is','is','vaut','entspricht'],x_note:['ECB-referentiekoersen van','ECB reference rates of','Taux de référence BCE du','EZB-Referenzkurse vom'],x_when:['(dagelijks rond 16:00 uur CET gepubliceerd)','(published daily around 16:00 CET)','(publiés chaque jour vers 16 h CET)','(täglich gegen 16:00 Uhr MEZ veröffentlicht)'],
+c_name:['Munt','Coin','Monnaie','Münze'],c_price:['Prijs (€)','Price (€)','Prix (€)','Preis (€)'],c_24:['24 uur','24 h','24 h','24 Std.'],c_7:['7 dagen','7 days','7 jours','7 Tage'],c_cap:['Marktkapitalisatie (€)','Market cap (€)','Capitalisation (€)','Marktkapitalisierung (€)'],c_upd:['Bijgewerkt (datum en tijd)','Updated (date & time)','Mis à jour (date et heure)','Aktualisiert (Datum & Uhrzeit)'],c_src:['Data door','Data by','Données de','Daten von'],
+m_last:['Laatste waarde','Latest value','Dernière valeur','Letzter Wert'],m_chg:['Verandering in periode','Change in period','Variation sur la période','Änderung im Zeitraum'],m_hi:['Hoogste in periode','Highest in period','Plus haut de la période','Höchstwert im Zeitraum'],m_lo:['Laagste in periode','Lowest in period','Plus bas de la période','Tiefstwert im Zeitraum'],m_on:['op','on','le','am'],m_freq:['Frequentie','Frequency','Fréquence','Frequenz'],fq_d:['dagelijks','daily','quotidienne','täglich'],fq_m:['maandelijks','monthly','mensuelle','monatlich'],
+m_note:['Bron: FRED (Federal Reserve Bank of St. Louis). De reeks bevat alleen meetdata (geen kloktijden); de datum bij elke waarde is de meetdatum en sommige reeksen verschijnen met vertraging.','Source: FRED (Federal Reserve Bank of St. Louis). The series only has observation dates (no clock times); the date next to each value is the observation date and some series are published with a delay.','Source : FRED (Federal Reserve Bank of St. Louis). La série ne comporte que des dates de mesure (pas d’heure) ; certaines séries sont publiées avec retard.','Quelle: FRED (Federal Reserve Bank of St. Louis). Die Reihe enthält nur Messdaten (keine Uhrzeiten); manche Reihen erscheinen mit Verzögerung.'],
+sr_DGS10:['VS 10-jaars rente','US 10-year yield','Taux US 10 ans','US-10-Jahres-Rendite'],sr_DGS2:['VS 2-jaars rente','US 2-year yield','Taux US 2 ans','US-2-Jahres-Rendite'],sr_T10Y2Y:['Rentecurve (10j min 2j)','Yield curve (10y minus 2y)','Courbe des taux (10 a − 2 a)','Zinskurve (10J minus 2J)'],sr_FEDFUNDS:['Fed-beleidsrente','Fed funds rate','Taux directeur Fed','Fed-Leitzins'],sr_CPIAUCSL:['Consumentenprijzen (CPI)','Consumer prices (CPI)','Prix à la consommation (CPI)','Verbraucherpreise (CPI)'],sr_UNRATE:['Werkloosheid VS','US unemployment','Chômage US','US-Arbeitslosigkeit'],sr_DCOILWTICO:['Olie WTI','Oil WTI','Pétrole WTI','Öl WTI'],sr_DCOILBRENTEU:['Olie Brent','Oil Brent','Pétrole Brent','Öl Brent'],sr_SP500:['S&P 500-index','S&P 500 index','Indice S&P 500','S&P-500-Index'],sr_DEXUSEU:['Dollar per euro','US dollars per euro','Dollars US par euro','US-Dollar pro Euro'],
+h_last:['Laatste slot','Last close','Dernière clôture','Letzter Schluss'],h_pd:['Koersdatum','Price date','Date du cours','Kursdatum'],h_pl:['Winst/verlies','Profit/loss','Gain/perte','Gewinn/Verlust'],del:['verwijder','delete','supprimer','löschen'],pf_tot:['Totale waarde','Total value','Valeur totale','Gesamtwert'],pf_res:['Totaal resultaat','Total result','Résultat total','Gesamtergebnis'],pf_none:['Nog geen posities toegevoegd.','No positions added yet.','Aucune position ajoutée.','Noch keine Positionen hinzugefügt.'],pf_acc:['Opgeslagen in je account','Saved in your account','Enregistré dans votre compte','In Ihrem Konto gespeichert'],pf_loc:['Opgeslagen in deze browser (maak een account om het veilig te bewaren)','Saved in this browser (create an account to keep it safe)','Enregistré dans ce navigateur (créez un compte pour le conserver)','In diesem Browser gespeichert (Konto erstellen zum sicheren Speichern)'],nd:['geen data','no data','pas de données','keine Daten'],
+au_ok:['Ik ga akkoord dat mijn e-mailadres en portefeuillegegevens worden opgeslagen.','I agree that my email address and portfolio data are stored.','J’accepte que mon adresse e-mail et mes données de portefeuille soient enregistrées.','Ich stimme der Speicherung meiner E-Mail-Adresse und Portfoliodaten zu.'],au_li:['Inloggen','Log in','Se connecter','Anmelden'],au_su:['Account maken','Create account','Créer un compte','Konto erstellen'],au_fp:['Wachtwoord vergeten','Forgot password','Mot de passe oublié','Passwort vergessen'],au_lo:['Uitloggen','Log out','Se déconnecter','Abmelden'],au_del:['Account en data verwijderen','Delete account and data','Supprimer le compte et les données','Konto und Daten löschen'],
+au_conf:['Je account en al je data worden definitief verwijderd. Doorgaan?','Your account and all your data will be permanently deleted. Continue?','Votre compte et toutes vos données seront définitivement supprimés. Continuer ?','Ihr Konto und alle Daten werden endgültig gelöscht. Fortfahren?'],au_gone:['Account verwijderd.','Account deleted.','Compte supprimé.','Konto gelöscht.'],au_in:['Ingelogd als','Logged in as','Connecté en tant que','Angemeldet als'],au_enter:['Open dashboard','Open dashboard','Ouvrir le tableau de bord','Dashboard öffnen'],au_out:['Je bent niet ingelogd.','You are not logged in.','Vous n’êtes pas connecté.','Sie sind nicht angemeldet.'],au_go:['Naar inloggen','Go to login','Aller à la connexion','Zur Anmeldung'],
+au_nosb:['Accounts zijn nog niet ingesteld (vul SB_URL en SB_KEY bovenaan de code in). De site werkt zonder account.','Accounts are not set up yet (fill in SB_URL and SB_KEY at the top of the code). The site works without an account.','Les comptes ne sont pas encore configurés (renseignez SB_URL et SB_KEY en haut du code). Le site fonctionne sans compte.','Konten sind noch nicht eingerichtet (SB_URL und SB_KEY oben im Code ausfüllen). Die Seite funktioniert ohne Konto.'],
+au_chk:['Vul een e-mailadres en een wachtwoord van minimaal 8 tekens in.','Enter an email address and a password of at least 8 characters.','Saisissez une adresse e-mail et un mot de passe d’au moins 8 caractères.','Geben Sie eine E-Mail-Adresse und ein Passwort mit mind. 8 Zeichen ein.'],au_cons:['Vink eerst de toestemming aan.','Please tick the consent box first.','Veuillez d’abord cocher la case de consentement.','Bitte zuerst die Zustimmung ankreuzen.'],au_made:['Account gemaakt, je bent ingelogd.','Account created, you are logged in.','Compte créé, vous êtes connecté.','Konto erstellt, Sie sind angemeldet.'],au_mail:['Bijna klaar: bevestig je e-mailadres via de mail die we stuurden.','Almost done: confirm your email address via the message we sent.','Presque terminé : confirmez votre adresse via l’e-mail envoyé.','Fast geschafft: Bestätigen Sie Ihre E-Mail-Adresse über die gesendete Nachricht.'],au_em:['Vul eerst je e-mailadres in.','Enter your email address first.','Saisissez d’abord votre adresse e-mail.','Geben Sie zuerst Ihre E-Mail-Adresse ein.'],au_reset:['Als dit adres bestaat, is er een mail verstuurd.','If this address exists, an email has been sent.','Si cette adresse existe, un e-mail a été envoyé.','Falls die Adresse existiert, wurde eine E-Mail gesendet.'],au_newpw:['Kies een nieuw wachtwoord (minimaal 8 tekens).','Choose a new password (at least 8 characters).','Choisissez un nouveau mot de passe (8 caractères min.).','Wählen Sie ein neues Passwort (mind. 8 Zeichen).']
+};
+const LANGS=['nl','en','fr','de'];
+let lang=new URLSearchParams(location.search).get('lang')||(()=>{try{return localStorage.getItem('lang')}catch(e){return null}})()||(navigator.language||'nl').slice(0,2);
+if(!LANGS.includes(lang))lang='nl';
+const LI=LANGS.indexOf(lang),LOC={nl:'nl-NL',en:'en-GB',fr:'fr-BE',de:'de-DE'}[lang];
+const t=k=>D[k]?D[k][LI]:k,tt=(p,v)=>D[p+v]?t(p+v):v;
+
+/* ===== Hulpfuncties ===== */
+const $=i=>document.getElementById(i),fmt=(n,d=0)=>(+n).toLocaleString(LOC,{maximumFractionDigits:d}),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const dt=s=>{const d=new Date(s);return isNaN(d)?'-':d.toLocaleString('nl-NL',{dateStyle:'short',timeStyle:'short'})};
-const now=()=>new Date().toLocaleString('nl-NL',{dateStyle:'short',timeStyle:'medium'});
+const dt=s=>{const d=new Date(typeof s==='number'&&s<1e12?s*1000:s);return isNaN(d)?'-':d.toLocaleString(LOC,{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'})};
+const now=()=>new Date().toLocaleString(LOC,{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZoneName:'short'});
 const pc=n=>`<span class="${n>=0?'pos':'neg'}">${n>=0?'+':''}${fmt(n,2)}%</span>`;
-const cache={};
-async function get(url){if(cache[url])return cache[url];if(/sec\.gov/.test(url))await sleep(120);
-  const r=await fetch(PROXY+"/?u="+encodeURIComponent(url));if(!r.ok)throw new Error("Bron gaf fout "+r.status);return cache[url]=await r.text()}
+const cache={},meta={};
+async function get(url,big){if(cache[url])return cache[url];if(/sec\.gov/.test(url))await sleep(120);
+  const r=await fetch(PROXY+"/?u="+encodeURIComponent(url));if(!r.ok)throw new Error(t('srcerr')+' '+r.status);
+  meta[url]=r.headers.get('X-Source-Updated')||'';const x=await r.text();if(!big)cache[url]=x;return x}
 const J=async u=>JSON.parse(await get(u));
-const out=(id,h)=>$(id).innerHTML=h+`<p class="note">Opgehaald op ${now()}</p>`,busy=id=>$(id).textContent='Laden… (kan even duren)',
-  fail=(id,e)=>$(id).innerHTML='<p class="err">'+esc(e.message)+'</p>';
-const dom=s=>new DOMParser().parseFromString(s.replace(/\sxmlns(:\w+)?="[^"]*"/g,"").replace(/<(\/?)\w+:/g,"<$1"),"text/xml");
+const out=(id,h,u)=>$(id).innerHTML=h+`<p class="note">${t('fetched')} ${now()}${u&&meta[u]?' · '+t('srcupd')+' '+dt(meta[u]):''}</p>`,
+  busy=(id,k)=>$(id).textContent=t(k||'loading'),fail=(id,e)=>$(id).innerHTML='<p class="err">'+esc(e.message)+'</p>';
 const q=(n,s)=>{const e=n.querySelector(s);return e?e.textContent.trim():""},nm=s=>parseFloat(s)||0;
+const dom=s=>new DOMParser().parseFromString(s.replace(/\sxmlns(:\w+)?="[^"]*"/g,"").replace(/<(\/?)\w+:/g,"<$1"),"text/xml");
+const dec=s=>s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;|&#39;/g,"'");
 const subs=async c=>(await J(`https://data.sec.gov/submissions/CIK${String(c).padStart(10,"0")}.json`)).filings.recent;
 function table(cols,rows){return '<table><thead><tr>'+cols.map(c=>`<th class="${c[2]||''}">${c[0]}</th>`).join('')+'</tr></thead><tbody>'+
   rows.map(r=>'<tr>'+cols.map(c=>`<td class="${c[2]||''} ${c[3]?c[3](r):''}">${c[1](r)}</td>`).join('')+'</tr>').join('')+'</tbody></table>'}
 const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((s,x)=>s+x,0)/n);
-function chart(p,ls){const k=Math.ceil(p.length/700),S=a=>a.filter((_,i)=>i%k==0||i==a.length-1);p=S(p);ls=ls.map(l=>({c:l.c,vals:S(l.vals)}));
-  const W=700,H=250,L=8,all=[...p.map(x=>x.v),...ls.flatMap(l=>l.vals.filter(v=>v!=null))],mn=Math.min(...all),mx=Math.max(...all),
-  X=i=>L+i*(W-2*L)/Math.max(p.length-1,1),Y=v=>H-26-(v-mn)/(mx-mn||1)*(H-46);
-  const path=a=>{let s='',on=false;a.forEach((v,i)=>{if(v==null){on=false;return}s+=(on?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);on=true});return s};
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><text x="${L}" y="12" class="ax">${fmt(mx,2)}</text><text x="${L}" y="${H-28}" class="ax">${fmt(mn,2)}</text><text x="${L}" y="${H-6}" class="ax">${p[0].d}</text><text x="${W-L}" y="${H-6}" text-anchor="end" class="ax">${p[p.length-1].d}</text>${ls.map(l=>`<path d="${path(l.vals)}" class="ln ${l.c}"/>`).join('')}<path d="${path(p.map(x=>x.v))}" class="ln l1"/></svg>`}
 
-async function findCompanies(term){const d=Object.values(await J("https://www.sec.gov/files/company_tickers.json")),t=term.toLowerCase();
-  return d.filter(v=>v.ticker.toLowerCase().includes(t)||v.title.toLowerCase().includes(t)).sort((a,b)=>(b.ticker.toLowerCase()==t)-(a.ticker.toLowerCase()==t)||a.title.length-b.title.length).slice(0,10)}
-function bind(p,cb){const go=async()=>{const t=$(p+'q').value.trim();if(!t)return;$(p+'res').textContent='Zoeken…';
-  try{const d=await findCompanies(t);$(p+'res').innerHTML=d.length?d.map((c,i)=>`<a data-i="${i}">${esc(c.ticker)} · ${esc(c.title)}</a>`).join(''):'Niets gevonden';
+/* ===== Interactieve grafiek met assen, hover en zoom ===== */
+function ticks(mn,mx,n=5){const r=(mx-mn)||1,s=Math.pow(10,Math.floor(Math.log10(r/n))),m=[1,2,5,10].map(x=>x*s).find(x=>r/x<=n)||s*10,a=[];for(let v=Math.ceil(mn/m)*m;v<=mx+1e-9;v+=m)a.push(+v.toFixed(10));a.m=m;return a}
+const CL={l1:'var(--ac)',l2:'#e8890c',l3:'#9b59d0'};
+function ichart(id,P,ls,unit){const el=$(id);if(P.length<2){el.textContent=t('nodata');return}
+  let a=0,b=P.length-1,X,Y,ds=null;const W=720,H=320,ML=58,MR=12,MT=18,MB=30;
+  el.innerHTML=`<div class="cw"><svg viewBox="0 0 ${W} ${H}" width="100%"></svg><div class="tip" hidden></div></div><div class="row" style="margin-top:6px"><button class="go sm" data-z="0.5">＋</button><button class="go sm" data-z="2">－</button><button class="go sm" id="${id}r" hidden>${t('reset')}</button><span class="note">${t('zoomhint')}</span></div><div class="note"><span style="color:${CL.l1}">■</span> ${esc(unit)}${ls.map(l=>` · <span style="color:${CL[l.c]}">■</span> ${esc(l.n)}`).join('')}</div>`;
+  const svg=el.querySelector('svg'),tip=el.querySelector('.tip'),n=()=>b-a+1,px=e=>{const r=svg.getBoundingClientRect();return(e.clientX-r.left)/r.width*W},
+    idx=x=>Math.max(0,Math.min(n()-1,Math.round((x-ML)/(W-ML-MR)*(n()-1))));
+  function draw(){const N=n(),vis=P.slice(a,b+1),vs=vis.map(p=>p.v);ls.forEach(l=>l.vals.slice(a,b+1).forEach(v=>{if(v!=null)vs.push(v)}));
+    let mn=Math.min(...vs),mx=Math.max(...vs);const pad=(mx-mn||1)*.06;mn-=pad;mx+=pad;
+    X=i=>ML+i*(W-ML-MR)/Math.max(N-1,1);Y=v=>H-MB-(v-mn)/(mx-mn)*(H-MB-MT);
+    const st=Math.ceil(N/900),path=arr=>{let s='',on=0;for(let i=0;i<N;i+=st){const v=arr[i];if(v==null){on=0;continue}s+=(on?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);on=1}return s};
+    const yt=ticks(mn,mx),dc=yt.m<1?2:0,xt=[...new Set([0,1,2,3,4,5].map(j=>Math.round(j*(N-1)/5)))];
+    svg.innerHTML=yt.map(v=>`<line x1="${ML}" x2="${W-MR}" y1="${Y(v)}" y2="${Y(v)}" class="gr"/><text x="${ML-6}" y="${Y(v)+4}" text-anchor="end" class="ax">${fmt(v,dc)}</text>`).join('')+
+      xt.map(i=>`<line x1="${X(i)}" x2="${X(i)}" y1="${H-MB}" y2="${H-MB+4}" class="axl"/><text x="${X(i)}" y="${H-MB+17}" text-anchor="${i==0?'start':i==N-1?'end':'middle'}" class="ax">${vis[i].d}</text>`).join('')+
+      `<line x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}" class="axl"/><line x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}" class="axl"/><text x="${ML}" y="11" class="ax">${esc(unit)}</text>`+
+      ls.map(l=>`<path d="${path(l.vals.slice(a,b+1))}" class="ln ${l.c}"/>`).join('')+`<path d="${path(vis.map(p=>p.v))}" class="ln l1"/><line id="${id}x" class="cx" y1="${MT}" y2="${H-MB}" hidden/><circle id="${id}d" r="4" class="cdot" hidden/><rect id="${id}s" class="sel" y="${MT}" height="${H-MT-MB}" hidden/>`;
+    $(id+'r').hidden=!(a>0||b<P.length-1)}
+  svg.onpointerdown=e=>{ds=px(e);svg.setPointerCapture(e.pointerId)};
+  svg.onpointermove=e=>{const x=px(e),i=idx(x),p=P[a+i],cx=$(id+'x');if(!cx)return;
+    cx.setAttribute('x1',X(i));cx.setAttribute('x2',X(i));cx.removeAttribute('hidden');const cd=$(id+'d');cd.setAttribute('cx',X(i));cd.setAttribute('cy',Y(p.v));cd.removeAttribute('hidden');
+    const r=svg.getBoundingClientRect(),lx=X(i)/W*r.width;tip.hidden=false;
+    tip.innerHTML=`<b>${p.d}</b><br>${fmt(p.v,2)} ${esc(unit)}`+ls.map(l=>l.vals[a+i]!=null?`<br>${esc(l.n)}: ${fmt(l.vals[a+i],2)}`:'').join('');
+    tip.style.left=Math.max(0,Math.min(r.width-tip.offsetWidth,lx+12))+'px';
+    if(ds!=null){const s=$(id+'s');s.setAttribute('x',Math.min(ds,x));s.setAttribute('width',Math.abs(x-ds));s.removeAttribute('hidden')}};
+  svg.onpointerup=e=>{if(ds==null)return;const x=px(e);if(Math.abs(x-ds)>8){const i0=idx(Math.min(ds,x)),i1=idx(Math.max(ds,x));if(i1-i0>=2){const na=a+i0;b=a+i1;a=na}}ds=null;tip.hidden=true;draw()};
+  svg.onpointerleave=()=>{tip.hidden=true;ds=null;draw()};
+  el.querySelectorAll('[data-z]').forEach(bn=>bn.onclick=()=>{const nn=Math.max(5,Math.min(P.length,Math.round(n()*+bn.dataset.z)));let na=Math.round((a+b)/2-nn/2);na=Math.max(0,Math.min(P.length-nn,na));a=na;b=na+nn-1;draw()});
+  $(id+'r').onclick=()=>{a=0;b=P.length-1;draw()};draw()}
+
+/* ===== Zoeken ===== */
+async function findCompanies(term){const d=Object.values(await J("https://www.sec.gov/files/company_tickers.json")),k=term.toLowerCase();
+  return d.filter(v=>v.ticker.toLowerCase().includes(k)||v.title.toLowerCase().includes(k)).sort((a,b)=>(b.ticker.toLowerCase()==k)-(a.ticker.toLowerCase()==k)||a.title.length-b.title.length).slice(0,10)}
+function bind(p,cb){const go=async()=>{const s=$(p+'q').value.trim();if(!s)return;$(p+'res').textContent=t('searching');
+  try{const d=await findCompanies(s);$(p+'res').innerHTML=d.length?d.map((c,i)=>`<a data-i="${i}">${esc(c.ticker)} · ${esc(c.title)}</a>`).join(''):t('none');
   $(p+'res').querySelectorAll('a').forEach(a=>a.onclick=()=>cb(d[a.dataset.i]))}catch(e){$(p+'res').innerHTML='<span class="err">'+esc(e.message)+'</span>'}};
   $(p+'sq').onclick=go;$(p+'q').addEventListener('keydown',e=>{if(e.key==='Enter')go()})}
 
-/* 1. Insiders */
+/* ===== 1. Insider trades ===== */
 const TYPES={P:"Koop",S:"Verkoop",A:"Toekenning",M:"Optie-uitoefening",F:"Belasting-inhouding",G:"Gift"};
 async function showInsiders(c){busy('o0');try{const r=await subs(c.cik_str),rows=[];
   const ix=r.form.map((f,i)=>f==="4"?i:-1).filter(i=>i>=0).slice(0,12);
@@ -129,104 +218,124 @@ async function showInsiders(c){busy('o0');try{const r=await subs(c.cik_str),rows
     try{x=dom(await get(`https://www.sec.gov/Archives/edgar/data/${+c.cik_str}/${acc}/${file}`))}catch(e){continue}
     const who=q(x,"reportingOwner rptOwnerName"),rel=x.querySelector("reportingOwner reportingOwnerRelationship");
     const role=(rel&&q(rel,"officerTitle"))||(rel&&["1","true"].includes(q(rel,"isDirector"))?"Director":"Insider");
-    x.querySelectorAll("nonDerivativeTransaction").forEach(t=>{const code=q(t,"transactionCoding transactionCode");
-      rows.push({date:q(t,"transactionDate value"),filed:r.acceptanceDateTime[i],who,role,type:TYPES[code]||code,shares:nm(q(t,"transactionShares value")),price:nm(q(t,"transactionPricePerShare value")),after:nm(q(t,"sharesOwnedFollowingTransaction value"))})})}
+    x.querySelectorAll("nonDerivativeTransaction").forEach(tr=>{const code=q(tr,"transactionCoding transactionCode");
+      rows.push({date:q(tr,"transactionDate value"),filed:r.acceptanceDateTime[i],who,role,type:TYPES[code]||code,shares:nm(q(tr,"transactionShares value")),price:nm(q(tr,"transactionPricePerShare value")),after:nm(q(tr,"sharesOwnedFollowingTransaction value"))})})}
   rows.sort((a,b)=>b.date.localeCompare(a.date));
-  out('o0',`<h3>${esc(c.title)}</h3>`+(rows.length?table([['Transactiedatum',r=>r.date],['Gemeld bij SEC (datum en tijd)',r=>dt(r.filed)],['Persoon',r=>esc(r.who)],['Rol',r=>esc(r.role)],['Type',r=>r.type,'',r=>r.type],['Aandelen',r=>fmt(r.shares),'n'],['Prijs',r=>r.price?'$'+fmt(r.price,2):'-','n'],['Waarde',r=>r.price?'$'+fmt(r.shares*r.price):'-','n'],['Daarna in bezit',r=>fmt(r.after),'n']],rows):'Geen recente Form 4-meldingen.'))}catch(e){fail('o0',e)}}
+  out('o0',`<h3>${esc(c.title)}</h3>`+(rows.length?table([[t('h_tdate'),r=>r.date],[t('h_filed'),r=>dt(r.filed)],[t('h_who'),r=>esc(r.who)],[t('h_role'),r=>esc(r.role)],[t('h_type'),r=>tt('ty_',r.type),'',r=>r.type],[t('h_sh'),r=>fmt(r.shares),'n'],[t('h_price'),r=>r.price?'$'+fmt(r.price,2):'-','n'],[t('h_val'),r=>r.price?'$'+fmt(r.shares*r.price):'-','n'],[t('h_after'),r=>fmt(r.after),'n']],rows):t('noform4')))}catch(e){fail('o0',e)}}
 
-/* 2. Fondsen */
+/* ===== 2. Fondsen (13F) - snelle tekstparser voor zeer grote bestanden ===== */
+const RX={cusip:/<(?:\w+:)?cusip>([^<]*)</,name:/<(?:\w+:)?nameOfIssuer>([^<]*)</,value:/<(?:\w+:)?value>([^<]*)</,sh:/<(?:\w+:)?sshPrnamt>([^<]*)</};
 async function holdingsOf(cik,acc){const base=`https://www.sec.gov/Archives/edgar/data/${+cik}/${acc.replace(/-/g,"")}`,idx=await J(base+"/index.json"),o={};
-  for(const f of idx.directory.item.map(f=>f.name).filter(n=>n.toLowerCase().endsWith(".xml")&&!n.toLowerCase().includes("primary_doc"))){let x;try{x=dom(await get(base+"/"+f))}catch(e){continue}
-    x.querySelectorAll("infoTable").forEach(it=>{const k=q(it,"cusip"),h=o[k]||(o[k]={name:q(it,"nameOfIssuer"),value:0,shares:0});h.value+=nm(q(it,"value"));h.shares+=nm(q(it,"sshPrnamt"))});
+  for(const f of idx.directory.item.map(f=>f.name).filter(n=>/\.xml$/i.test(n)&&!/primary_doc/i.test(n))){const x=await get(base+"/"+f,true),re=/<(?:\w+:)?infoTable>([\s\S]*?)<\/(?:\w+:)?infoTable>/g;let m;
+    while((m=re.exec(x))){const s=m[1],g=k=>{const r=s.match(RX[k]);return r?r[1].trim():''},key=g('cusip')||g('name'),h=o[key]||(o[key]={name:dec(g('name')),value:0,shares:0});h.value+=nm(g('value'));h.shares+=nm(g('sh'))}
     if(Object.keys(o).length)break}return o}
-async function showFund(){const cik=$('cik').value.trim()||$('fs').value;busy('o1');try{const r=await subs(cik),f=[];
+async function showFund(){const cik=$('cik').value.trim()||$('fs').value;busy('o1','bigload');try{const r=await subs(cik),f=[];
   r.form.forEach((x,i)=>{if(x==="13F-HR"&&f.length<2)f.push([r.accessionNumber[i],r.reportDate[i],r.acceptanceDateTime[i]])});
-  if(!f.length)throw new Error("Geen 13F-HR gevonden voor deze CIK");
+  if(!f.length)throw new Error(t('no13f'));
   const cur=await holdingsOf(cik,f[0][0]),prev=f[1]?await holdingsOf(cik,f[1][0]):{},rows=[];
   for(const k in cur){const h=cur[k],p=prev[k]?prev[k].shares:0;h.change=h.shares-p;h.status=!(k in prev)?"Nieuw":h.change>0?"Vermeerderd":h.change<0?"Verminderd":"Gelijk";rows.push(h)}
   for(const k in prev)if(!(k in cur))rows.push({...prev[k],value:0,shares:0,change:-prev[k].shares,status:"Verkocht"});
   rows.sort((a,b)=>b.value-a.value);
-  out('o1',`<p class="note">Positie per ${f[0][1]}, ingediend op ${dt(f[0][2])}`+(f[1]?` · vergeleken met ${f[1][1]} (ingediend ${dt(f[1][2])})`:'')+`. Top 200.</p>`+
-  table([['Bedrijf',r=>esc(r.name)],['Waarde ($)',r=>fmt(r.value),'n'],['Aandelen',r=>fmt(r.shares),'n'],['Verandering',r=>(r.change>0?'+':'')+fmt(r.change),'n'],['Status',r=>r.status,'',r=>r.status]],rows.slice(0,200)))}catch(e){fail('o1',e)}}
+  out('o1',`<p class="note">${t('f13a')} ${f[0][1]}, ${t('f13b')} ${dt(f[0][2])}`+(f[1]?` · ${t('f13c')} ${f[1][1]} (${t('f13b')} ${dt(f[1][2])})`:'')+` · ${t('f13d')}</p>`+
+   table([[t('h_co'),r=>esc(r.name)],[t('h_valusd'),r=>fmt(r.value),'n'],[t('h_sh'),r=>fmt(r.shares),'n'],[t('h_chg'),r=>(r.change>0?'+':'')+fmt(r.change),'n'],[t('h_status'),r=>tt('st_',r.status),'',r=>r.status]],rows.slice(0,200)))}catch(e){fail('o1',e)}}
 
-/* 3. Koersen */
-async function prices(t){t=t.trim().toLowerCase();const c=await get(`https://stooq.com/q/d/l/?s=${t.includes('.')?t:t+'.us'}&i=d`);
-  const L=c.trim().split('\n').slice(1).map(l=>l.split(',')).filter(a=>a.length>=5&&+a[4]);if(!L.length)throw new Error('Geen koersdata gevonden voor '+t.toUpperCase());return L.map(a=>({d:a[0],v:+a[4]}))}
-async function showPrices(){const t=$('t2').value.trim();if(!t)return;busy('o2');try{const full=await prices(t),n={'3m':63,'1y':252,'5y':1260,max:1e9}[$('per2').value],p=full.slice(-n),fv=full.map(x=>x.v),l=p[p.length-1],f=p[0],y=full.slice(-252).map(x=>x.v);
-  const ls=$('sma2').checked?[{c:'l2',vals:sma(fv,20).slice(-p.length)},{c:'l3',vals:sma(fv,50).slice(-p.length)}]:[];
-  out('o2',`<div class="stats"><div>Laatste slotkoers<b>${fmt(l.v,2)}</b><span class="note">${l.d} (slot, geen live koers)</span></div><div>Verandering over periode<b>${pc((l.v/f.v-1)*100)}</b></div><div>52-weeks hoog<b>${fmt(Math.max(...y),2)}</b></div><div>52-weeks laag<b>${fmt(Math.min(...y),2)}</b></div></div>`+chart(p,ls)+(ls.length?'<p class="note"><span style="color:var(--ac)">■</span> koers · <span style="color:#e8890c">■</span> gemiddelde 20 dagen · <span style="color:#9b59d0">■</span> gemiddelde 50 dagen</p>':''))}catch(e){fail('o2',e)}}
+/* ===== 3. Koersen ===== */
+async function prices(sym){sym=sym.trim().toLowerCase();const u=`https://stooq.com/q/d/l/?s=${sym.includes('.')?sym:sym+'.us'}&i=d`,c=await get(u);
+  const L=c.trim().split('\n').slice(1).map(l=>l.split(',')).filter(a=>a.length>=5&&+a[4]);if(!L.length)throw new Error(t('nodata')+' '+sym.toUpperCase());
+  const r=L.map(a=>({d:a[0],v:+a[4]}));r.url=u;return r}
+async function showPrices(){const sym=$('t2').value.trim();if(!sym)return;busy('o2');try{const full=await prices(sym),n={'3m':63,'1y':252,'5y':1260,max:1e9}[$('per2').value],p=full.slice(-n),fv=full.map(x=>x.v),l=p[p.length-1],f=p[0],y=full.slice(-252).map(x=>x.v);
+  const ls=$('sma2').checked?[{c:'l2',n:t('lg_20'),vals:sma(fv,20).slice(-p.length)},{c:'l3',n:t('lg_50'),vals:sma(fv,50).slice(-p.length)}]:[];
+  out('o2',`<div class="stats"><div>${t('s_last')}<b>${fmt(l.v,2)}</b><span class="note">${l.d} (${t('s_close')})</span></div><div>${t('s_chg')}<b>${pc((l.v/f.v-1)*100)}</b><span class="note">${f.d} → ${l.d}</span></div><div>${t('s_hi52')}<b>${fmt(Math.max(...y),2)}</b></div><div>${t('s_lo52')}<b>${fmt(Math.min(...y),2)}</b></div></div><div id="ch2"></div>`,full.url);
+  ichart('ch2',p,ls,sym.toUpperCase()+' · '+t('lg_px'))}catch(e){fail('o2',e)}}
 
-/* 4. Financiele cijfers */
-const TAGS=[['Omzet',['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax','SalesRevenueNet']],['Nettowinst',['NetIncomeLoss']],['Winst per aandeel (EPS, $)',['EarningsPerShareDiluted']],['Operationele cashflow',['NetCashProvidedByUsedInOperatingActivities']],['Totale activa',['Assets']],['Schulden',['Liabilities']],['Cash',['CashAndCashEquivalentsAtCarryingValue']],['Eigen vermogen',['StockholdersEquity']]];
+/* ===== 4. Financiele cijfers ===== */
+const TAGS=[['r_rev',['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax','SalesRevenueNet']],['r_ni',['NetIncomeLoss']],['r_eps',['EarningsPerShareDiluted']],['r_cf',['NetCashProvidedByUsedInOperatingActivities']],['r_as',['Assets']],['r_li',['Liabilities']],['r_ca',['CashAndCashEquivalentsAtCarryingValue']],['r_eq',['StockholdersEquity']]];
 async function showFin(c){busy('o3');try{const d=await J(`https://data.sec.gov/api/xbrl/companyfacts/CIK${String(c.cik_str).padStart(10,'0')}.json`),g=d.facts['us-gaap']||{};
-  const res=TAGS.map(([n,tags])=>{for(const t of tags){const u=g[t]&&g[t].units,a=u&&(u.USD||u['USD/shares']);if(!a)continue;const m={};
+  const res=TAGS.map(([k,tags])=>{for(const tg of tags){const u=g[tg]&&g[tg].units,a=u&&(u.USD||u['USD/shares']);if(!a)continue;const m={};
     a.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>3e10*10)).forEach(e=>{if(!m[e.end]||e.filed>m[e.end].filed)m[e.end]=e});
-    if(Object.keys(m).length)return{n,m,eps:n.includes('EPS')}}return{n,m:{}}});
-  const ends=[...new Set(res.flatMap(r=>Object.keys(r.m)))].sort().reverse().slice(0,5);
-  if(!ends.length)throw new Error('Geen jaarcijfers gevonden (geen Amerikaans 10-K-bedrijf?)');
+    if(Object.keys(m).length)return{n:t(k),m,eps:k=='r_eps'}}return{n:t(k),m:{}}});
+  const ends=[...new Set(res.flatMap(r=>Object.keys(r.m)))].sort().reverse().slice(0,5);if(!ends.length)throw new Error(t('nofin'));
   const filed=e=>{const r=res.find(r=>r.m[e]);return r?r.m[e].filed:''};
-  out('o3',`<h3>${esc(d.entityName)}</h3><table><thead><tr><th>Post (mln $)</th>${ends.map(e=>`<th class="n">Boekjaar tot ${e}</th>`).join('')}</tr></thead><tbody>`+
+  out('o3',`<h3>${esc(d.entityName)}</h3><table><thead><tr><th>${t('fh_post')}</th>${ends.map(e=>`<th class="n">${t('fh_fy')} ${e}</th>`).join('')}</tr></thead><tbody>`+
    res.map(r=>`<tr><td>${r.n}</td>${ends.map(e=>`<td class="n">${r.m[e]?(r.eps?fmt(r.m[e].val,2):fmt(r.m[e].val/1e6)):'-'}</td>`).join('')}</tr>`).join('')+
-   `<tr><td class="note">Gemeld bij SEC op</td>${ends.map(e=>`<td class="n note">${filed(e)}</td>`).join('')}</tr></tbody></table>`)}catch(e){fail('o3',e)}}
+   `<tr><td class="note">${t('fh_filed')}</td>${ends.map(e=>`<td class="n note">${filed(e)}</td>`).join('')}</tr></tbody></table>`)}catch(e){fail('o3',e)}}
 
-/* 5. Valuta */
-async function showFx(){busy('o4');try{const b=$('base4').value,a=+$('amt4').value||1,d=await J(`https://api.frankfurter.dev/v1/latest?base=${b}`);
-  out('o4',table([['Valuta',r=>r[0]],[`Koers voor 1 ${b}`,r=>fmt(r[1],4),'n'],[`${fmt(a,2)} ${b} is`,r=>fmt(r[1]*a,2),'n']],Object.entries(d.rates))+`<p class="note">ECB-referentiekoersen van ${d.date} (dagelijks rond 16:00 uur gepubliceerd).</p>`)}catch(e){fail('o4',e)}}
+/* ===== 5. Valuta ===== */
+async function showFx(){busy('o4');try{const b=$('base4').value,a=+$('amt4').value||1,u=`https://api.frankfurter.dev/v1/latest?base=${b}`,d=await J(u);
+  out('o4',table([[t('x_cur'),r=>r[0]],[`${t('x_rate')} ${b}`,r=>fmt(r[1],4),'n'],[`${fmt(a,2)} ${b} ${t('x_is')}`,r=>fmt(r[1]*a,2),'n']],Object.entries(d.rates))+`<p class="note">${t('x_note')} ${d.date} ${t('x_when')}</p>`,u)}catch(e){fail('o4',e)}}
 
-/* 6. Crypto */
-async function showCrypto(){busy('o5');try{const d=await J('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=20&page=1&price_change_percentage=24h,7d');
-  out('o5',table([['#',r=>r.market_cap_rank],['Munt',r=>esc(r.name)+' <span class="note">'+esc(r.symbol.toUpperCase())+'</span>'],['Prijs (€)',r=>fmt(r.current_price,r.current_price<1?4:2),'n'],['24 uur',r=>pc(r.price_change_percentage_24h||0),'n'],['7 dagen',r=>pc(r.price_change_percentage_7d_in_currency||0),'n'],['Marktkapitalisatie (€)',r=>fmt(r.market_cap),'n'],['Prijs bijgewerkt (datum en tijd)',r=>dt(r.last_updated)]],d)+'<p class="note">Data door CoinGecko.</p>')}catch(e){fail('o5',e)}}
+/* ===== 6. Crypto (Coinpaprika, met CoinGecko als reserve) ===== */
+async function showCrypto(){busy('o5');try{let rows,src,u;
+  try{u='https://api.coinpaprika.com/v1/tickers?quotes=EUR';const d=await J(u);src='Coinpaprika';
+    rows=d.filter(x=>x.rank>0&&x.quotes&&x.quotes.EUR).sort((a,b)=>a.rank-b.rank).slice(0,20).map(x=>({rank:x.rank,name:x.name,sym:x.symbol,price:x.quotes.EUR.price,d24:x.quotes.EUR.percent_change_24h,d7:x.quotes.EUR.percent_change_7d,cap:x.quotes.EUR.market_cap,upd:x.last_updated}))}
+  catch(e1){try{u='https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=20&page=1&price_change_percentage=24h,7d';const d=await J(u);src='CoinGecko';
+    rows=d.map(x=>({rank:x.market_cap_rank,name:x.name,sym:x.symbol.toUpperCase(),price:x.current_price,d24:x.price_change_percentage_24h,d7:x.price_change_percentage_7d_in_currency,cap:x.market_cap,upd:x.last_updated}))}
+  catch(e2){throw new Error('Coinpaprika: '+e1.message+' · CoinGecko: '+e2.message)}}
+  out('o5',table([['#',r=>r.rank],[t('c_name'),r=>esc(r.name)+' <span class="note">'+esc(r.sym)+'</span>'],[t('c_price'),r=>fmt(r.price,r.price<1?4:2),'n'],[t('c_24'),r=>pc(r.d24||0),'n'],[t('c_7'),r=>pc(r.d7||0),'n'],[t('c_cap'),r=>fmt(r.cap),'n'],[t('c_upd'),r=>dt(r.upd)]],rows)+`<p class="note">${t('c_src')} ${src}.</p>`,u)}catch(e){fail('o5',e)}}
 
-/* 7. Macro */
-async function showMacro(){const id=$('ser6').value;busy('o6');try{const c=await get(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${id}`);
+/* ===== 7. Macro & rente ===== */
+async function showMacro(){const [id,unit,fq]=SERIES[+$('ser6').value];busy('o6');try{const u=`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${id}`,c=await get(u);
   let p=c.trim().split('\n').slice(1).map(l=>l.split(',')).filter(a=>a[1]&&a[1]!=='.'&&!isNaN(+a[1])).map(a=>({d:a[0],v:+a[1]}));
-  if(!p.length)throw new Error('Geen data');const y={'1y':365,'5y':1825,max:1e9}[$('per6').value],cut=new Date(Date.now()-y*864e5).toISOString().slice(0,10);p=p.filter(x=>x.d>=cut);
-  const l=p[p.length-1];out('o6',`<div class="stats"><div>Laatste waarde<b>${fmt(l.v,2)}</b><span class="note">per ${l.d}</span></div><div>Hoogste in periode<b>${fmt(Math.max(...p.map(x=>x.v)),2)}</b></div><div>Laagste in periode<b>${fmt(Math.min(...p.map(x=>x.v)),2)}</b></div></div>`+chart(p,[])+'<p class="note">Bron: FRED, Federal Reserve Bank of St. Louis. De datum is de meetdatum; sommige reeksen verschijnen met vertraging.</p>')}catch(e){fail('o6',e)}}
+  if(!p.length)throw new Error(t('nodata')+' '+id);
+  const days={'1y':365,'5y':1825,max:1e9}[$('per6').value],cut=new Date(Date.now()-days*864e5).toISOString().slice(0,10);p=p.filter(x=>x.d>=cut);
+  const l=p[p.length-1],f=p[0],hi=p.reduce((a,b)=>b.v>a.v?b:a),lo=p.reduce((a,b)=>b.v<a.v?b:a),pl=esc($('per6').selectedOptions[0].text),
+  card=(lab,pt,ex)=>`<div>${lab}<b>${fmt(pt.v,2)} ${esc(unit)}</b><span class="note">${t('m_on')} ${pt.d}${ex||''}</span></div>`;
+  out('o6',`<div class="stats">${card(t('m_last'),l,' · '+t('m_freq')+': '+t(fq=='d'?'fq_d':'fq_m'))}<div>${t('m_chg')} (${pl})<b>${l.v-f.v>=0?'+':''}${fmt(l.v-f.v,2)} ${esc(unit)}</b><span class="note">${f.d} → ${l.d}</span></div>${card(t('m_hi')+' ('+pl+')',hi)}${card(t('m_lo')+' ('+pl+')',lo)}</div><div id="ch6"></div><p class="note">${t('m_note')}</p>`,u);
+  ichart('ch6',p,[],t('sr_'+id)+' ('+unit+')')}catch(e){fail('o6',e)}}
 
-/* 8. Portefeuille: de database en RLS isoleren records per aangemelde gebruiker. */
-async function showPf(){busy('o7');try{const {data,error}=await sb.from('portfolio_positions').select('id,ticker,shares,purchase_price').order('created_at',{ascending:true});if(error)throw error;
-  if(!data.length){$('o7').innerHTML='<p class="note">Nog geen posities toegevoegd.</p>';return}
-  const rows=[];let tv=0,tc=0;
-  for(const p of data){const item={id:p.id,t:p.ticker,sh:Number(p.shares),px:Number(p.purchase_price)};try{const px=await prices(item.t),l=px[px.length-1],val=l.v*item.sh,cost=item.px*item.sh;tv+=val;tc+=cost;rows.push({...item,last:l.v,d:l.d,val,pl:val-cost,pct:(val/cost-1)*100})}catch(e){rows.push({...item,last:0,d:'geen data',val:0,pl:0,pct:0})}}
-  out('o7',table([['Ticker',r=>esc(r.t.toUpperCase())],['Aantal',r=>fmt(r.sh,2),'n'],['Aankoopprijs',r=>fmt(r.px,2),'n'],['Laatste slot',r=>fmt(r.last,2),'n'],['Koersdatum',r=>r.d],['Waarde',r=>fmt(r.val,2),'n'],['Winst/verlies',r=>`<span class="${r.pl>=0?'pos':'neg'}">${fmt(r.pl,2)}</span>`,'n'],['%',r=>pc(r.pct),'n'],['',r=>`<a data-del="${r.id}" style="cursor:pointer" class="neg">verwijder</a>`]],rows)+
-   `<div class="stats"><div>Totale waarde<b>${fmt(tv,2)}</b></div><div>Totaal resultaat<b>${pc(tc?(tv/tc-1)*100:0)}</b></div></div>`);
-  $('o7').querySelectorAll('[data-del]').forEach(x=>x.onclick=async()=>{const {error}=await sb.from('portfolio_positions').delete().eq('id',x.dataset.del);if(error){setAuthStatus('Verwijderen mislukt: '+error.message,true);return}showPf()})
- }catch(e){fail('o7',e)}}
-async function addPf(){const t=$('t7').value.trim().toUpperCase(),sh=+$('sh7').value,px=+$('px7').value;if(!t||!sh||!px)return;
- const {data:{user},error:userError}=await sb.auth.getUser();if(userError||!user){setAuthStatus('Log eerst in om een positie op te slaan.',true);return}
- const {error}=await sb.from('portfolio_positions').insert({user_id:user.id,ticker:t,shares:sh,purchase_price:px});if(error){setAuthStatus('Opslaan mislukt: '+error.message,true);return}
- $('t7').value=$('sh7').value=$('px7').value='';showPf()}
-$('b7').onclick=addPf;
+/* ===== 8. Portefeuille (lokaal of in account) ===== */
+let sb=null,user=null,rec=false;
+try{if(typeof supabase!=='undefined'&&SB_URL.startsWith('https://')&&!SB_URL.includes('JOUW'))sb=supabase.createClient(SB_URL,SB_KEY)}catch(e){}
+const lpf=()=>{try{return JSON.parse(localStorage.getItem('pf'))||[]}catch(e){return[]}},spf=a=>{try{localStorage.setItem('pf',JSON.stringify(a))}catch(e){}};
+async function loadPf(){if(user){const{data,error}=await sb.from('portfolio_positions').select('id,ticker,shares,purchase_price,created_at').order('created_at');if(error)throw error;return data.map(d=>({id:d.id,t:d.ticker,sh:+d.shares,px:+d.purchase_price}))}return lpf().map((p,i)=>({id:i,...p}))}
+async function addPos(tk,sh,px){if(user){const{error}=await sb.from('portfolio_positions').insert({user_id:user.id,ticker:tk,shares:sh,purchase_price:px});if(error)throw error}else{const a=lpf();a.push({t:tk,sh,px});spf(a)}}
+async function delPos(id){if(user){const{error}=await sb.from('portfolio_positions').delete().eq('id',id);if(error)throw error}else{const a=lpf();a.splice(+id,1);spf(a)}}
+async function showPf(){let a;try{a=await loadPf()}catch(e){return fail('o7',e)}
+  if(!a.length){$('o7').innerHTML=`<p class="note">${t('pf_none')}</p>`;return}busy('o7');const rows=[];let tv=0,tc=0;
+  for(const p of a){try{const px=await prices(p.t),l=px[px.length-1],val=l.v*p.sh,cost=p.px*p.sh;tv+=val;tc+=cost;rows.push({...p,last:l.v,d:l.d,val,pl:val-cost,pct:(val/cost-1)*100})}catch(e){rows.push({...p,last:0,d:t('nd'),val:0,pl:0,pct:0})}}
+  out('o7',`<p class="note">${user?t('pf_acc')+' ('+esc(user.email)+')':t('pf_loc')}</p>`+table([[t('ph_tk'),r=>esc(r.t.toUpperCase())],[t('ph_sh'),r=>fmt(r.sh,2),'n'],[t('ph_px'),r=>fmt(r.px,2),'n'],[t('h_last'),r=>fmt(r.last,2),'n'],[t('h_pd'),r=>r.d],[t('h_val'),r=>fmt(r.val,2),'n'],[t('h_pl'),r=>`<span class="${r.pl>=0?'pos':'neg'}">${fmt(r.pl,2)}</span>`,'n'],['%',r=>pc(r.pct),'n'],['',r=>`<a data-del="${r.id}" style="cursor:pointer" class="neg">${t('del')}</a>`]],rows)+
+   `<div class="stats"><div>${t('pf_tot')}<b>${fmt(tv,2)}</b></div><div>${t('pf_res')}<b>${pc(tc?(tv/tc-1)*100:0)}</b></div></div>`);
+  $('o7').querySelectorAll('[data-del]').forEach(x=>x.onclick=async()=>{try{await delPos(x.dataset.del)}catch(e){return fail('o7',e)}showPf()})}
+$('b7').onclick=async()=>{const tk=$('t7').value.trim(),sh=+$('sh7').value,px=+$('px7').value;if(!tk||!sh||!px)return;try{await addPos(tk,sh,px)}catch(e){return fail('o7',e)}$('t7').value=$('sh7').value=$('px7').value='';showPf()};
 
-/* Tabs */
-const NAMES=['Insider trades','Fondsen (13F)','Koersen & grafiek','Financiële cijfers','Valuta','Crypto','Macro & rente','Portefeuille'],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
+/* ===== 9. Account ===== */
+const say=x=>{const m=$('am')||$('am2');if(m)m.textContent=x};
+function show(v){$('landing').hidden=v!='landing';$('app').hidden=v!='app';scrollTo(0,0)}
+function renderAcc(){const A=$('acc'),B=$('acc2');
+  if(!sb){A.innerHTML=B.innerHTML=`<p class="note">${t('au_nosb')}</p>`;return}
+  if(rec){A.innerHTML=`<p>${t('au_newpw')}</p><div class="row"><input type="password" id="npw" placeholder="${t('ph_npw')}"><button class="go" id="bnp">${t('b_save')}</button></div><p id="am" class="note"></p>`;show('landing');
+    $('bnp').onclick=async()=>{const{error}=await sb.auth.updateUser({password:$('npw').value});if(error)return say(error.message);rec=false;renderAcc()};return}
+  if(user){A.innerHTML=`<p>${t('au_in')} <b>${esc(user.email)}</b></p><button class="go" id="ent">${t('au_enter')}</button>`;$('ent').onclick=()=>show('app');
+    B.innerHTML=`<p>${t('au_in')} <b>${esc(user.email)}</b></p><div class="row"><button class="go" id="lo">${t('au_lo')}</button><button class="go" id="del" style="background:var(--r)">${t('au_del')}</button></div><p id="am2" class="note"></p>`;
+    $('lo').onclick=()=>sb.auth.signOut();
+    $('del').onclick=async()=>{if(!confirm(t('au_conf')))return;const{error}=await sb.rpc('delete_my_account');if(error)return say(error.message);await sb.auth.signOut();say(t('au_gone'))};return}
+  A.innerHTML=`<div class="row"><input type="text" id="em" placeholder="${t('ph_em')}" autocomplete="email"><input type="password" id="pw" placeholder="${t('ph_pw')}" autocomplete="current-password"></div>
+  <label class="note"><input type="checkbox" id="ok"> ${t('au_ok')}</label>
+  <div class="row" style="margin-top:8px"><button class="go" id="li">${t('au_li')}</button><button class="go" id="su">${t('au_su')}</button><button class="go" id="fp" style="background:var(--mut)">${t('au_fp')}</button></div><p id="am" class="note"></p>`;
+  B.innerHTML=`<p>${t('au_out')}</p><button class="go" id="tolog">${t('au_go')}</button>`;$('tolog').onclick=()=>{show('landing');$('authbox').scrollIntoView({behavior:'smooth'})};
+  const cr=()=>({email:$('em').value.trim(),password:$('pw').value}),back=location.href.split('#')[0].split('?')[0];
+  $('li').onclick=async()=>{const{error}=await sb.auth.signInWithPassword(cr());say(error?error.message:'')};
+  $('su').onclick=async()=>{const c=cr();if(!c.email||c.password.length<8)return say(t('au_chk'));if(!$('ok').checked)return say(t('au_cons'));
+    const{data,error}=await sb.auth.signUp({...c,options:{emailRedirectTo:back}});say(error?error.message:data.session?t('au_made'):t('au_mail'))};
+  $('fp').onclick=async()=>{const{email}=cr();if(!email)return say(t('au_em'));const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:back});say(error?error.message:t('au_reset'))}}
+async function initAuth(){renderAcc();if(!sb)return;const{data}=await sb.auth.getSession();user=data.session?data.session.user:null;renderAcc();if(user&&!rec)show('app');
+  sb.auth.onAuthStateChange((ev,ses)=>{user=ses?ses.user:null;if(ev==='PASSWORD_RECOVERY')rec=true;renderAcc();if(done[7])showPf()})}
+
+/* ===== Start ===== */
+document.documentElement.lang=lang;
+document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=t(e.dataset.i));
+document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));
+const NAMES=[0,1,2,3,4,5,6,7,8].map(i=>t('tn'+i)),LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
 $('tabs').innerHTML=NAMES.map((n,i)=>`<button data-t="${i}" class="${i?'':'on'}">${esc(n)}</button>`).join('');
 $('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=+b.dataset.t;NAMES.forEach((_,i)=>{$('p'+i).hidden=i!=n;$('tabs').children[i].className=i==n?'on':''});if(LOAD[n]&&!done[n]){done[n]=1;LOAD[n]()}});
 bind('0',showInsiders);bind('3',showFin);
 $('fs').innerHTML=Object.entries(FUNDS).map(([n,c])=>`<option value="${c}">${n}</option>`).join('');
-$('ser6').innerHTML=SERIES.map(([i,n])=>`<option value="${i}">${n}</option>`).join('');
+$('ser6').innerHTML=SERIES.map(([i],ix)=>`<option value="${ix}">${t('sr_'+i)}</option>`).join('');
+$('feat').innerHTML=['🕵️','🏦','📈','📊','🌍','💼'].map((ic,i)=>`<div class="fc"><div class="ic">${ic}</div><h3>${t('f'+i+'t')}</h3><p>${t('f'+i+'d')}</p></div>`).join('');
 $('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
 $('t2').addEventListener('keydown',e=>{if(e.key==='Enter')showPrices()});
-
-/* Authentication: email/password; database RLS is the authorization boundary. */
-let isSignUp=false,loadedUserId=null;
-function setAuthStatus(message,isError=false){$('authStatus').textContent=message;$('authStatus').className=isError?'err':'note'}
-async function applyAuthUser(user){
-  $('appContent').hidden=!user;$('authForm').hidden=!!user;$('authMode').hidden=!!user;$('signOut').hidden=!user;
-  if(!user){loadedUserId=null;setAuthStatus('Log in of maak een account aan om je eigen portefeuille te openen.');return}
-  setAuthStatus('Ingelogd als '+user.email+'. Je portefeuille is alleen voor jouw account zichtbaar.');
-  if(loadedUserId!==user.id){loadedUserId=user.id;await showPf()}
-}
-$('authMode').onclick=()=>{isSignUp=!isSignUp;$('authSubmit').textContent=isSignUp?'Account aanmaken':'Inloggen';$('authMode').textContent=isSignUp?'Ik heb al een account':'Account aanmaken';$('authPassword').autocomplete=isSignUp?'new-password':'current-password';setAuthStatus(isSignUp?'Maak een account aan met je e-mailadres en een sterk wachtwoord.':'Log in of maak een account aan om je eigen portefeuille te openen.')};
-$('authForm').onsubmit=async e=>{e.preventDefault();const email=$('authEmail').value.trim(),password=$('authPassword').value;
-  $('authSubmit').disabled=true;setAuthStatus(isSignUp?'Account aanmaken…':'Inloggen…');
-  try{const result=isSignUp?await sb.auth.signUp({email,password,options:{emailRedirectTo:'https://yaro-invest.github.io/investorinfo/'}}):await sb.auth.signInWithPassword({email,password});
-    if(result.error)throw result.error;
-    if(isSignUp&&!result.data.session){setAuthStatus('Controleer je e-mail en bevestig je account. Daarna kun je hier inloggen.');return}
-    if(result.data.user)await applyAuthUser(result.data.user);
-  }catch(error){setAuthStatus(error.message||'Aanmelden is mislukt.',true)}finally{$('authSubmit').disabled=false}
-};
-$('signOut').onclick=async()=>{const {error}=await sb.auth.signOut();if(error)setAuthStatus('Uitloggen mislukt: '+error.message,true);else await applyAuthUser(null)};
-sb.auth.onAuthStateChange((_event,session)=>{void applyAuthUser(session?.user||null)});
-sb.auth.getSession().then(({data,error})=>{if(error)setAuthStatus('Sessie laden mislukt: '+error.message,true);else void applyAuthUser(data.session?.user||null)});
+$('lang').value=lang;$('lang').onchange=e=>{try{localStorage.setItem('lang',e.target.value)}catch(x){}location.href=location.pathname+'?lang='+e.target.value};
+$('nh').onclick=$('logo').onclick=()=>show('landing');$('nd').onclick=$('c2').onclick=()=>show('app');
+$('c1').onclick=()=>$('authbox').scrollIntoView({behavior:'smooth'});
+initAuth();
 </script></body></html>
