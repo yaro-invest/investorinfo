@@ -40,3 +40,18 @@ create policy "Users can delete their own portfolio positions"
 
 grant select, insert, update, delete on public.portfolio_positions to authenticated;
 revoke all on public.portfolio_positions from anon;
+
+-- Allow a signed-in user to permanently delete only their own account.
+-- Deleting auth.users cascades to portfolio_positions via user_id.
+create or replace function public.delete_my_account()
+returns void
+language sql
+security definer
+set search_path = ''
+as $function$
+  delete from auth.users where id = (select auth.uid());
+$function$;
+
+revoke all on function public.delete_my_account() from public;
+revoke all on function public.delete_my_account() from anon;
+grant execute on function public.delete_my_account() to authenticated;
