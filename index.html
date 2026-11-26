@@ -19,8 +19,17 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
 .note{color:var(--mut);font-size:13px}.err{color:var(--r)}
 .ln{fill:none;stroke-width:1.6}.l1{stroke:var(--ac)}.l2{stroke:#e8890c}.l3{stroke:#9b59d0}.ax{font-size:11px;fill:var(--mut)}
 .stats{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0}.stats b{display:block;font-size:18px}
+#authPanel{max-width:720px}#authPanel h2{margin:0 0 6px}#authForm .row{align-items:stretch}#authEmail,#authPassword{flex:1;min-width:220px}#authStatus{display:block;margin-top:10px}#signOut{margin-left:auto}
 </style></head><body><main>
 <h1>Investor Tool</h1><p class="s">Gratis, publieke marktdata op één plek. Open bij elk onderdeel het kopje "Wat is dit?" voor uitleg.</p>
+<section class="card" id="authPanel" aria-live="polite">
+  <h2>Portefeuille veilig opslaan</h2>
+  <p class="note">Maak een account aan of log in. Je portefeuille wordt in Supabase opgeslagen en is alleen zichtbaar voor jouw account.</p>
+  <form id="authForm"><div class="row"><input id="authEmail" type="email" autocomplete="email" required placeholder="E-mailadres"><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Wachtwoord (minimaal 8 tekens)"><button class="go" id="authSubmit" type="submit">Inloggen</button></div></form>
+  <div class="row" style="margin-top:10px"><button class="go" id="authMode" type="button" style="background:var(--mut)">Account aanmaken</button><button class="go" id="signOut" type="button" hidden>Uitloggen</button></div>
+  <p class="note" id="authStatus">Log in of maak een account aan om je eigen portefeuille te openen.</p>
+</section>
+<div id="appContent" hidden>
 <div class="tabs" id="tabs"></div>
 
 <div id="p0" class="card">
@@ -66,15 +75,20 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
 </div>
 
 <div id="p7" class="card" hidden>
-  <details open><summary>Wat is dit? Portefeuille</summary>Houd bij wat je bezit: ticker, aantal en gemiddelde aankoopprijs. De site berekent de actuele waarde en je winst of verlies (op basis van de laatste slotkoers). Alles wordt alleen in je eigen browser opgeslagen (niet op een server), dus wissen van browserdata wist ook je portefeuille. Het is een hulpmiddel en geen echte broker.</details>
+  <details open><summary>Wat is dit? Portefeuille</summary>Houd bij wat je bezit: ticker, aantal en gemiddelde aankoopprijs. De site berekent de actuele waarde en je winst of verlies (op basis van de laatste slotkoers). Posities worden online opgeslagen en zijn door row-level security alleen zichtbaar voor jouw account. Het is een hulpmiddel en geen echte broker.</details>
   <div class="row"><input type="text" id="t7" placeholder="Ticker" style="max-width:110px"><input type="number" id="sh7" placeholder="Aantal" style="max-width:110px"><input type="number" id="px7" placeholder="Aankoopprijs" style="max-width:140px"><button class="go" id="b7">Toevoegen</button></div>
   <div class="wrap" id="o7"></div>
 </div>
 
 <p class="note">Bronnen: SEC EDGAR, Stooq (koersen), ECB via Frankfurter (valuta), CoinGecko (crypto), FRED (macro). Data kan vertraagd of onvolledig zijn. Geen beleggingsadvies.</p>
+</div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const PROXY="https://investor.yaro-biesmans-zakelijk.workers.dev";
+const SB_URL="https://tsnmqrgvfrxnksaliiwf.supabase.co";
+const SB_KEY="sb_publishable_2N1sy9GoWNugZhuKw4E2WA_R7lOcyMw";
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const FUNDS={"Berkshire Hathaway":"1067983","Bridgewater":"1350694","Pershing Square":"1336528","Scion (Burry)":"1649339","Renaissance Tech":"1037389","Vanguard":"102909","BlackRock":"1364742","Citadel Advisors":"1423053","Norges Bank":"1374170"};
 const SERIES=[["DGS10","VS 10-jaars rente (%)"],["DGS2","VS 2-jaars rente (%)"],["T10Y2Y","Rentecurve 10j min 2j (%)"],["FEDFUNDS","Fed-beleidsrente (%)"],["CPIAUCSL","Consumentenprijzen (CPI-index)"],["UNRATE","Werkloosheid VS (%)"],["DCOILWTICO","Olie WTI ($/vat)"],["DCOILBRENTEU","Olie Brent ($/vat)"],["SP500","S&P 500-index"],["DEXUSEU","Dollar per euro"]];
 const $=i=>document.getElementById(i),fmt=(n,d=0)=>(+n).toLocaleString('nl-NL',{maximumFractionDigits:d}),sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -169,14 +183,20 @@ async function showMacro(){const id=$('ser6').value;busy('o6');try{const c=await
   if(!p.length)throw new Error('Geen data');const y={'1y':365,'5y':1825,max:1e9}[$('per6').value],cut=new Date(Date.now()-y*864e5).toISOString().slice(0,10);p=p.filter(x=>x.d>=cut);
   const l=p[p.length-1];out('o6',`<div class="stats"><div>Laatste waarde<b>${fmt(l.v,2)}</b><span class="note">per ${l.d}</span></div><div>Hoogste in periode<b>${fmt(Math.max(...p.map(x=>x.v)),2)}</b></div><div>Laagste in periode<b>${fmt(Math.min(...p.map(x=>x.v)),2)}</b></div></div>`+chart(p,[])+'<p class="note">Bron: FRED, Federal Reserve Bank of St. Louis. De datum is de meetdatum; sommige reeksen verschijnen met vertraging.</p>')}catch(e){fail('o6',e)}}
 
-/* 8. Portefeuille */
-const pf=()=>{try{return JSON.parse(localStorage.getItem('pf'))||[]}catch(e){return[]}},savepf=a=>{try{localStorage.setItem('pf',JSON.stringify(a))}catch(e){}};
-async function showPf(){const a=pf();if(!a.length){$('o7').innerHTML='<p class="note">Nog geen posities toegevoegd.</p>';return}busy('o7');const rows=[];let tv=0,tc=0;
-  for(const [i,p] of a.entries()){try{const px=await prices(p.t),l=px[px.length-1],val=l.v*p.sh,cost=p.px*p.sh;tv+=val;tc+=cost;rows.push({i,...p,last:l.v,d:l.d,val,pl:val-cost,pct:(val/cost-1)*100})}catch(e){rows.push({i,...p,last:0,d:'geen data',val:0,pl:0,pct:0})}}
-  out('o7',table([['Ticker',r=>esc(r.t.toUpperCase())],['Aantal',r=>fmt(r.sh,2),'n'],['Aankoopprijs',r=>fmt(r.px,2),'n'],['Laatste slot',r=>fmt(r.last,2),'n'],['Koersdatum',r=>r.d],['Waarde',r=>fmt(r.val,2),'n'],['Winst/verlies',r=>`<span class="${r.pl>=0?'pos':'neg'}">${fmt(r.pl,2)}</span>`,'n'],['%',r=>pc(r.pct),'n'],['',r=>`<a data-del="${r.i}" style="cursor:pointer" class="neg">verwijder</a>`]],rows)+
+/* 8. Portefeuille: de database en RLS isoleren records per aangemelde gebruiker. */
+async function showPf(){busy('o7');try{const {data,error}=await sb.from('portfolio_positions').select('id,ticker,shares,purchase_price').order('created_at',{ascending:true});if(error)throw error;
+  if(!data.length){$('o7').innerHTML='<p class="note">Nog geen posities toegevoegd.</p>';return}
+  const rows=[];let tv=0,tc=0;
+  for(const p of data){const item={id:p.id,t:p.ticker,sh:Number(p.shares),px:Number(p.purchase_price)};try{const px=await prices(item.t),l=px[px.length-1],val=l.v*item.sh,cost=item.px*item.sh;tv+=val;tc+=cost;rows.push({...item,last:l.v,d:l.d,val,pl:val-cost,pct:(val/cost-1)*100})}catch(e){rows.push({...item,last:0,d:'geen data',val:0,pl:0,pct:0})}}
+  out('o7',table([['Ticker',r=>esc(r.t.toUpperCase())],['Aantal',r=>fmt(r.sh,2),'n'],['Aankoopprijs',r=>fmt(r.px,2),'n'],['Laatste slot',r=>fmt(r.last,2),'n'],['Koersdatum',r=>r.d],['Waarde',r=>fmt(r.val,2),'n'],['Winst/verlies',r=>`<span class="${r.pl>=0?'pos':'neg'}">${fmt(r.pl,2)}</span>`,'n'],['%',r=>pc(r.pct),'n'],['',r=>`<a data-del="${r.id}" style="cursor:pointer" class="neg">verwijder</a>`]],rows)+
    `<div class="stats"><div>Totale waarde<b>${fmt(tv,2)}</b></div><div>Totaal resultaat<b>${pc(tc?(tv/tc-1)*100:0)}</b></div></div>`);
-  $('o7').querySelectorAll('[data-del]').forEach(x=>x.onclick=()=>{const a=pf();a.splice(+x.dataset.del,1);savepf(a);showPf()})}
-$('b7').onclick=()=>{const t=$('t7').value.trim(),sh=+$('sh7').value,px=+$('px7').value;if(!t||!sh||!px)return;const a=pf();a.push({t,sh,px});savepf(a);$('t7').value=$('sh7').value=$('px7').value='';showPf()};
+  $('o7').querySelectorAll('[data-del]').forEach(x=>x.onclick=async()=>{const {error}=await sb.from('portfolio_positions').delete().eq('id',x.dataset.del);if(error){setAuthStatus('Verwijderen mislukt: '+error.message,true);return}showPf()})
+ }catch(e){fail('o7',e)}}
+async function addPf(){const t=$('t7').value.trim().toUpperCase(),sh=+$('sh7').value,px=+$('px7').value;if(!t||!sh||!px)return;
+ const {data:{user},error:userError}=await sb.auth.getUser();if(userError||!user){setAuthStatus('Log eerst in om een positie op te slaan.',true);return}
+ const {error}=await sb.from('portfolio_positions').insert({user_id:user.id,ticker:t,shares:sh,purchase_price:px});if(error){setAuthStatus('Opslaan mislukt: '+error.message,true);return}
+ $('t7').value=$('sh7').value=$('px7').value='';showPf()}
+$('b7').onclick=addPf;
 
 /* Tabs */
 const NAMES=['Insider trades','Fondsen (13F)','Koersen & grafiek','Financiële cijfers','Valuta','Crypto','Macro & rente','Portefeuille'],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
@@ -187,4 +207,26 @@ $('fs').innerHTML=Object.entries(FUNDS).map(([n,c])=>`<option value="${c}">${n}<
 $('ser6').innerHTML=SERIES.map(([i,n])=>`<option value="${i}">${n}</option>`).join('');
 $('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
 $('t2').addEventListener('keydown',e=>{if(e.key==='Enter')showPrices()});
+
+/* Authentication: email/password; database RLS is the authorization boundary. */
+let isSignUp=false,loadedUserId=null;
+function setAuthStatus(message,isError=false){$('authStatus').textContent=message;$('authStatus').className=isError?'err':'note'}
+async function applyAuthUser(user){
+  $('appContent').hidden=!user;$('authForm').hidden=!!user;$('authMode').hidden=!!user;$('signOut').hidden=!user;
+  if(!user){loadedUserId=null;setAuthStatus('Log in of maak een account aan om je eigen portefeuille te openen.');return}
+  setAuthStatus('Ingelogd als '+user.email+'. Je portefeuille is alleen voor jouw account zichtbaar.');
+  if(loadedUserId!==user.id){loadedUserId=user.id;await showPf()}
+}
+$('authMode').onclick=()=>{isSignUp=!isSignUp;$('authSubmit').textContent=isSignUp?'Account aanmaken':'Inloggen';$('authMode').textContent=isSignUp?'Ik heb al een account':'Account aanmaken';$('authPassword').autocomplete=isSignUp?'new-password':'current-password';setAuthStatus(isSignUp?'Maak een account aan met je e-mailadres en een sterk wachtwoord.':'Log in of maak een account aan om je eigen portefeuille te openen.')};
+$('authForm').onsubmit=async e=>{e.preventDefault();const email=$('authEmail').value.trim(),password=$('authPassword').value;
+  $('authSubmit').disabled=true;setAuthStatus(isSignUp?'Account aanmaken…':'Inloggen…');
+  try{const result=isSignUp?await sb.auth.signUp({email,password,options:{emailRedirectTo:'https://yaro-invest.github.io/investorinfo/'}}):await sb.auth.signInWithPassword({email,password});
+    if(result.error)throw result.error;
+    if(isSignUp&&!result.data.session){setAuthStatus('Controleer je e-mail en bevestig je account. Daarna kun je hier inloggen.');return}
+    if(result.data.user)await applyAuthUser(result.data.user);
+  }catch(error){setAuthStatus(error.message||'Aanmelden is mislukt.',true)}finally{$('authSubmit').disabled=false}
+};
+$('signOut').onclick=async()=>{const {error}=await sb.auth.signOut();if(error)setAuthStatus('Uitloggen mislukt: '+error.message,true);else await applyAuthUser(null)};
+sb.auth.onAuthStateChange((_event,session)=>{void applyAuthUser(session?.user||null)});
+sb.auth.getSession().then(({data,error})=>{if(error)setAuthStatus('Sessie laden mislukt: '+error.message,true);else void applyAuthUser(data.session?.user||null)});
 </script></body></html>
