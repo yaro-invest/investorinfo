@@ -5,127 +5,186 @@
 :root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mut:#667085;--ac:#1d6fe8;--bd:#e3e6eb;--g:#0a8f4e;--r:#d1303a}
 @media(prefers-color-scheme:dark){:root{--bg:#0e1116;--card:#171b22;--tx:#e8ebf0;--mut:#8b94a3;--ac:#4c93ff;--bd:#272d38;--g:#3ccf88;--r:#ff6670}}
 *{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:var(--bg);color:var(--tx)}
-main{max-width:1000px;margin:0 auto;padding:24px 16px}h1{margin:0 0 4px}p.s{color:var(--mut);margin:0 0 20px}
-.tabs{display:flex;gap:8px;margin-bottom:16px}.tabs button{padding:8px 16px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer}
+main{max-width:1050px;margin:0 auto;padding:24px 16px}h1{margin:0 0 4px}p.s{color:var(--mut);margin:0 0 20px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tabs button{padding:8px 14px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer}
 .tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px}
 input,select{padding:9px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;min-width:0}
-.row{display:flex;gap:8px;flex-wrap:wrap}.row input{flex:1}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row input[type=text]{flex:1}
 button.go{padding:9px 16px;background:var(--ac);color:#fff;border:0;border-radius:8px;cursor:pointer}
+details{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;margin-bottom:12px;color:var(--mut);font-size:14px}summary{cursor:pointer;color:var(--tx);font-weight:500}
 .res a{display:inline-block;margin:8px 8px 0 0;padding:5px 10px;border:1px solid var(--bd);border-radius:20px;cursor:pointer;color:var(--ac)}
-.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}
-th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koop{color:var(--g)}.Verkocht,.Verminderd,.Verkoop{color:var(--r)}
+.wrap{overflow-x:auto;margin-top:8px}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koop,.pos{color:var(--g)}.Verkocht,.Verminderd,.Verkoop,.neg{color:var(--r)}
 .note{color:var(--mut);font-size:13px}.err{color:var(--r)}
+.ln{fill:none;stroke-width:1.6}.l1{stroke:var(--ac)}.l2{stroke:#e8890c}.l3{stroke:#9b59d0}.ax{font-size:11px;fill:var(--mut)}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0}.stats b{display:block;font-size:18px}
 </style></head><body><main>
-<h1>Investor Tool</h1><p class="s">Wie koopt en verkoopt? Gratis data van SEC EDGAR.</p>
-<div class="tabs"><button id="t1" class="on">Insider trades</button><button id="t2">Fondsen (13F)</button></div>
+<h1>Investor Tool</h1><p class="s">Gratis, publieke marktdata op één plek. Open bij elk onderdeel het kopje "Wat is dit?" voor uitleg.</p>
+<div class="tabs" id="tabs"></div>
 
-<div id="p1" class="card">
-  <div class="row"><input type="text" id="q" placeholder="Zoek bedrijf of ticker, bijv. AAPL"><button class="go" id="sq">Zoek</button></div>
-  <div class="res" id="res"></div>
-  <p class="note">Form 4: aankopen en verkopen door bestuurders en grootaandeelhouders (&gt;10%) van het bedrijf zelf.</p>
+<div id="p0" class="card">
+  <details open><summary>Wat is dit? Insider trades</summary>Bestuurders, managers en aandeelhouders met meer dan 10% moeten elke aan- of verkoop van aandelen van hun eigen bedrijf binnen 2 werkdagen melden bij de SEC (Form 4). Kopen insiders veel, dan gelooft de top vaak in het bedrijf. Verkopen hoeft niets te betekenen: het kan om belasting, een toegekend pakket of persoonlijke redenen gaan. De transactiedatum heeft geen kloktijd; de tijd is het moment waarop de melding bij de SEC binnenkwam.</details>
+  <div class="row"><input type="text" id="0q" placeholder="Zoek bedrijf of ticker, bijv. AAPL"><button class="go" id="0sq">Zoek</button></div>
+  <div class="res" id="0res"></div><div class="wrap" id="o0"></div>
+</div>
+
+<div id="p1" class="card" hidden>
+  <details open><summary>Wat is dit? Fondsen (13F)</summary>Grote beleggers (fondsen, banken, vermogensbeheerders) met meer dan 100 miljoen dollar aan Amerikaanse aandelen moeten elk kwartaal hun posities melden (Form 13F), uiterlijk 45 dagen na kwartaaleinde. Zo zie je wat bijvoorbeeld Berkshire Hathaway bezit en wat het ten opzichte van het vorige kwartaal kocht (Nieuw, Vermeerderd) of verkocht (Verminderd, Verkocht). De data loopt dus altijd achter.</details>
+  <div class="row"><select id="fs"></select><input type="text" id="cik" placeholder="of vul een CIK in"><button class="go" id="sh">Toon</button></div>
   <div class="wrap" id="o1"></div>
 </div>
 
 <div id="p2" class="card" hidden>
-  <div class="row"><select id="fs"></select><input type="text" id="cik" placeholder="of vul een CIK in"><button class="go" id="sh">Toon</button></div>
-  <p class="note" id="nq">13F: kwartaalrapport van grote beleggers. Toont wat ze kochten, vermeerderden, verminderden of verkochten.</p>
-  <div class="wrap" id="o2"></div>
+  <details open><summary>Wat is dit? Koersen &amp; grafiek</summary>Dagelijkse slotkoersen met een grafiek. Het 20- en 50-daags gemiddelde (SMA) is het gemiddelde slot van de laatste 20 of 50 handelsdagen: het vlakt schommelingen af en toont de trend. Ligt de koers erboven, dan is de trend meestal positief. Gebruik een Amerikaanse ticker (AAPL) of een Stooq-symbool met landcode, zoals ASML.NL.</details>
+  <div class="row"><input type="text" id="t2" value="AAPL" placeholder="Ticker"><select id="per2"><option value="3m">3 maanden</option><option value="1y" selected>1 jaar</option><option value="5y">5 jaar</option><option value="max">Alles</option></select>
+  <label class="note"><input type="checkbox" id="sma2" checked> Gemiddelden</label><button class="go" id="b2">Toon</button></div>
+  <div id="o2"></div>
 </div>
-<p class="note">Data: SEC EDGAR (publiek). 13F-data is tot 45 dagen na kwartaaleinde vertraagd. Geen beleggingsadvies.</p>
+
+<div id="p3" class="card" hidden>
+  <details open><summary>Wat is dit? Financiële cijfers</summary>De jaarcijfers die Amerikaanse beursbedrijven in hun 10-K bij de SEC indienen. Omzet is wat het bedrijf verkoopt, nettowinst wat er na kosten en belasting overblijft, EPS de winst per aandeel. Activa is alles wat het bedrijf bezit, schulden wat het verschuldigd is, en eigen vermogen het verschil. Een bedrijf met stijgende omzet, groeiende winst en beheersbare schulden is meestal gezonder. Bedragen staan in miljoenen dollars.</details>
+  <div class="row"><input type="text" id="3q" placeholder="Zoek bedrijf of ticker, bijv. MSFT"><button class="go" id="3sq">Zoek</button></div>
+  <div class="res" id="3res"></div><div class="wrap" id="o3"></div>
+</div>
+
+<div id="p4" class="card" hidden>
+  <details open><summary>Wat is dit? Valuta</summary>Wisselkoersen tussen de belangrijkste valuta, op basis van de dagelijkse referentiekoersen van de Europese Centrale Bank (ECB). Handig om te zien wat een dollar-aandeel in euro kost en hoe valutaschommelingen je rendement beïnvloeden. Dit zijn geen live handelskoersen.</details>
+  <div class="row"><select id="base4"><option>EUR</option><option>USD</option><option>GBP</option><option>CHF</option><option>JPY</option></select><input type="number" id="amt4" value="1" min="0"><button class="go" id="b4">Toon</button></div>
+  <div class="wrap" id="o4"></div>
+</div>
+
+<div id="p5" class="card" hidden>
+  <details open><summary>Wat is dit? Crypto</summary>De 20 grootste cryptomunten op marktkapitalisatie (de totale waarde van alle munten samen), met de prijsverandering van de laatste dag en week. Crypto beweegt veel sterker dan aandelen, dus zie dit als een overzicht en niet als signaal.</details>
+  <div class="wrap" id="o5"></div>
+</div>
+
+<div id="p6" class="card" hidden>
+  <details open><summary>Wat is dit? Macro &amp; rente</summary>Economische cijfers van de Amerikaanse centrale bank van St. Louis (FRED). De rente op staatsobligaties (10 jaar) bepaalt hoe duur lenen is en drukt vaak op aandelenkoersen als ze stijgt. De rentecurve (10 jaar min 2 jaar) wordt negatief vóór veel recessies. Inflatie (CPI), werkloosheid en de olieprijs laten zien hoe de economie ervoor staat.</details>
+  <div class="row"><select id="ser6"></select><select id="per6"><option value="1y">1 jaar</option><option value="5y" selected>5 jaar</option><option value="max">Alles</option></select><button class="go" id="b6">Toon</button></div>
+  <div id="o6"></div>
+</div>
+
+<div id="p7" class="card" hidden>
+  <details open><summary>Wat is dit? Portefeuille</summary>Houd bij wat je bezit: ticker, aantal en gemiddelde aankoopprijs. De site berekent de actuele waarde en je winst of verlies (op basis van de laatste slotkoers). Alles wordt alleen in je eigen browser opgeslagen (niet op een server), dus wissen van browserdata wist ook je portefeuille. Het is een hulpmiddel en geen echte broker.</details>
+  <div class="row"><input type="text" id="t7" placeholder="Ticker" style="max-width:110px"><input type="number" id="sh7" placeholder="Aantal" style="max-width:110px"><input type="number" id="px7" placeholder="Aankoopprijs" style="max-width:140px"><button class="go" id="b7">Toevoegen</button></div>
+  <div class="wrap" id="o7"></div>
+</div>
+
+<p class="note">Bronnen: SEC EDGAR, Stooq (koersen), ECB via Frankfurter (valuta), CoinGecko (crypto), FRED (macro). Data kan vertraagd of onvolledig zijn. Geen beleggingsadvies.</p>
 </main>
 <script>
-const PROXY = "https://investor.yaro-biesmans-zakelijk.workers.dev/"; // zonder slash aan het eind
-const FUNDS = {"Berkshire Hathaway":"1067983","Bridgewater":"1350694","Pershing Square":"1336528","Scion (Burry)":"1649339","Renaissance Tech":"1037389","Vanguard":"102909","BlackRock":"1364742","Citadel Advisors":"1423053","Norges Bank":"1374170"};
-const $=i=>document.getElementById(i), fmt=n=>Math.round(n).toLocaleString('nl-NL'), sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const PROXY="https://investor.yaro-biesmans-zakelijk.workers.dev";
+const FUNDS={"Berkshire Hathaway":"1067983","Bridgewater":"1350694","Pershing Square":"1336528","Scion (Burry)":"1649339","Renaissance Tech":"1037389","Vanguard":"102909","BlackRock":"1364742","Citadel Advisors":"1423053","Norges Bank":"1374170"};
+const SERIES=[["DGS10","VS 10-jaars rente (%)"],["DGS2","VS 2-jaars rente (%)"],["T10Y2Y","Rentecurve 10j min 2j (%)"],["FEDFUNDS","Fed-beleidsrente (%)"],["CPIAUCSL","Consumentenprijzen (CPI-index)"],["UNRATE","Werkloosheid VS (%)"],["DCOILWTICO","Olie WTI ($/vat)"],["DCOILBRENTEU","Olie Brent ($/vat)"],["SP500","S&P 500-index"],["DEXUSEU","Dollar per euro"]];
+const $=i=>document.getElementById(i),fmt=(n,d=0)=>(+n).toLocaleString('nl-NL',{maximumFractionDigits:d}),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dt=s=>{const d=new Date(s);return isNaN(d)?'-':d.toLocaleString('nl-NL',{dateStyle:'short',timeStyle:'short'})};
+const now=()=>new Date().toLocaleString('nl-NL',{dateStyle:'short',timeStyle:'medium'});
+const pc=n=>`<span class="${n>=0?'pos':'neg'}">${n>=0?'+':''}${fmt(n,2)}%</span>`;
 const cache={};
-async function sec(url){
-  if(cache[url]) return cache[url];
-  await sleep(120); // SEC: max 10 verzoeken per seconde
-  const r=await fetch(PROXY+"/?u="+encodeURIComponent(url));
-  if(!r.ok) throw new Error("SEC-fout "+r.status);
-  return cache[url]=await r.text();
-}
+async function get(url){if(cache[url])return cache[url];if(/sec\.gov/.test(url))await sleep(120);
+  const r=await fetch(PROXY+"/?u="+encodeURIComponent(url));if(!r.ok)throw new Error("Bron gaf fout "+r.status);return cache[url]=await r.text()}
+const J=async u=>JSON.parse(await get(u));
+const out=(id,h)=>$(id).innerHTML=h+`<p class="note">Opgehaald op ${now()}</p>`,busy=id=>$(id).textContent='Laden… (kan even duren)',
+  fail=(id,e)=>$(id).innerHTML='<p class="err">'+esc(e.message)+'</p>';
 const dom=s=>new DOMParser().parseFromString(s.replace(/\sxmlns(:\w+)?="[^"]*"/g,"").replace(/<(\/?)\w+:/g,"<$1"),"text/xml");
-const q=(n,s)=>{const e=n.querySelector(s);return e?e.textContent.trim():""};
-const nm=s=>parseFloat(s)||0;
-const subs=async c=>JSON.parse(await sec(`https://data.sec.gov/submissions/CIK${String(c).padStart(10,"0")}.json`)).filings.recent;
-
-async function findCompanies(term){
-  const d=Object.values(JSON.parse(await sec("https://www.sec.gov/files/company_tickers.json"))), t=term.toLowerCase();
-  return d.filter(v=>v.ticker.toLowerCase().includes(t)||v.title.toLowerCase().includes(t))
-    .sort((a,b)=>(b.ticker.toLowerCase()==t)-(a.ticker.toLowerCase()==t)||a.title.length-b.title.length).slice(0,10);
-}
-const TYPES={P:"Koop",S:"Verkoop",A:"Toekenning",M:"Optie-uitoefening",F:"Belasting-inhouding",G:"Gift"};
-async function insiders(cik){
-  const r=await subs(cik), rows=[];
-  const ix=r.form.map((f,i)=>f==="4"?i:-1).filter(i=>i>=0).slice(0,12);
-  for(const i of ix){
-    const acc=r.accessionNumber[i].replace(/-/g,""), file=r.primaryDocument[i].split("/").pop();
-    let x; try{ x=dom(await sec(`https://www.sec.gov/Archives/edgar/data/${+cik}/${acc}/${file}`)); }catch(e){continue}
-    const who=q(x,"reportingOwner rptOwnerName"), rel=x.querySelector("reportingOwner reportingOwnerRelationship");
-    const role=(rel&&q(rel,"officerTitle"))||(rel&&["1","true"].includes(q(rel,"isDirector"))?"Director":"Insider");
-    x.querySelectorAll("nonDerivativeTransaction").forEach(t=>{
-      const code=q(t,"transactionCoding transactionCode");
-      rows.push({date:q(t,"transactionDate value"),who,role,type:TYPES[code]||code,
-        shares:nm(q(t,"transactionShares value")),price:nm(q(t,"transactionPricePerShare value")),after:nm(q(t,"sharesOwnedFollowingTransaction value"))});
-    });
-  }
-  return rows.sort((a,b)=>b.date.localeCompare(a.date));
-}
-async function holdingsOf(cik,acc){
-  const base=`https://www.sec.gov/Archives/edgar/data/${+cik}/${acc.replace(/-/g,"")}`;
-  const idx=JSON.parse(await sec(base+"/index.json")), out={};
-  const files=idx.directory.item.map(f=>f.name).filter(n=>n.toLowerCase().endsWith(".xml")&&!n.toLowerCase().includes("primary_doc"));
-  for(const f of files){
-    let x; try{ x=dom(await sec(base+"/"+f)); }catch(e){continue}
-    x.querySelectorAll("infoTable").forEach(it=>{
-      const k=q(it,"cusip"), h=out[k]||(out[k]={name:q(it,"nameOfIssuer"),value:0,shares:0});
-      h.value+=nm(q(it,"value")); h.shares+=nm(q(it,"sshPrnamt"));
-    });
-    if(Object.keys(out).length) break;
-  }
-  return out;
-}
-async function holdings(cik){
-  const r=await subs(cik), f=[];
-  r.form.forEach((x,i)=>{if(x==="13F-HR"&&f.length<2) f.push([r.accessionNumber[i],r.reportDate[i]])});
-  if(!f.length) throw new Error("Geen 13F-HR gevonden voor deze CIK");
-  const cur=await holdingsOf(cik,f[0][0]), prev=f[1]?await holdingsOf(cik,f[1][0]):{}, rows=[];
-  for(const k in cur){const h=cur[k],p=prev[k]?prev[k].shares:0;h.change=h.shares-p;
-    h.status=!(k in prev)?"Nieuw":h.change>0?"Vermeerderd":h.change<0?"Verminderd":"Gelijk";rows.push(h)}
-  for(const k in prev) if(!(k in cur)) rows.push({...prev[k],value:0,shares:0,change:-prev[k].shares,status:"Verkocht"});
-  return {quarter:f[0][1],previous:f[1]&&f[1][1],rows:rows.sort((a,b)=>b.value-a.value).slice(0,200)};
-}
-
+const q=(n,s)=>{const e=n.querySelector(s);return e?e.textContent.trim():""},nm=s=>parseFloat(s)||0;
+const subs=async c=>(await J(`https://data.sec.gov/submissions/CIK${String(c).padStart(10,"0")}.json`)).filings.recent;
 function table(cols,rows){return '<table><thead><tr>'+cols.map(c=>`<th class="${c[2]||''}">${c[0]}</th>`).join('')+'</tr></thead><tbody>'+
   rows.map(r=>'<tr>'+cols.map(c=>`<td class="${c[2]||''} ${c[3]?c[3](r):''}">${c[1](r)}</td>`).join('')+'</tr>').join('')+'</tbody></table>'}
-function tab(n){$('p1').hidden=n!=1;$('p2').hidden=n!=2;$('t1').className=n==1?'on':'';$('t2').className=n==2?'on':''}
-const fail=(id,e)=>$(id).innerHTML='<p class="err">'+esc(e.message)+'</p>';
+const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((s,x)=>s+x,0)/n);
+function chart(p,ls){const k=Math.ceil(p.length/700),S=a=>a.filter((_,i)=>i%k==0||i==a.length-1);p=S(p);ls=ls.map(l=>({c:l.c,vals:S(l.vals)}));
+  const W=700,H=250,L=8,all=[...p.map(x=>x.v),...ls.flatMap(l=>l.vals.filter(v=>v!=null))],mn=Math.min(...all),mx=Math.max(...all),
+  X=i=>L+i*(W-2*L)/Math.max(p.length-1,1),Y=v=>H-26-(v-mn)/(mx-mn||1)*(H-46);
+  const path=a=>{let s='',on=false;a.forEach((v,i)=>{if(v==null){on=false;return}s+=(on?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);on=true});return s};
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><text x="${L}" y="12" class="ax">${fmt(mx,2)}</text><text x="${L}" y="${H-28}" class="ax">${fmt(mn,2)}</text><text x="${L}" y="${H-6}" class="ax">${p[0].d}</text><text x="${W-L}" y="${H-6}" text-anchor="end" class="ax">${p[p.length-1].d}</text>${ls.map(l=>`<path d="${path(l.vals)}" class="ln ${l.c}"/>`).join('')}<path d="${path(p.map(x=>x.v))}" class="ln l1"/></svg>`}
 
-async function doSearch(){
-  const t=$('q').value.trim(); if(!t) return; $('res').textContent='Zoeken…';
-  try{ const d=await findCompanies(t);
-    $('res').innerHTML=d.length?d.map(c=>`<a data-c="${c.cik_str}">${esc(c.ticker)} · ${esc(c.title)}</a>`).join(''):'Niets gevonden';
-    $('res').querySelectorAll('a').forEach(a=>a.onclick=()=>showInsiders(a.dataset.c));
-  }catch(e){ $('res').textContent=''; fail('o1',e) }
-}
-async function showInsiders(cik){
-  $('o1').textContent='Laden… (kan even duren)';
-  try{ const d=await insiders(cik);
-    $('o1').innerHTML=d.length?table([['Datum',r=>r.date],['Persoon',r=>esc(r.who)],['Rol',r=>esc(r.role)],['Type',r=>r.type,'',r=>r.type],
-      ['Aandelen',r=>fmt(r.shares),'n'],['Prijs',r=>r.price?'$'+r.price.toFixed(2):'-','n'],['Waarde',r=>r.price?'$'+fmt(r.shares*r.price):'-','n'],['Daarna in bezit',r=>fmt(r.after),'n']],d):'Geen recente Form 4-meldingen.';
-  }catch(e){fail('o1',e)}
-}
-async function showFund(){
-  const cik=$('cik').value.trim()||$('fs').value; $('o2').textContent='Laden… (kan even duren)';
-  try{ const d=await holdings(cik);
-    $('nq').textContent=`Kwartaal ${d.quarter}`+(d.previous?` vs ${d.previous}. Top 200 posities.`:'');
-    $('o2').innerHTML=table([['Bedrijf',r=>esc(r.name)],['Waarde ($)',r=>fmt(r.value),'n'],['Aandelen',r=>fmt(r.shares),'n'],['Verandering',r=>(r.change>0?'+':'')+fmt(r.change),'n'],['Status',r=>r.status,'',r=>r.status]],d.rows);
-  }catch(e){fail('o2',e)}
-}
-$('t1').onclick=()=>tab(1);$('t2').onclick=()=>tab(2);
-$('sq').onclick=doSearch;$('q').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});$('sh').onclick=showFund;
+async function findCompanies(term){const d=Object.values(await J("https://www.sec.gov/files/company_tickers.json")),t=term.toLowerCase();
+  return d.filter(v=>v.ticker.toLowerCase().includes(t)||v.title.toLowerCase().includes(t)).sort((a,b)=>(b.ticker.toLowerCase()==t)-(a.ticker.toLowerCase()==t)||a.title.length-b.title.length).slice(0,10)}
+function bind(p,cb){const go=async()=>{const t=$(p+'q').value.trim();if(!t)return;$(p+'res').textContent='Zoeken…';
+  try{const d=await findCompanies(t);$(p+'res').innerHTML=d.length?d.map((c,i)=>`<a data-i="${i}">${esc(c.ticker)} · ${esc(c.title)}</a>`).join(''):'Niets gevonden';
+  $(p+'res').querySelectorAll('a').forEach(a=>a.onclick=()=>cb(d[a.dataset.i]))}catch(e){$(p+'res').innerHTML='<span class="err">'+esc(e.message)+'</span>'}};
+  $(p+'sq').onclick=go;$(p+'q').addEventListener('keydown',e=>{if(e.key==='Enter')go()})}
+
+/* 1. Insiders */
+const TYPES={P:"Koop",S:"Verkoop",A:"Toekenning",M:"Optie-uitoefening",F:"Belasting-inhouding",G:"Gift"};
+async function showInsiders(c){busy('o0');try{const r=await subs(c.cik_str),rows=[];
+  const ix=r.form.map((f,i)=>f==="4"?i:-1).filter(i=>i>=0).slice(0,12);
+  for(const i of ix){const acc=r.accessionNumber[i].replace(/-/g,""),file=r.primaryDocument[i].split("/").pop();let x;
+    try{x=dom(await get(`https://www.sec.gov/Archives/edgar/data/${+c.cik_str}/${acc}/${file}`))}catch(e){continue}
+    const who=q(x,"reportingOwner rptOwnerName"),rel=x.querySelector("reportingOwner reportingOwnerRelationship");
+    const role=(rel&&q(rel,"officerTitle"))||(rel&&["1","true"].includes(q(rel,"isDirector"))?"Director":"Insider");
+    x.querySelectorAll("nonDerivativeTransaction").forEach(t=>{const code=q(t,"transactionCoding transactionCode");
+      rows.push({date:q(t,"transactionDate value"),filed:r.acceptanceDateTime[i],who,role,type:TYPES[code]||code,shares:nm(q(t,"transactionShares value")),price:nm(q(t,"transactionPricePerShare value")),after:nm(q(t,"sharesOwnedFollowingTransaction value"))})})}
+  rows.sort((a,b)=>b.date.localeCompare(a.date));
+  out('o0',`<h3>${esc(c.title)}</h3>`+(rows.length?table([['Transactiedatum',r=>r.date],['Gemeld bij SEC (datum en tijd)',r=>dt(r.filed)],['Persoon',r=>esc(r.who)],['Rol',r=>esc(r.role)],['Type',r=>r.type,'',r=>r.type],['Aandelen',r=>fmt(r.shares),'n'],['Prijs',r=>r.price?'$'+fmt(r.price,2):'-','n'],['Waarde',r=>r.price?'$'+fmt(r.shares*r.price):'-','n'],['Daarna in bezit',r=>fmt(r.after),'n']],rows):'Geen recente Form 4-meldingen.'))}catch(e){fail('o0',e)}}
+
+/* 2. Fondsen */
+async function holdingsOf(cik,acc){const base=`https://www.sec.gov/Archives/edgar/data/${+cik}/${acc.replace(/-/g,"")}`,idx=await J(base+"/index.json"),o={};
+  for(const f of idx.directory.item.map(f=>f.name).filter(n=>n.toLowerCase().endsWith(".xml")&&!n.toLowerCase().includes("primary_doc"))){let x;try{x=dom(await get(base+"/"+f))}catch(e){continue}
+    x.querySelectorAll("infoTable").forEach(it=>{const k=q(it,"cusip"),h=o[k]||(o[k]={name:q(it,"nameOfIssuer"),value:0,shares:0});h.value+=nm(q(it,"value"));h.shares+=nm(q(it,"sshPrnamt"))});
+    if(Object.keys(o).length)break}return o}
+async function showFund(){const cik=$('cik').value.trim()||$('fs').value;busy('o1');try{const r=await subs(cik),f=[];
+  r.form.forEach((x,i)=>{if(x==="13F-HR"&&f.length<2)f.push([r.accessionNumber[i],r.reportDate[i],r.acceptanceDateTime[i]])});
+  if(!f.length)throw new Error("Geen 13F-HR gevonden voor deze CIK");
+  const cur=await holdingsOf(cik,f[0][0]),prev=f[1]?await holdingsOf(cik,f[1][0]):{},rows=[];
+  for(const k in cur){const h=cur[k],p=prev[k]?prev[k].shares:0;h.change=h.shares-p;h.status=!(k in prev)?"Nieuw":h.change>0?"Vermeerderd":h.change<0?"Verminderd":"Gelijk";rows.push(h)}
+  for(const k in prev)if(!(k in cur))rows.push({...prev[k],value:0,shares:0,change:-prev[k].shares,status:"Verkocht"});
+  rows.sort((a,b)=>b.value-a.value);
+  out('o1',`<p class="note">Positie per ${f[0][1]}, ingediend op ${dt(f[0][2])}`+(f[1]?` · vergeleken met ${f[1][1]} (ingediend ${dt(f[1][2])})`:'')+`. Top 200.</p>`+
+  table([['Bedrijf',r=>esc(r.name)],['Waarde ($)',r=>fmt(r.value),'n'],['Aandelen',r=>fmt(r.shares),'n'],['Verandering',r=>(r.change>0?'+':'')+fmt(r.change),'n'],['Status',r=>r.status,'',r=>r.status]],rows.slice(0,200)))}catch(e){fail('o1',e)}}
+
+/* 3. Koersen */
+async function prices(t){t=t.trim().toLowerCase();const c=await get(`https://stooq.com/q/d/l/?s=${t.includes('.')?t:t+'.us'}&i=d`);
+  const L=c.trim().split('\n').slice(1).map(l=>l.split(',')).filter(a=>a.length>=5&&+a[4]);if(!L.length)throw new Error('Geen koersdata gevonden voor '+t.toUpperCase());return L.map(a=>({d:a[0],v:+a[4]}))}
+async function showPrices(){const t=$('t2').value.trim();if(!t)return;busy('o2');try{const full=await prices(t),n={'3m':63,'1y':252,'5y':1260,max:1e9}[$('per2').value],p=full.slice(-n),fv=full.map(x=>x.v),l=p[p.length-1],f=p[0],y=full.slice(-252).map(x=>x.v);
+  const ls=$('sma2').checked?[{c:'l2',vals:sma(fv,20).slice(-p.length)},{c:'l3',vals:sma(fv,50).slice(-p.length)}]:[];
+  out('o2',`<div class="stats"><div>Laatste slotkoers<b>${fmt(l.v,2)}</b><span class="note">${l.d} (slot, geen live koers)</span></div><div>Verandering over periode<b>${pc((l.v/f.v-1)*100)}</b></div><div>52-weeks hoog<b>${fmt(Math.max(...y),2)}</b></div><div>52-weeks laag<b>${fmt(Math.min(...y),2)}</b></div></div>`+chart(p,ls)+(ls.length?'<p class="note"><span style="color:var(--ac)">■</span> koers · <span style="color:#e8890c">■</span> gemiddelde 20 dagen · <span style="color:#9b59d0">■</span> gemiddelde 50 dagen</p>':''))}catch(e){fail('o2',e)}}
+
+/* 4. Financiele cijfers */
+const TAGS=[['Omzet',['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax','SalesRevenueNet']],['Nettowinst',['NetIncomeLoss']],['Winst per aandeel (EPS, $)',['EarningsPerShareDiluted']],['Operationele cashflow',['NetCashProvidedByUsedInOperatingActivities']],['Totale activa',['Assets']],['Schulden',['Liabilities']],['Cash',['CashAndCashEquivalentsAtCarryingValue']],['Eigen vermogen',['StockholdersEquity']]];
+async function showFin(c){busy('o3');try{const d=await J(`https://data.sec.gov/api/xbrl/companyfacts/CIK${String(c.cik_str).padStart(10,'0')}.json`),g=d.facts['us-gaap']||{};
+  const res=TAGS.map(([n,tags])=>{for(const t of tags){const u=g[t]&&g[t].units,a=u&&(u.USD||u['USD/shares']);if(!a)continue;const m={};
+    a.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>3e10*10)).forEach(e=>{if(!m[e.end]||e.filed>m[e.end].filed)m[e.end]=e});
+    if(Object.keys(m).length)return{n,m,eps:n.includes('EPS')}}return{n,m:{}}});
+  const ends=[...new Set(res.flatMap(r=>Object.keys(r.m)))].sort().reverse().slice(0,5);
+  if(!ends.length)throw new Error('Geen jaarcijfers gevonden (geen Amerikaans 10-K-bedrijf?)');
+  const filed=e=>{const r=res.find(r=>r.m[e]);return r?r.m[e].filed:''};
+  out('o3',`<h3>${esc(d.entityName)}</h3><table><thead><tr><th>Post (mln $)</th>${ends.map(e=>`<th class="n">Boekjaar tot ${e}</th>`).join('')}</tr></thead><tbody>`+
+   res.map(r=>`<tr><td>${r.n}</td>${ends.map(e=>`<td class="n">${r.m[e]?(r.eps?fmt(r.m[e].val,2):fmt(r.m[e].val/1e6)):'-'}</td>`).join('')}</tr>`).join('')+
+   `<tr><td class="note">Gemeld bij SEC op</td>${ends.map(e=>`<td class="n note">${filed(e)}</td>`).join('')}</tr></tbody></table>`)}catch(e){fail('o3',e)}}
+
+/* 5. Valuta */
+async function showFx(){busy('o4');try{const b=$('base4').value,a=+$('amt4').value||1,d=await J(`https://api.frankfurter.dev/v1/latest?base=${b}`);
+  out('o4',table([['Valuta',r=>r[0]],[`Koers voor 1 ${b}`,r=>fmt(r[1],4),'n'],[`${fmt(a,2)} ${b} is`,r=>fmt(r[1]*a,2),'n']],Object.entries(d.rates))+`<p class="note">ECB-referentiekoersen van ${d.date} (dagelijks rond 16:00 uur gepubliceerd).</p>`)}catch(e){fail('o4',e)}}
+
+/* 6. Crypto */
+async function showCrypto(){busy('o5');try{const d=await J('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=20&page=1&price_change_percentage=24h,7d');
+  out('o5',table([['#',r=>r.market_cap_rank],['Munt',r=>esc(r.name)+' <span class="note">'+esc(r.symbol.toUpperCase())+'</span>'],['Prijs (€)',r=>fmt(r.current_price,r.current_price<1?4:2),'n'],['24 uur',r=>pc(r.price_change_percentage_24h||0),'n'],['7 dagen',r=>pc(r.price_change_percentage_7d_in_currency||0),'n'],['Marktkapitalisatie (€)',r=>fmt(r.market_cap),'n'],['Prijs bijgewerkt (datum en tijd)',r=>dt(r.last_updated)]],d)+'<p class="note">Data door CoinGecko.</p>')}catch(e){fail('o5',e)}}
+
+/* 7. Macro */
+async function showMacro(){const id=$('ser6').value;busy('o6');try{const c=await get(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${id}`);
+  let p=c.trim().split('\n').slice(1).map(l=>l.split(',')).filter(a=>a[1]&&a[1]!=='.'&&!isNaN(+a[1])).map(a=>({d:a[0],v:+a[1]}));
+  if(!p.length)throw new Error('Geen data');const y={'1y':365,'5y':1825,max:1e9}[$('per6').value],cut=new Date(Date.now()-y*864e5).toISOString().slice(0,10);p=p.filter(x=>x.d>=cut);
+  const l=p[p.length-1];out('o6',`<div class="stats"><div>Laatste waarde<b>${fmt(l.v,2)}</b><span class="note">per ${l.d}</span></div><div>Hoogste in periode<b>${fmt(Math.max(...p.map(x=>x.v)),2)}</b></div><div>Laagste in periode<b>${fmt(Math.min(...p.map(x=>x.v)),2)}</b></div></div>`+chart(p,[])+'<p class="note">Bron: FRED, Federal Reserve Bank of St. Louis. De datum is de meetdatum; sommige reeksen verschijnen met vertraging.</p>')}catch(e){fail('o6',e)}}
+
+/* 8. Portefeuille */
+const pf=()=>{try{return JSON.parse(localStorage.getItem('pf'))||[]}catch(e){return[]}},savepf=a=>{try{localStorage.setItem('pf',JSON.stringify(a))}catch(e){}};
+async function showPf(){const a=pf();if(!a.length){$('o7').innerHTML='<p class="note">Nog geen posities toegevoegd.</p>';return}busy('o7');const rows=[];let tv=0,tc=0;
+  for(const [i,p] of a.entries()){try{const px=await prices(p.t),l=px[px.length-1],val=l.v*p.sh,cost=p.px*p.sh;tv+=val;tc+=cost;rows.push({i,...p,last:l.v,d:l.d,val,pl:val-cost,pct:(val/cost-1)*100})}catch(e){rows.push({i,...p,last:0,d:'geen data',val:0,pl:0,pct:0})}}
+  out('o7',table([['Ticker',r=>esc(r.t.toUpperCase())],['Aantal',r=>fmt(r.sh,2),'n'],['Aankoopprijs',r=>fmt(r.px,2),'n'],['Laatste slot',r=>fmt(r.last,2),'n'],['Koersdatum',r=>r.d],['Waarde',r=>fmt(r.val,2),'n'],['Winst/verlies',r=>`<span class="${r.pl>=0?'pos':'neg'}">${fmt(r.pl,2)}</span>`,'n'],['%',r=>pc(r.pct),'n'],['',r=>`<a data-del="${r.i}" style="cursor:pointer" class="neg">verwijder</a>`]],rows)+
+   `<div class="stats"><div>Totale waarde<b>${fmt(tv,2)}</b></div><div>Totaal resultaat<b>${pc(tc?(tv/tc-1)*100:0)}</b></div></div>`);
+  $('o7').querySelectorAll('[data-del]').forEach(x=>x.onclick=()=>{const a=pf();a.splice(+x.dataset.del,1);savepf(a);showPf()})}
+$('b7').onclick=()=>{const t=$('t7').value.trim(),sh=+$('sh7').value,px=+$('px7').value;if(!t||!sh||!px)return;const a=pf();a.push({t,sh,px});savepf(a);$('t7').value=$('sh7').value=$('px7').value='';showPf()};
+
+/* Tabs */
+const NAMES=['Insider trades','Fondsen (13F)','Koersen & grafiek','Financiële cijfers','Valuta','Crypto','Macro & rente','Portefeuille'],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
+$('tabs').innerHTML=NAMES.map((n,i)=>`<button data-t="${i}" class="${i?'':'on'}">${esc(n)}</button>`).join('');
+$('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=+b.dataset.t;NAMES.forEach((_,i)=>{$('p'+i).hidden=i!=n;$('tabs').children[i].className=i==n?'on':''});if(LOAD[n]&&!done[n]){done[n]=1;LOAD[n]()}});
+bind('0',showInsiders);bind('3',showFin);
 $('fs').innerHTML=Object.entries(FUNDS).map(([n,c])=>`<option value="${c}">${n}</option>`).join('');
+$('ser6').innerHTML=SERIES.map(([i,n])=>`<option value="${i}">${n}</option>`).join('');
+$('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
+$('t2').addEventListener('keydown',e=>{if(e.key==='Enter')showPrices()});
 </script></body></html>
