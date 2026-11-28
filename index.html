@@ -30,6 +30,7 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
 .ax{font-size:11px;fill:var(--mut)}.gr{stroke:var(--bd);stroke-width:1}.axl{stroke:var(--mut);stroke-width:1}.cx{stroke:var(--mut);stroke-dasharray:3 3}.cdot{fill:var(--ac)}.sel{fill:var(--ac);opacity:.18}
 .tip{position:absolute;top:8px;pointer-events:none;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 2px 8px #0003;white-space:nowrap}
 .nd{cursor:pointer}.nd rect{fill:var(--card);stroke-width:1.5}.nd:hover rect{fill:var(--bg)}.nd text{fill:var(--tx)}.nd text.ax{fill:var(--mut)}.lnk{fill:none;opacity:.5}svg.sp{cursor:default;touch-action:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:900px){.two{grid-template-columns:1fr}}.two h4{margin:6px 0}.live{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--mut)}.live.on{background:var(--g)}
 </style></head><body>
 <header class="top"><span class="logo" id="logo">📈 Investor Tool</span>
 <div class="row"><button class="lk" id="nh" data-i="home"></button><button class="lk" id="nd" data-i="dash"></button>
@@ -82,6 +83,17 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
   <div class="wrap" id="o7"></div></div>
 
 <div id="p8" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d8"></span></details><div id="acc2"></div></div>
+<div id="p10" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d10"></span></details>
+  <div class="row"><input type="text" id="flt10" data-p="ph_flt"><button class="go" id="b10" data-i="b_refresh"></button><button class="go alt" id="m10" data-i="ls_more"></button><label class="note"><input type="checkbox" id="a10"> <span data-i="ls_auto"></span></label></div>
+  <p class="note" id="s10"></p><div id="o10"></div></div>
+
+<div id="p11" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d11"></span></details>
+  <div class="row"><select id="coin11"></select><select id="min11"><option value="10000">≥ $10K</option><option value="25000" selected>≥ $25K</option><option value="100000">≥ $100K</option><option value="500000">≥ $500K</option></select><span class="note"><span class="live" id="dot11"></span><span id="st11"></span></span></div>
+  <div class="stats" id="v11"></div><div class="two" id="o11"></div></div>
+
+<div id="p12" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d12"></span></details>
+  <div class="row"><select id="min12"><option value="50">≥ 50 ETH</option><option value="100" selected>≥ 100 ETH</option><option value="500">≥ 500 ETH</option><option value="1000">≥ 1000 ETH</option></select><span class="note" id="st12"></span></div>
+  <div class="wrap" id="o12"></div><p class="note" data-i="wh_click"></p><div id="w12"></div></div>
 <p class="note" data-i="foot"></p>
 </main>
 
@@ -163,7 +175,21 @@ in_rev:['Laatste jaaromzet','Latest annual revenue','Dernier chiffre d’affaire
 in_nofin:['Geen jaarcijfers beschikbaar (geen 10-K-bedrijf, bijv. een privaat fonds).','No annual figures available (not a 10-K filer, e.g. a private fund).','Pas de chiffres annuels (pas une société 10-K, p. ex. un fonds privé).','Keine Jahreszahlen verfügbar (kein 10-K-Unternehmen, z. B. ein privater Fonds).'],
 in_stake:['Positie in','Position in','Position dans','Position in'],in_before:['Vorig kwartaal','Previous quarter','Trimestre précédent','Vorquartal'],in_now:['Dit kwartaal','This quarter','Ce trimestre','Dieses Quartal'],
 in_val:['Geschatte waarde van de wijziging','Estimated value of the change','Valeur estimée de la variation','Geschätzter Wert der Änderung'],in_port:['Bekijk volledige portefeuille','View full portfolio','Voir le portefeuille complet','Vollständiges Portfolio ansehen'],
-in_fundtype:['Beleggingsfonds of vermogensbeheerder die kwartaalrapporten (13F) indient.','Investment fund or asset manager that files quarterly reports (13F).','Fonds d’investissement ou gestionnaire d’actifs déposant des rapports trimestriels (13F).','Investmentfonds oder Vermögensverwalter, der Quartalsberichte (13F) einreicht.']
+in_fundtype:['Beleggingsfonds of vermogensbeheerder die kwartaalrapporten (13F) indient.','Investment fund or asset manager that files quarterly reports (13F).','Fonds d’investissement ou gestionnaire d’actifs déposant des rapports trimestriels (13F).','Investmentfonds oder Vermögensverwalter, der Quartalsberichte (13F) einreicht.'],
+tn10:['Live aandelen','Live stocks','Actions en direct','Live-Aktien'],tn11:['Live crypto','Live crypto','Crypto en direct','Live-Krypto'],tn12:['Whales (on-chain)','Whales (on-chain)','Baleines (on-chain)','Wale (On-Chain)'],
+d10:['Bijna-live overzicht van aandelen die bestuurders en grootaandeelhouders op de open markt kopen of verkopen. Bron: Form 4-meldingen bij de SEC, die binnen 2 werkdagen na de handel worden ingediend. Rechts de grootste aankopen, links de grootste verkopen (top 30), met wie het deed, wanneer het gemeld werd en voor welk bedrag. Let op: gewone beleggers en fondsen zijn niet live te zien. Beurshandel is anoniem en live-data per transactie is alleen betaald beschikbaar. Klik op een naam om te filteren.','Near-live overview of shares that executives and major shareholders buy or sell on the open market. Source: Form 4 filings with the SEC, submitted within 2 business days of the trade. Right: the largest buys, left: the largest sells (top 30), with who did it, when it was reported and the amount. Note: ordinary investors and funds cannot be seen live. Exchange trading is anonymous and per-trade live data is only available for a fee. Click a name to filter.','Aperçu quasi en direct des actions que dirigeants et grands actionnaires achètent ou vendent sur le marché. Source : déclarations Form 4 à la SEC, déposées sous 2 jours ouvrés. À droite les plus gros achats, à gauche les plus grosses ventes (top 30), avec l’auteur, la date de déclaration et le montant. Attention : les investisseurs ordinaires et les fonds ne sont pas visibles en direct. Le trading est anonyme et les données en direct par transaction sont payantes. Cliquez sur un nom pour filtrer.','Fast-Live-Übersicht der Aktien, die Vorstände und Großaktionäre am offenen Markt kaufen oder verkaufen. Quelle: Form-4-Meldungen bei der SEC, die binnen 2 Werktagen eingereicht werden. Rechts die größten Käufe, links die größten Verkäufe (Top 30), mit Person, Meldezeit und Betrag. Hinweis: Normale Anleger und Fonds sind nicht live sichtbar. Börsenhandel ist anonym und Live-Daten je Transaktion sind kostenpflichtig. Klicken Sie auf einen Namen zum Filtern.'],
+d11:['Live grote transacties op de cryptobeurs (Binance) via een directe verbinding. Rechts de grootste aankopen, links de grootste verkopen van het laatste uur (top 30), per munt te filteren. Een koop betekent dat een koper een bestaande verkooporder opat, een verkoop het omgekeerde. Beurshandel is anoniem: er is geen wallet bekend. Voor wallets zie het tabblad Whales (on-chain).','Live large trades on the crypto exchange (Binance) via a direct connection. Right: the largest buys, left: the largest sells of the last hour (top 30), filterable per coin. A buy means a buyer took an existing sell order, a sell the reverse. Exchange trading is anonymous: no wallet is known. For wallets see the Whales (on-chain) tab.','Grosses transactions en direct sur la bourse crypto (Binance) via une connexion directe. À droite les plus gros achats, à gauche les plus grosses ventes de la dernière heure (top 30), filtrables par pièce. Un achat signifie qu’un acheteur a pris un ordre de vente existant, une vente l’inverse. Le trading est anonyme : aucun wallet n’est connu. Pour les wallets, voir l’onglet Baleines (on-chain).','Große Trades live an der Krypto-Börse (Binance) per Direktverbindung. Rechts die größten Käufe, links die größten Verkäufe der letzten Stunde (Top 30), nach Münze filterbar. Ein Kauf bedeutet, dass ein Käufer eine bestehende Verkaufsorder genommen hat, ein Verkauf das Gegenteil. Börsenhandel ist anonym: kein Wallet bekannt. Wallets siehe Tab Wale (On-Chain).'],
+d12:['Grote Ethereum-overdrachten tussen wallets, live uit de blockchain. Je ziet van welke wallet naar welke wallet het ging. Klik op een wallet voor saldo, laatste transacties en tokenoverdrachten. Let op: een overdracht is niet automatisch een koop of verkoop, en wallets hebben geen naam tenzij de explorer die kent.','Large Ethereum transfers between wallets, live from the blockchain. You see from which wallet to which wallet it went. Click a wallet for its balance, latest transactions and token transfers. Note: a transfer is not automatically a buy or sell, and wallets have no name unless the explorer knows one.','Gros transferts Ethereum entre wallets, en direct depuis la blockchain. Vous voyez de quel wallet vers quel wallet. Cliquez sur un wallet pour son solde, ses dernières transactions et ses transferts de tokens. Attention : un transfert n’est pas forcément un achat ou une vente, et les wallets n’ont pas de nom sauf si l’explorateur en connaît un.','Große Ethereum-Überweisungen zwischen Wallets, live aus der Blockchain. Sie sehen, von welchem Wallet an welches. Klicken Sie auf ein Wallet für Guthaben, letzte Transaktionen und Token-Transfers. Hinweis: Eine Überweisung ist nicht automatisch Kauf oder Verkauf, und Wallets haben nur einen Namen, wenn der Explorer einen kennt.'],
+ph_flt:['Filter op bedrijf, ticker of persoon','Filter by company, ticker or person','Filtrer par société, ticker ou personne','Nach Unternehmen, Ticker oder Person filtern'],b_refresh:['Vernieuwen','Refresh','Actualiser','Aktualisieren'],ls_more:['Laad 100 oudere','Load 100 older','Charger 100 plus anciens','100 ältere laden'],ls_auto:['Automatisch vernieuwen (2 min)','Auto-refresh (2 min)','Actualisation auto (2 min)','Automatisch aktualisieren (2 Min.)'],
+ls_empty:['Nog geen open-markt-aankopen of -verkopen gevonden. Laad meer.','No open-market buys or sells found yet. Load more.','Aucun achat ou vente sur le marché pour l’instant. Chargez-en plus.','Noch keine Käufe oder Verkäufe am offenen Markt gefunden. Mehr laden.'],
+ls_note:['Alleen open-markt-transacties (P = koop, S = verkoop); toekenningen, belastingverrekening en opties zijn weggelaten.','Open-market trades only (P = buy, S = sell); awards, tax withholding and options are left out.','Seulement les opérations sur le marché (P = achat, S = vente) ; attributions, retenues fiscales et options exclues.','Nur Transaktionen am offenen Markt (P = Kauf, S = Verkauf); Zuteilungen, Steuereinbehalt und Optionen ausgelassen.'],
+ls_done:['meldingen verwerkt','filings processed','déclarations traitées','Meldungen verarbeitet'],ls_rep:['Gemeld bij SEC','Reported to SEC','Déclaré à la SEC','An SEC gemeldet'],ls_edgar:['Alle meldingen van deze persoon (EDGAR)','All filings by this person (EDGAR)','Tous les dépôts de cette personne (EDGAR)','Alle Meldungen dieser Person (EDGAR)'],
+cx_on:['Live verbonden','Live connected','Connecté en direct','Live verbunden'],cx_off:['Verbinding verbroken, opnieuw proberen…','Disconnected, retrying…','Déconnecté, nouvelle tentative…','Getrennt, neuer Versuch…'],cx_all:['Alle munten','All coins','Toutes les pièces','Alle Münzen'],cx_wallet:['Wallet','Wallet','Wallet','Wallet'],cx_anon:['anoniem','anonymous','anonyme','anonym'],
+cx_bv:['Gekocht (laatste 60 min)','Bought (last 60 min)','Acheté (60 dernières min)','Gekauft (letzte 60 Min.)'],cx_sv:['Verkocht (laatste 60 min)','Sold (last 60 min)','Vendu (60 dernières min)','Verkauft (letzte 60 Min.)'],cx_time:['Tijd','Time','Heure','Zeit'],cx_coin:['Munt','Coin','Pièce','Münze'],cx_qty:['Aantal','Amount','Quantité','Menge'],cx_usd:['Bedrag ($)','Amount ($)','Montant ($)','Betrag ($)'],
+cx_wait:['Wachten op grote transacties…','Waiting for large trades…','En attente de grosses transactions…','Warte auf große Transaktionen…'],cx_err:['Geen verbinding met de live-feed (Binance is in sommige landen geblokkeerd).','No connection to the live feed (Binance is blocked in some countries).','Pas de connexion au flux en direct (Binance est bloqué dans certains pays).','Keine Verbindung zum Live-Feed (Binance ist in manchen Ländern gesperrt).'],
+wh_from:['Van wallet','From wallet','Depuis le wallet','Von Wallet'],wh_to:['Naar wallet','To wallet','Vers le wallet','An Wallet'],wh_amt:['Bedrag (ETH)','Amount (ETH)','Montant (ETH)','Betrag (ETH)'],wh_click:['Klik op een wallet voor de geschiedenis. Een overdracht is niet automatisch een koop of verkoop.','Click a wallet for its history. A transfer is not automatically a buy or sell.','Cliquez sur un wallet pour son historique. Un transfert n’est pas forcément un achat ou une vente.','Klicken Sie auf ein Wallet für den Verlauf. Eine Überweisung ist nicht automatisch Kauf oder Verkauf.'],
+wh_bal:['Saldo','Balance','Solde','Guthaben'],wh_tx:['Laatste transacties','Latest transactions','Dernières transactions','Letzte Transaktionen'],wh_tok:['Laatste tokenoverdrachten','Latest token transfers','Derniers transferts de tokens','Letzte Token-Transfers'],wh_in:['Ontvangen','Received','Reçu','Empfangen'],wh_out:['Verstuurd','Sent','Envoyé','Gesendet'],
+wh_dir:['Richting','Direction','Sens','Richtung'],wh_cp:['Andere wallet','Other wallet','Autre wallet','Andere Wallet'],wh_tk:['Token','Token','Jeton','Token'],wh_err:['Geen verbinding met een Ethereum-node','No connection to an Ethereum node','Pas de connexion à un nœud Ethereum','Keine Verbindung zu einem Ethereum-Knoten'],wh_wait:['Wachten op grote overdrachten…','Waiting for large transfers…','En attente de gros transferts…','Warte auf große Überweisungen…'],wh_label:['Naam (explorer)','Name (explorer)','Nom (explorateur)','Name (Explorer)']
 };
 const LANGS=['nl','en','fr','de'];
 let lang=new URLSearchParams(location.search).get('lang')||(()=>{try{return localStorage.getItem('lang')}catch(e){return null}})()||(navigator.language||'nl').slice(0,2);
@@ -386,17 +412,83 @@ async function spSearch(){const s=$('9q').value.trim();if(!s)return;$('9res').te
     $('9res').innerHTML=hits.length?hits.map((c,i)=>`<a data-i="${i}">${esc(c.n)}${c.t?' · '+esc(c.t):''}</a>`).join(''):t('none')+(why?` <span class="note">(${esc(why)})</span>`:'')+`<div class="note">holders.json: ${h.issuers.length} · ${esc(h.issuers.slice(0,4).map(i=>i.n).join(', '))} · v5.2</div>`;
     $('9res').querySelectorAll('a').forEach(a=>a.onclick=()=>spShow(hits[a.dataset.i]))}catch(e){$('9res').innerHTML='<span class="err">'+esc(e.message)+'</span>'}}
 
+/* ===== 11. Live aandelen (Form 4) ===== */
+const LS={rows:[],seen:new Set(),start:0,busy:false,msg:'',oc:'',timer:null};
+async function lsLoad(more){if(LS.busy)return;LS.busy=true;try{
+  LS.start=more?LS.start+100:0;
+  const u=`https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4&company=&dateb=&owner=include&start=${LS.start}&count=100&output=atom`;delete cache[u];
+  const x=dom(await get(u)),todo=[];
+  x.querySelectorAll('entry').forEach(e=>{const l=e.querySelector('link'),m=((l&&l.getAttribute('href'))||'').match(/\/data\/(\d+)\/(\d{18})\//);if(!m||LS.seen.has(m[2]))return;LS.seen.add(m[2]);todo.push({cik:m[1],acc:m[2],upd:q(e,'updated')})});
+  let n=0;for(const f of todo){n++;$('s10').textContent=`${t('loading')} ${n}/${todo.length}`;
+    try{const dash=f.acc.slice(0,10)+'-'+f.acc.slice(10,12)+'-'+f.acc.slice(12),txt=await get(`https://www.sec.gov/Archives/edgar/data/${f.cik}/${f.acc}/${dash}.txt`,true),m=txt.match(/<ownershipDocument>[\s\S]*?<\/ownershipDocument>/);if(!m)continue;
+      const d=dom(m[0]),issuer=q(d,'issuer issuerName'),sym=q(d,'issuer issuerTradingSymbol'),ow=[...d.querySelectorAll('reportingOwner')],o=ow[0];if(!o)continue;
+      const who=ow.map(k=>q(k,'rptOwnerName')).join(', '),ocik=q(o,'rptOwnerCik'),rel=o.querySelector('reportingOwnerRelationship'),on=k=>rel&&['1','true'].includes(q(rel,k)),
+        role=(rel&&q(rel,'officerTitle'))||(on('isDirector')?'Director':on('isTenPercentOwner')?'10% owner':'Insider');
+      d.querySelectorAll('nonDerivativeTransaction').forEach(tr=>{const code=q(tr,'transactionCoding transactionCode');if(code!=='P'&&code!=='S')return;const sh=nm(q(tr,'transactionShares value')),px=nm(q(tr,'transactionPricePerShare value'));
+        LS.rows.push({code,upd:f.upd,date:q(tr,'transactionDate value'),issuer,sym,who,ocik,role,sh,px,val:sh*px})})}catch(e){}
+    if(n%8==0)lsRender()}
+  LS.msg=`${LS.seen.size} ${t('ls_done')} · ${t('fetched')} ${now()}`;lsRender()}catch(e){fail('o10',e)}LS.busy=false}
+function lsRender(){const f=($('flt10').value||'').trim().toLowerCase(),rows=LS.rows.filter(r=>!f||(r.sym+' '+r.issuer+' '+r.who).toLowerCase().includes(f)),top=c=>rows.filter(r=>r.code==c&&r.val>0).sort((a,b)=>b.val-a.val).slice(0,30),
+  cols=[[t('ls_rep'),r=>dt(r.upd)],[t('h_co'),r=>esc(r.issuer)+(r.sym?` <span class="note">${esc(r.sym)}</span>`:'')],[t('h_who'),r=>`<a data-who="${esc(r.who)}" data-oc="${esc(r.ocik)}" style="cursor:pointer;color:var(--ac)">${esc(r.who)}</a> <span class="note">${esc(r.role)}</span>`],[t('h_sh'),r=>fmt(r.sh),'n'],[t('h_price'),r=>'$'+fmt(r.px,2),'n'],[t('h_val'),r=>'$'+fmt(r.val),'n']],S=top('S'),B=top('P');
+  $('s10').innerHTML=LS.msg+(f&&LS.oc?` · <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${encodeURIComponent(LS.oc)}&type=4" target="_blank" rel="noopener">${t('ls_edgar')}</a>`:'');
+  $('o10').innerHTML=(S.length+B.length?`<div class="two"><div><h4 class="neg">${t('sp_sellers')}</h4><div class="wrap">${S.length?table(cols,S):''}</div></div><div><h4 class="pos">${t('sp_buyers')}</h4><div class="wrap">${B.length?table(cols,B):''}</div></div></div>`:`<p class="note">${t('ls_empty')}</p>`)+`<p class="note">${t('ls_note')}</p>`;
+  $('o10').querySelectorAll('[data-who]').forEach(a=>a.onclick=()=>{LS.oc=a.dataset.oc;$('flt10').value=a.dataset.who;lsRender()})}
+
+/* ===== 12. Live crypto (beurshandel via WebSocket) ===== */
+const COINS=['BTC','ETH','SOL','XRP','BNB','DOGE','ADA','AVAX','LINK','TRX','DOT','LTC','SHIB','PEPE','SUI','NEAR','APT','ARB','OP','INJ'];
+const CX={trades:[],px:{},ws:null,on:false,timer:null},tm=ms=>new Date(ms).toLocaleString(LOC,{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+function cxStatus(){$('dot11').className='live'+(CX.on?' on':'');$('st11').textContent=CX.on?t('cx_on'):t('cx_off')}
+function cxStart(){if(CX.timer)return;const url='wss://stream.binance.com:9443/stream?streams='+COINS.map(c=>c.toLowerCase()+'usdt@aggTrade').join('/');
+  const open=()=>{let ws;try{ws=CX.ws=new WebSocket(url)}catch(e){$('st11').textContent=t('cx_err');return}
+    ws.onopen=()=>{CX.on=true;cxStatus()};
+    ws.onmessage=e=>{let m;try{m=JSON.parse(e.data).data}catch(x){return}if(!m||!m.p)return;const p=+m.p,qt=+m.q,usd=p*qt,coin=m.s.replace('USDT','');CX.px[coin]=p;if(usd>=1e4)CX.trades.push({t:m.T,coin,side:m.m?'s':'b',qty:qt,px:p,usd})};
+    ws.onclose=()=>{CX.on=false;cxStatus();setTimeout(open,3000)};ws.onerror=()=>ws.close()};
+  open();cxStatus();CX.timer=setInterval(cxRender,1000)}
+function cxRender(){if($('p11').hidden)return;const cut=Date.now()-36e5;CX.trades=CX.trades.filter(x=>x.t>=cut).slice(-30000);
+  const c=$('coin11').value,min=+$('min11').value,L=CX.trades.filter(x=>x.usd>=min&&(!c||x.coin==c)),top=sd=>L.filter(x=>x.side==sd).sort((a,b)=>b.usd-a.usd).slice(0,30),sum=sd=>L.filter(x=>x.side==sd).reduce((a,x)=>a+x.usd,0),
+  cols=[[t('cx_time'),r=>tm(r.t)],[t('cx_coin'),r=>r.coin],[t('cx_qty'),r=>fmt(r.qty,r.qty<10?3:0),'n'],[t('h_price'),r=>'$'+fmt(r.px,r.px<1?5:2),'n'],[t('cx_usd'),r=>'$'+fmt(r.usd),'n'],[t('cx_wallet'),r=>`<span class="note">${t('cx_anon')}</span>`]],S=top('s'),B=top('b');
+  $('v11').innerHTML=`<div>${t('cx_bv')}<b class="pos">$${fmt(sum('b'))}</b></div><div>${t('cx_sv')}<b class="neg">$${fmt(sum('s'))}</b></div>`;
+  $('o11').innerHTML=`<div><h4 class="neg">${t('sp_sellers')}</h4><div class="wrap">${S.length?table(cols,S):`<p class="note">${t('cx_wait')}</p>`}</div></div><div><h4 class="pos">${t('sp_buyers')}</h4><div class="wrap">${B.length?table(cols,B):`<p class="note">${t('cx_wait')}</p>`}</div></div>`}
+
+/* ===== 13. Whales: grote ETH-overdrachten + wallet-geschiedenis ===== */
+const RPCS=['https://ethereum-rpc.publicnode.com','https://eth.llamarpc.com','https://cloudflare-eth.com'],WH={rows:[],seen:new Set(),last:0,timer:null};
+async function rpc(method,params){let err;for(const u of RPCS){try{const r=await fetch(u,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})}),j=await r.json();if(j.error)throw new Error(j.error.message);return j.result}catch(e){err=e}}throw new Error(t('wh_err')+' ('+err.message+')')}
+async function whBlock(n){const b=await rpc('eth_getBlockByNumber',['0x'+n.toString(16),true]);if(!b)return;const ts=parseInt(b.timestamp,16)*1000;
+  b.transactions.forEach(x=>{const eth=Number(BigInt(x.value))/1e18;if(eth>=50&&!WH.seen.has(x.hash)){WH.seen.add(x.hash);WH.rows.push({ts,eth,from:x.from,to:x.to,hash:x.hash})}})}
+async function whPoll(){try{const n=parseInt(await rpc('eth_blockNumber',[]),16);for(let i=WH.last?WH.last+1:n-8;i<=n;i++)await whBlock(i);WH.last=n;WH.rows=WH.rows.filter(r=>r.ts>Date.now()-72e5).slice(-2000);$('st12').textContent=`${t('fetched')} ${now()}`;whRender()}catch(e){$('st12').textContent=e.message}}
+function whStart(){if(WH.timer)return;whPoll();WH.timer=setInterval(whPoll,12000)}
+const wl=a=>`<a data-addr="${a}" style="cursor:pointer;color:var(--ac)" title="${a}">${a.slice(0,8)}…${a.slice(-6)}</a>`;
+function whRender(){const min=+$('min12').value,px=CX.px.ETH,rows=WH.rows.filter(r=>r.eth>=min).sort((a,b)=>b.eth-a.eth).slice(0,30);
+  $('o12').innerHTML=rows.length?table([[t('cx_time'),r=>tm(r.ts)],[t('wh_amt'),r=>fmt(r.eth,1),'n'],['$',r=>px?'$'+fmt(r.eth*px):'-','n'],[t('wh_from'),r=>wl(r.from)],[t('wh_to'),r=>r.to?wl(r.to):'—'],['Tx',r=>`<a href="https://etherscan.io/tx/${r.hash}" target="_blank" rel="noopener">↗</a>`]],rows):`<p class="note">${t('wh_wait')}</p>`;
+  $('o12').querySelectorAll('[data-addr]').forEach(a=>a.onclick=()=>whWallet(a.dataset.addr))}
+async function whWallet(a){const el=$('w12'),B='https://eth.blockscout.com/api/v2/addresses/'+a;el.innerHTML=`<div class="card">${t('loading')}</div>`;el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  const jf=async p=>{try{const r=await fetch(B+p);return r.ok?await r.json():null}catch(e){return null}},[info,txs,tok]=await Promise.all([jf(''),jf('/transactions'),jf('/token-transfers')]),
+  me=x=>String(x||'').toLowerCase()==a.toLowerCase(),dir=(f,to)=>me(to)?t('wh_in'):t('wh_out'),cp=(f,to)=>{const o=me(to)?f:to;return o?wl(o):'—'},
+  bal=info&&info.coin_balance?Number(BigInt(info.coin_balance))/1e18:null,name=info&&(info.name||info.ens_domain_name);
+  const T1=((txs&&txs.items)||[]).slice(0,20).map(i=>({ts:i.timestamp,dir:dir(i.from?.hash,i.to?.hash),cp:cp(i.from?.hash,i.to?.hash),amt:Number(BigInt(i.value||0))/1e18,hash:i.hash})),
+  T2=((tok&&tok.items)||[]).slice(0,20).map(i=>({ts:i.timestamp,dir:dir(i.from?.hash,i.to?.hash),cp:cp(i.from?.hash,i.to?.hash),tk:i.token?.symbol||'?',amt:Number(i.total?.value||0)/Math.pow(10,Number(i.total?.decimals||18)),hash:i.transaction_hash||i.tx_hash||''})),
+  lnk=h=>h?`<a href="https://etherscan.io/tx/${h}" target="_blank" rel="noopener">↗</a>`:'';
+  el.innerHTML=`<div class="card"><h3 style="margin-top:0;word-break:break-all">${esc(a)}</h3><div class="stats"><div>${t('wh_bal')}<b>${bal==null?'-':fmt(bal,2)+' ETH'}</b></div><div>${t('wh_label')}<b>${esc(name||'-')}</b></div></div>
+  <h4>${t('wh_tx')}</h4><div class="wrap">${T1.length?table([[t('cx_time'),r=>dt(r.ts)],[t('wh_dir'),r=>r.dir],[t('wh_cp'),r=>r.cp],[t('wh_amt'),r=>fmt(r.amt,3),'n'],['Tx',r=>lnk(r.hash)]],T1):'-'}</div>
+  <h4>${t('wh_tok')}</h4><div class="wrap">${T2.length?table([[t('cx_time'),r=>dt(r.ts)],[t('wh_dir'),r=>r.dir],[t('wh_tk'),r=>esc(r.tk)],[t('cx_qty'),r=>fmt(r.amt,2),'n'],[t('wh_cp'),r=>r.cp],['Tx',r=>lnk(r.hash)]],T2):'-'}</div>
+  <p class="note">${t('fetched')} ${now()} · Blockscout</p></div>`;
+  el.querySelectorAll('[data-addr]').forEach(x=>x.onclick=()=>whWallet(x.dataset.addr))}
+
 /* ===== Start ===== */
 document.documentElement.lang=lang;
 document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=t(e.dataset.i));
 document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));
-const ORDER=[9,0,1,2,3,4,5,6,7,8],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
+const ORDER=[9,10,11,12,0,1,2,3,4,5,6,7,8],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf,10:()=>{lsLoad(false)},11:cxStart,12:whStart},done={};
 $('tabs').innerHTML=ORDER.map((n,k)=>`<button data-t="${n}" class="${k?'':'on'}">${esc(t('tn'+n))}</button>`).join('');
 $('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=+b.dataset.t;ORDER.forEach(i=>$('p'+i).hidden=i!=n);$('tabs').querySelectorAll('button').forEach(x=>x.className=x.dataset.t==n?'on':'');if(LOAD[n]&&!done[n]){done[n]=1;LOAD[n]()}});
 bind('0',showInsiders);bind('3',showFin);
 $('fs').innerHTML=Object.entries(FUNDS).map(([n,c])=>`<option value="${c}">${n}</option>`).join('');
 $('ser6').innerHTML=SERIES.map(([i],ix)=>`<option value="${ix}">${t('sr_'+i)}</option>`).join('');
 $('feat').innerHTML=['🕵️','🏦','📈','📊','🌍','💼'].map((ic,i)=>`<div class="fc"><div class="ic">${ic}</div><h3>${t('f'+i+'t')}</h3><p>${t('f'+i+'d')}</p></div>`).join('');
+$('coin11').innerHTML='<option value="">'+t('cx_all')+'</option>'+COINS.map(c=>`<option>${c}</option>`).join('');
+$('b10').onclick=()=>lsLoad(false);$('m10').onclick=()=>lsLoad(true);$('flt10').oninput=()=>{LS.oc='';lsRender()};
+$('a10').onchange=e=>{clearInterval(LS.timer);if(e.target.checked)LS.timer=setInterval(()=>{if(!$('p10').hidden)lsLoad(false)},120000)};
+$('coin11').onchange=$('min11').onchange=cxRender;$('min12').onchange=whRender;
 $('9sq').onclick=spSearch;$('9q').addEventListener('keydown',e=>{if(e.key==='Enter')spSearch()});$('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
 $('t2').addEventListener('keydown',e=>{if(e.key==='Enter')showPrices()});
 $('lang').value=lang;$('lang').onchange=e=>{try{localStorage.setItem('lang',e.target.value)}catch(x){}location.href=location.pathname+'?lang='+e.target.value};
