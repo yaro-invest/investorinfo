@@ -29,6 +29,7 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
 .cw{position:relative}svg{touch-action:pan-y;cursor:crosshair;user-select:none}.ln{fill:none;stroke-width:1.6}.l1{stroke:var(--ac)}.l2{stroke:#e8890c}.l3{stroke:#9b59d0}
 .ax{font-size:11px;fill:var(--mut)}.gr{stroke:var(--bd);stroke-width:1}.axl{stroke:var(--mut);stroke-width:1}.cx{stroke:var(--mut);stroke-dasharray:3 3}.cdot{fill:var(--ac)}.sel{fill:var(--ac);opacity:.18}
 .tip{position:absolute;top:8px;pointer-events:none;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 2px 8px #0003;white-space:nowrap}
+.nd{cursor:pointer}.nd rect{fill:var(--card);stroke-width:1.5}.nd:hover rect{fill:var(--bg)}.nd text{fill:var(--tx)}.nd text.ax{fill:var(--mut)}.lnk{fill:none;opacity:.5}svg.sp{cursor:default;touch-action:auto}
 </style></head><body>
 <header class="top"><span class="logo" id="logo">📈 Investor Tool</span>
 <div class="row"><button class="lk" id="nh" data-i="home"></button><button class="lk" id="nd" data-i="dash"></button>
@@ -47,7 +48,11 @@ th{color:var(--mut);font-weight:500}.n{text-align:right}.Nieuw,.Vermeerderd,.Koo
 <h1 data-i="dash"></h1><p class="s" data-i="app_sub"></p>
 <div class="tabs" id="tabs"></div>
 
-<div id="p0" class="card"><details open><summary data-i="what"></summary><span data-i="d0"></span></details>
+<div id="p9" class="card"><details open><summary data-i="what"></summary><span data-i="d9"></span></details>
+  <div class="row"><input type="text" id="9q" data-p="ph_co"><button class="go" id="9sq" data-i="b_search"></button></div>
+  <div class="res" id="9res"></div><div id="o9"></div></div>
+
+<div id="p0" class="card" hidden><details open><summary data-i="what"></summary><span data-i="d0"></span></details>
   <div class="row"><input type="text" id="0q" data-p="ph_co"><button class="go" id="0sq" data-i="b_search"></button></div>
   <div class="res" id="0res"></div><div class="wrap" id="o0"></div></div>
 
@@ -143,7 +148,22 @@ h_last:['Laatste slot','Last close','Dernière clôture','Letzter Schluss'],h_pd
 au_ok:['Ik ga akkoord dat mijn e-mailadres en portefeuillegegevens worden opgeslagen.','I agree that my email address and portfolio data are stored.','J’accepte que mon adresse e-mail et mes données de portefeuille soient enregistrées.','Ich stimme der Speicherung meiner E-Mail-Adresse und Portfoliodaten zu.'],au_li:['Inloggen','Log in','Se connecter','Anmelden'],au_su:['Account maken','Create account','Créer un compte','Konto erstellen'],au_fp:['Wachtwoord vergeten','Forgot password','Mot de passe oublié','Passwort vergessen'],au_lo:['Uitloggen','Log out','Se déconnecter','Abmelden'],au_del:['Account en data verwijderen','Delete account and data','Supprimer le compte et les données','Konto und Daten löschen'],
 au_conf:['Je account en al je data worden definitief verwijderd. Doorgaan?','Your account and all your data will be permanently deleted. Continue?','Votre compte et toutes vos données seront définitivement supprimés. Continuer ?','Ihr Konto und alle Daten werden endgültig gelöscht. Fortfahren?'],au_gone:['Account verwijderd.','Account deleted.','Compte supprimé.','Konto gelöscht.'],au_in:['Ingelogd als','Logged in as','Connecté en tant que','Angemeldet als'],au_enter:['Open dashboard','Open dashboard','Ouvrir le tableau de bord','Dashboard öffnen'],au_out:['Je bent niet ingelogd.','You are not logged in.','Vous n’êtes pas connecté.','Sie sind nicht angemeldet.'],au_go:['Naar inloggen','Go to login','Aller à la connexion','Zur Anmeldung'],
 au_nosb:['Accounts zijn nog niet ingesteld (vul SB_URL en SB_KEY bovenaan de code in). De site werkt zonder account.','Accounts are not set up yet (fill in SB_URL and SB_KEY at the top of the code). The site works without an account.','Les comptes ne sont pas encore configurés (renseignez SB_URL et SB_KEY en haut du code). Le site fonctionne sans compte.','Konten sind noch nicht eingerichtet (SB_URL und SB_KEY oben im Code ausfüllen). Die Seite funktioniert ohne Konto.'],
-au_chk:['Vul een e-mailadres en een wachtwoord van minimaal 8 tekens in.','Enter an email address and a password of at least 8 characters.','Saisissez une adresse e-mail et un mot de passe d’au moins 8 caractères.','Geben Sie eine E-Mail-Adresse und ein Passwort mit mind. 8 Zeichen ein.'],au_cons:['Vink eerst de toestemming aan.','Please tick the consent box first.','Veuillez d’abord cocher la case de consentement.','Bitte zuerst die Zustimmung ankreuzen.'],au_made:['Account gemaakt, je bent ingelogd.','Account created, you are logged in.','Compte créé, vous êtes connecté.','Konto erstellt, Sie sind angemeldet.'],au_mail:['Bijna klaar: bevestig je e-mailadres via de mail die we stuurden.','Almost done: confirm your email address via the message we sent.','Presque terminé : confirmez votre adresse via l’e-mail envoyé.','Fast geschafft: Bestätigen Sie Ihre E-Mail-Adresse über die gesendete Nachricht.'],au_em:['Vul eerst je e-mailadres in.','Enter your email address first.','Saisissez d’abord votre adresse e-mail.','Geben Sie zuerst Ihre E-Mail-Adresse ein.'],au_reset:['Als dit adres bestaat, is er een mail verstuurd.','If this address exists, an email has been sent.','Si cette adresse existe, un e-mail a été envoyé.','Falls die Adresse existiert, wurde eine E-Mail gesendet.'],au_newpw:['Kies een nieuw wachtwoord (minimaal 8 tekens).','Choose a new password (at least 8 characters).','Choisissez un nouveau mot de passe (8 caractères min.).','Wählen Sie ein neues Passwort (mind. 8 Zeichen).']
+au_chk:['Vul een e-mailadres en een wachtwoord van minimaal 8 tekens in.','Enter an email address and a password of at least 8 characters.','Saisissez une adresse e-mail et un mot de passe d’au moins 8 caractères.','Geben Sie eine E-Mail-Adresse und ein Passwort mit mind. 8 Zeichen ein.'],au_cons:['Vink eerst de toestemming aan.','Please tick the consent box first.','Veuillez d’abord cocher la case de consentement.','Bitte zuerst die Zustimmung ankreuzen.'],au_made:['Account gemaakt, je bent ingelogd.','Account created, you are logged in.','Compte créé, vous êtes connecté.','Konto erstellt, Sie sind angemeldet.'],au_mail:['Bijna klaar: bevestig je e-mailadres via de mail die we stuurden.','Almost done: confirm your email address via the message we sent.','Presque terminé : confirmez votre adresse via l’e-mail envoyé.','Fast geschafft: Bestätigen Sie Ihre E-Mail-Adresse über die gesendete Nachricht.'],au_em:['Vul eerst je e-mailadres in.','Enter your email address first.','Saisissez d’abord votre adresse e-mail.','Geben Sie zuerst Ihre E-Mail-Adresse ein.'],au_reset:['Als dit adres bestaat, is er een mail verstuurd.','If this address exists, an email has been sent.','Si cette adresse existe, un e-mail a été envoyé.','Falls die Adresse existiert, wurde eine E-Mail gesendet.'],au_newpw:['Kies een nieuw wachtwoord (minimaal 8 tekens).','Choose a new password (at least 8 characters).','Choisissez un nouveau mot de passe (8 caractères min.).','Wählen Sie ein neues Passwort (mind. 8 Zeichen).'],
+tn9:['Kopers & verkopers','Buyers & sellers','Acheteurs et vendeurs','Käufer & Verkäufer'],
+d9:['Zoek een aandeel. In het midden staat het bedrijf; links staan de grote beleggers (fondsen, banken) die het afgelopen kwartaal aandelen verkochten, rechts de beleggers die kochten. Hoe dikker de lijn, hoe groter de wijziging. Klik op een belegger voor wat het bedrijf doet, de laatste omzet en zijn positie. De data komt uit de kwartaalrapporten (13F) en loopt tot 45 dagen achter; alleen de grootste wijzigingen worden getoond. Het gaat dus om kopers en verkopers van aandelen, niet om leveranciers of klanten.','Search for a stock. The company is in the middle; on the left are the big investors (funds, banks) that sold shares last quarter, on the right those that bought. The thicker the line, the bigger the change. Click an investor to see what it does, its latest revenue and its position. The data comes from quarterly reports (13F) and lags up to 45 days; only the largest changes are shown. So these are buyers and sellers of shares, not suppliers or customers.','Recherchez un titre. La société est au centre ; à gauche, les grands investisseurs (fonds, banques) qui ont vendu des actions le trimestre dernier, à droite ceux qui ont acheté. Plus la ligne est épaisse, plus la variation est grande. Cliquez sur un investisseur pour voir son activité, son dernier chiffre d’affaires et sa position. Les données viennent des rapports trimestriels (13F) avec jusqu’à 45 jours de retard ; seules les plus grandes variations sont affichées. Il s’agit donc d’acheteurs et de vendeurs d’actions, pas de fournisseurs ou de clients.','Suchen Sie eine Aktie. In der Mitte steht das Unternehmen; links die großen Investoren (Fonds, Banken), die im letzten Quartal Aktien verkauft haben, rechts die Käufer. Je dicker die Linie, desto größer die Änderung. Klicken Sie auf einen Investor für Geschäftstätigkeit, letzten Umsatz und seine Position. Die Daten stammen aus den Quartalsberichten (13F) und hinken bis zu 45 Tage hinterher; angezeigt werden nur die größten Änderungen. Es geht also um Käufer und Verkäufer von Aktien, nicht um Lieferanten oder Kunden.'],
+sp_sellers:['Verkopers','Sellers','Vendeurs','Verkäufer'],sp_buyers:['Kopers','Buyers','Acheteurs','Käufer'],
+sp_between:['Wijzigingen tussen','Changes between','Variations entre','Änderungen zwischen'],sp_and:['en','and','et','und'],sp_gen:['Gegevens gegenereerd op','Data generated on','Données générées le','Daten erstellt am'],
+sp_small:['Alleen de grootste wijzigingen (max. 10 per kant).','Only the largest changes (max. 10 per side).','Seulement les plus grandes variations (10 max. par côté).','Nur die größten Änderungen (max. 10 pro Seite).'],
+sp_click:['Klik op een bedrijf voor meer informatie.','Click a company for more information.','Cliquez sur une société pour plus d’informations.','Klicken Sie auf ein Unternehmen für mehr Informationen.'],
+sp_none:['Geen kopers of verkopers gevonden voor dit aandeel.','No buyers or sellers found for this stock.','Aucun acheteur ou vendeur trouvé pour ce titre.','Keine Käufer oder Verkäufer für diese Aktie gefunden.'],
+sp_nofile:['Het gegevensbestand holders.json ontbreekt nog. Maak het met build_holders.py en upload het naar GitHub.','The data file holders.json is missing. Create it with build_holders.py and upload it to GitHub.','Le fichier holders.json est absent. Créez-le avec build_holders.py et téléversez-le sur GitHub.','Die Datei holders.json fehlt. Erstellen Sie sie mit build_holders.py und laden Sie sie zu GitHub hoch.'],
+sp_filed:['13F ingediend op','13F filed on','13F déposé le','13F eingereicht am'],
+in_ind:['Branche','Industry','Secteur','Branche'],in_loc:['Locatie','Location','Lieu','Standort'],in_web:['Website','Website','Site web','Website'],
+in_rev:['Laatste jaaromzet','Latest annual revenue','Dernier chiffre d’affaires annuel','Letzter Jahresumsatz'],in_ni:['Laatste nettowinst','Latest net income','Dernier résultat net','Letzter Nettogewinn'],in_mln:['mln $','$ million','M$','Mio. $'],
+in_nofin:['Geen jaarcijfers beschikbaar (geen 10-K-bedrijf, bijv. een privaat fonds).','No annual figures available (not a 10-K filer, e.g. a private fund).','Pas de chiffres annuels (pas une société 10-K, p. ex. un fonds privé).','Keine Jahreszahlen verfügbar (kein 10-K-Unternehmen, z. B. ein privater Fonds).'],
+in_stake:['Positie in','Position in','Position dans','Position in'],in_before:['Vorig kwartaal','Previous quarter','Trimestre précédent','Vorquartal'],in_now:['Dit kwartaal','This quarter','Ce trimestre','Dieses Quartal'],
+in_val:['Geschatte waarde van de wijziging','Estimated value of the change','Valeur estimée de la variation','Geschätzter Wert der Änderung'],in_port:['Bekijk volledige portefeuille','View full portfolio','Voir le portefeuille complet','Vollständiges Portfolio ansehen'],
+in_fundtype:['Beleggingsfonds of vermogensbeheerder die kwartaalrapporten (13F) indient.','Investment fund or asset manager that files quarterly reports (13F).','Fonds d’investissement ou gestionnaire d’actifs déposant des rapports trimestriels (13F).','Investmentfonds oder Vermögensverwalter, der Quartalsberichte (13F) einreicht.']
 };
 const LANGS=['nl','en','fr','de'];
 let lang=new URLSearchParams(location.search).get('lang')||(()=>{try{return localStorage.getItem('lang')}catch(e){return null}})()||(navigator.language||'nl').slice(0,2);
@@ -321,18 +341,59 @@ function renderAcc(){const A=$('acc'),B=$('acc2');
 async function initAuth(){renderAcc();if(!sb)return;const{data}=await sb.auth.getSession();user=data.session?data.session.user:null;renderAcc();if(user&&!rec)show('app');
   sb.auth.onAuthStateChange((ev,ses)=>{user=ses?ses.user:null;if(ev==='PASSWORD_RECOVERY')rec=true;renderAcc();if(done[7])showPf()})}
 
+/* ===== 10. Kopers & verkopers (spindiagram) ===== */
+let HD=null;
+const cmp=n=>new Intl.NumberFormat(LOC,{notation:'compact',maximumFractionDigits:1}).format(n),sg=n=>(n>0?'+':n<0?'−':'')+cmp(Math.abs(n));
+const normN=s=>s.toUpperCase().replace(/&/g,' AND ').replace(/[^A-Z0-9 ]/g,' ').replace(/\b(INC|CORP|CORPORATION|CO|COMPANY|LTD|LIMITED|PLC|LLC|HOLDINGS|GROUP|CL|CLASS|NEW|THE|SA|NV|AG)\b/g,' ').replace(/\s+/g,' ').trim();
+const clip=(s,n)=>s.length>n?s.slice(0,n-1)+'…':s;
+async function loadH(){if(HD)return HD;const r=await fetch('holders.json');if(!r.ok)throw new Error(t('sp_nofile'));return HD=await r.json()}
+function spider(name,L,R){const W=920,bw=260,bh=42,n=Math.max(L.length,R.length,1),Hh=Math.max(260,n*58+70),cx=W/2,cy=Hh/2,mx=Math.max(1,...L.concat(R).map(x=>Math.abs(x.cv))),
+  sw=v=>(1.5+11*Math.sqrt(Math.abs(v)/mx)).toFixed(1),ys=(len,i)=>len==1?cy:50+i*(Hh-100)/(len-1),col=s=>s=='s'?'var(--r)':'var(--g)';
+  const node=(r,i,len,x,sd)=>{const y=ys(len,i);return`<g class="nd" data-s="${sd}" data-i="${i}"><rect x="${x}" y="${y-bh/2}" width="${bw}" height="${bh}" rx="8" stroke="${col(sd)}"/><text x="${x+10}" y="${y-3}" font-size="13" font-weight="600">${esc(clip(r.name,30))}</text><text x="${x+10}" y="${y+13}" class="ax">${sg(r.sn-r.so)} · ${sg(r.cv)} $</text></g>`};
+  const link=(r,i,len,sd)=>{const y=ys(len,i),x1=sd=='s'?10+bw:W-10-bw,x2=sd=='s'?cx-80:cx+80,m=(x1+x2)/2;return`<path d="M${x1},${y} C${m},${y} ${m},${cy} ${x2},${cy}" class="lnk" stroke="${col(sd)}" stroke-width="${sw(r.cv)}"/>`};
+  return`<svg class="sp" viewBox="0 0 ${W} ${Hh}" width="100%"><text x="10" y="18" class="ax" style="font-size:13px;font-weight:600">${t('sp_sellers')}</text><text x="${W-10}" y="18" text-anchor="end" class="ax" style="font-size:13px;font-weight:600">${t('sp_buyers')}</text>`+
+   L.map((r,i)=>link(r,i,L.length,'s')).join('')+R.map((r,i)=>link(r,i,R.length,'b')).join('')+
+   `<rect x="${cx-80}" y="${cy-34}" width="160" height="68" rx="14" fill="var(--ac)"/><text x="${cx}" y="${cy+5}" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">${esc(clip(name,18))}</text>`+
+   L.map((r,i)=>node(r,i,L.length,10,'s')).join('')+R.map((r,i)=>node(r,i,R.length,W-10-bw,'b')).join('')+'</svg>'}
+const chips=(a,sd)=>a.map((r,i)=>`<a data-s="${sd}" data-i="${i}" style="border-left:4px solid ${sd=='s'?'var(--r)':'var(--g)'}">${esc(r.name)} · ${sg(r.sn-r.so)}</a>`).join('');
+function spShow(c){const mk=sd=>c[sd].map(r=>({cik:r[0],name:r[1]||('CIK '+r[0]),date:r[2],sn:r[3],so:r[4],cv:r[5]})),L=mk('s'),R=mk('b'),narrow=$('o9').clientWidth<650;
+  $('o9').innerHTML=`<p class="note">${t('sp_between')} ${HD.period_old} ${t('sp_and')} ${HD.period_new} · ${t('sp_gen')} ${dt(HD.generated)} · ${t('sp_small')}</p><h3>${esc(c.n)}${c.t?' · '+esc(c.t):''}</h3>`+
+   (L.length+R.length?(narrow?`<div class="res"><b>${t('sp_sellers')}</b><br>${chips(L,'s')}<br><b>${t('sp_buyers')}</b><br>${chips(R,'b')}</div>`:spider(c.n,L,R))+`<p class="note">${t('sp_click')}</p>`:`<p>${t('sp_none')}</p>`)+'<div id="info9"></div>';
+  $('o9').querySelectorAll('[data-s]').forEach(g=>g.onclick=()=>spInfo((g.dataset.s=='s'?L:R)[g.dataset.i],c))}
+async function latestFin(cik){try{const d=await J(`https://data.sec.gov/api/xbrl/companyfacts/CIK${String(cik).padStart(10,'0')}.json`),g=d.facts['us-gaap']||{};
+  const pick=tags=>{for(const tg of tags){const u=g[tg]&&g[tg].units&&g[tg].units.USD;if(!u)continue;
+    const a=u.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>3e10*10)).sort((x,y)=>y.end.localeCompare(x.end)||y.filed.localeCompare(x.filed));if(a.length)return a[0]}return null};
+  return{rev:pick(TAGS[0][1]),ni:pick(TAGS[1][1])}}catch(e){return null}}
+async function spInfo(r,c){const el=$('info9');el.innerHTML=`<div class="card">${t('loading')}</div>`;el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  let d=null;try{d=await J(`https://data.sec.gov/submissions/CIK${String(r.cik).padStart(10,'0')}.json`)}catch(e){}
+  const f=await latestFin(r.cik),ad=d&&d.addresses&&d.addresses.business,loc=ad?[ad.city,ad.stateOrCountry].filter(Boolean).join(', '):'',sic=(d&&d.sicDescription)||'',
+  web=d&&d.website?(/^https?:/.test(d.website)?d.website:'https://'+d.website):'',
+  fl=(lab,p)=>p?`<div>${lab}<b>${fmt(p.val/1e6)} ${t('in_mln')}</b><span class="note">${t('fh_fy')} ${p.end} · ${t('fh_filed')} ${p.filed}</span></div>`:'';
+  el.innerHTML=`<div class="card"><h3 style="margin-top:0">${esc(r.name)}</h3><p>${sic?esc(sic):t('in_fundtype')}</p>
+  <div class="stats"><div>${t('in_ind')}<b>${esc(sic||'-')}</b></div><div>${t('in_loc')}<b>${esc(loc||'-')}</b></div>${web?`<div>${t('in_web')}<b><a href="${esc(web)}" target="_blank" rel="noopener">${esc(web.replace(/^https?:\/\//,''))}</a></b></div>`:''}</div>
+  <div class="stats">${f&&(f.rev||f.ni)?fl(t('in_rev'),f.rev)+fl(t('in_ni'),f.ni):`<span class="note">${t('in_nofin')}</span>`}</div>
+  <h4>${t('in_stake')} ${esc(c.n)}</h4><div class="stats"><div>${t('in_before')} (${HD.period_old})<b>${fmt(r.so)}</b></div><div>${t('in_now')} (${HD.period_new})<b>${fmt(r.sn)}</b></div><div>${t('h_chg')}<b>${r.sn-r.so>0?'+':''}${fmt(r.sn-r.so)}</b></div><div>${t('in_val')}<b>${r.cv>0?'+':''}$${fmt(r.cv)}</b></div></div>
+  <p class="note">${t('sp_filed')} ${esc(r.date||'-')}</p><button class="go" id="gopf">${t('in_port')}</button></div>`;
+  $('gopf').onclick=()=>{$('cik').value=r.cik;$('tabs').querySelector('[data-t="1"]').click();showFund()}}
+async function spSearch(){const s=$('9q').value.trim();if(!s)return;$('9res').textContent=t('searching');
+  try{const h=await loadH(),k=s.toUpperCase();let hits=h.issuers.filter(i=>i.t===k||i.n.includes(k));
+    if(!hits.length){try{const co=(await findCompanies(s))[0];if(co){const w=normN(co.title).split(' ')[0];hits=h.issuers.filter(i=>normN(i.n).split(' ')[0]===w)}}catch(e){}}
+    hits=hits.sort((a,b)=>b.v-a.v).slice(0,10);
+    $('9res').innerHTML=hits.length?hits.map((c,i)=>`<a data-i="${i}">${esc(c.n)}${c.t?' · '+esc(c.t):''}</a>`).join(''):t('none');
+    $('9res').querySelectorAll('a').forEach(a=>a.onclick=()=>spShow(hits[a.dataset.i]))}catch(e){$('9res').innerHTML='<span class="err">'+esc(e.message)+'</span>'}}
+
 /* ===== Start ===== */
 document.documentElement.lang=lang;
 document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=t(e.dataset.i));
 document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));
-const NAMES=[0,1,2,3,4,5,6,7,8].map(i=>t('tn'+i)),LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
-$('tabs').innerHTML=NAMES.map((n,i)=>`<button data-t="${i}" class="${i?'':'on'}">${esc(n)}</button>`).join('');
-$('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=+b.dataset.t;NAMES.forEach((_,i)=>{$('p'+i).hidden=i!=n;$('tabs').children[i].className=i==n?'on':''});if(LOAD[n]&&!done[n]){done[n]=1;LOAD[n]()}});
+const ORDER=[9,0,1,2,3,4,5,6,7,8],LOAD={4:showFx,5:showCrypto,6:showMacro,7:showPf},done={};
+$('tabs').innerHTML=ORDER.map((n,k)=>`<button data-t="${n}" class="${k?'':'on'}">${esc(t('tn'+n))}</button>`).join('');
+$('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=+b.dataset.t;ORDER.forEach(i=>$('p'+i).hidden=i!=n);$('tabs').querySelectorAll('button').forEach(x=>x.className=x.dataset.t==n?'on':'');if(LOAD[n]&&!done[n]){done[n]=1;LOAD[n]()}});
 bind('0',showInsiders);bind('3',showFin);
 $('fs').innerHTML=Object.entries(FUNDS).map(([n,c])=>`<option value="${c}">${n}</option>`).join('');
 $('ser6').innerHTML=SERIES.map(([i],ix)=>`<option value="${ix}">${t('sr_'+i)}</option>`).join('');
 $('feat').innerHTML=['🕵️','🏦','📈','📊','🌍','💼'].map((ic,i)=>`<div class="fc"><div class="ic">${ic}</div><h3>${t('f'+i+'t')}</h3><p>${t('f'+i+'d')}</p></div>`).join('');
-$('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
+$('9sq').onclick=spSearch;$('9q').addEventListener('keydown',e=>{if(e.key==='Enter')spSearch()});$('sh').onclick=showFund;$('b2').onclick=showPrices;$('b4').onclick=showFx;$('b6').onclick=showMacro;
 $('t2').addEventListener('keydown',e=>{if(e.key==='Enter')showPrices()});
 $('lang').value=lang;$('lang').onchange=e=>{try{localStorage.setItem('lang',e.target.value)}catch(x){}location.href=location.pathname+'?lang='+e.target.value};
 $('nh').onclick=$('logo').onclick=()=>show('landing');$('nd').onclick=$('c2').onclick=()=>show('app');
