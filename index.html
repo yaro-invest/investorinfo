@@ -272,7 +272,7 @@ async function showPrices(){const sym=$('t2').value.trim();if(!sym)return;busy('
 const TAGS=[['r_rev',['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax','SalesRevenueNet']],['r_ni',['NetIncomeLoss']],['r_eps',['EarningsPerShareDiluted']],['r_cf',['NetCashProvidedByUsedInOperatingActivities']],['r_as',['Assets']],['r_li',['Liabilities']],['r_ca',['CashAndCashEquivalentsAtCarryingValue']],['r_eq',['StockholdersEquity']]];
 async function showFin(c){busy('o3');try{const d=await J(`https://data.sec.gov/api/xbrl/companyfacts/CIK${String(c.cik_str).padStart(10,'0')}.json`),g=d.facts['us-gaap']||{};
   const res=TAGS.map(([k,tags])=>{for(const tg of tags){const u=g[tg]&&g[tg].units,a=u&&(u.USD||u['USD/shares']);if(!a)continue;const m={};
-    a.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>3e10*10)).forEach(e=>{if(!m[e.end]||e.filed>m[e.end].filed)m[e.end]=e});
+    a.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>2.6e10)).forEach(e=>{if(!m[e.end]||e.filed>m[e.end].filed)m[e.end]=e});
     if(Object.keys(m).length)return{n:t(k),m,eps:k=='r_eps'}}return{n:t(k),m:{}}});
   const ends=[...new Set(res.flatMap(r=>Object.keys(r.m)))].sort().reverse().slice(0,5);if(!ends.length)throw new Error(t('nofin'));
   const filed=e=>{const r=res.find(r=>r.m[e]);return r?r.m[e].filed:''};
@@ -362,7 +362,7 @@ function spShow(c){const mk=sd=>c[sd].map(r=>({cik:r[0],name:r[1]||('CIK '+r[0])
   $('o9').querySelectorAll('[data-s]').forEach(g=>g.onclick=()=>spInfo((g.dataset.s=='s'?L:R)[g.dataset.i],c))}
 async function latestFin(cik){try{const d=await J(`https://data.sec.gov/api/xbrl/companyfacts/CIK${String(cik).padStart(10,'0')}.json`),g=d.facts['us-gaap']||{};
   const pick=tags=>{for(const tg of tags){const u=g[tg]&&g[tg].units&&g[tg].units.USD;if(!u)continue;
-    const a=u.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>3e10*10)).sort((x,y)=>y.end.localeCompare(x.end)||y.filed.localeCompare(x.filed));if(a.length)return a[0]}return null};
+    const a=u.filter(e=>e.form==='10-K'&&e.fp==='FY'&&(!e.start||(new Date(e.end)-new Date(e.start))>2.6e10)).sort((x,y)=>y.end.localeCompare(x.end)||y.filed.localeCompare(x.filed));if(a.length)return a[0]}return null};
   return{rev:pick(TAGS[0][1]),ni:pick(TAGS[1][1])}}catch(e){return null}}
 async function spInfo(r,c){const el=$('info9');el.innerHTML=`<div class="card">${t('loading')}</div>`;el.scrollIntoView({behavior:'smooth',block:'nearest'});
   let d=null;try{d=await J(`https://data.sec.gov/submissions/CIK${String(r.cik).padStart(10,'0')}.json`)}catch(e){}
@@ -375,11 +375,15 @@ async function spInfo(r,c){const el=$('info9');el.innerHTML=`<div class="card">$
   <h4>${t('in_stake')} ${esc(c.n)}</h4><div class="stats"><div>${t('in_before')} (${HD.period_old})<b>${fmt(r.so)}</b></div><div>${t('in_now')} (${HD.period_new})<b>${fmt(r.sn)}</b></div><div>${t('h_chg')}<b>${r.sn-r.so>0?'+':''}${fmt(r.sn-r.so)}</b></div><div>${t('in_val')}<b>${r.cv>0?'+':''}$${fmt(r.cv)}</b></div></div>
   <p class="note">${t('sp_filed')} ${esc(r.date||'-')}</p><button class="go" id="gopf">${t('in_port')}</button></div>`;
   $('gopf').onclick=()=>{$('cik').value=r.cik;$('tabs').querySelector('[data-t="1"]').click();showFund()}}
+const ALIAS={NVDA:'NVIDIA',MSFT:'MICROSOFT',AAPL:'APPLE',AMZN:'AMAZON',GOOGL:'ALPHABET',GOOG:'ALPHABET',META:'META PLATFORMS',TSLA:'TESLA',AVGO:'BROADCOM',JPM:'JPMORGAN',LLY:'ELI LILLY',V:'VISA',MA:'MASTERCARD',XOM:'EXXON',WMT:'WALMART',UNH:'UNITEDHEALTH',JNJ:'JOHNSON',COST:'COSTCO',NFLX:'NETFLIX',AMD:'ADVANCED MICRO',INTC:'INTEL',KO:'COCA COLA',PEP:'PEPSICO',DIS:'DISNEY',BAC:'BANK AMER',ORCL:'ORACLE',CRM:'SALESFORCE',ADBE:'ADOBE',PYPL:'PAYPAL',BA:'BOEING',NKE:'NIKE',MCD:'MCDONALD',PFE:'PFIZER',CVX:'CHEVRON',TSM:'TAIWAN SEMICONDUCTOR',PLTR:'PALANTIR',SHOP:'SHOPIFY',BABA:'ALIBABA',COIN:'COINBASE',BRK:'BERKSHIRE'};
+const lev=(a,b)=>{const d=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let p=d[0];d[0]=i;for(let j=1;j<=b.length;j++){const x=d[j];d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]==b[j-1]?0:1));p=x}}return d[b.length]};
 async function spSearch(){const s=$('9q').value.trim();if(!s)return;$('9res').textContent=t('searching');
-  try{const h=await loadH(),k=s.toUpperCase();let hits=h.issuers.filter(i=>i.t===k||i.n.includes(k));
-    if(!hits.length){try{const co=(await findCompanies(s))[0];if(co){const w=normN(co.title).split(' ')[0];hits=h.issuers.filter(i=>normN(i.n).split(' ')[0]===w)}}catch(e){}}
+  try{const h=await loadH(),k=s.toUpperCase().replace(/[^A-Z0-9. ]/g,'');let hits=h.issuers.filter(i=>i.t===k||i.n.includes(k)),why='';
+    if(!hits.length&&ALIAS[k])hits=h.issuers.filter(i=>i.n.includes(ALIAS[k]));
+    if(!hits.length){try{const co=(await findCompanies(s))[0];if(co){const w=normN(co.title).split(' ')[0];hits=h.issuers.filter(i=>normN(i.n).split(' ')[0]===w)}}catch(e){why=e.message}}
+    if(!hits.length){const w=normN(s).split(' ')[0];if(w.length>=4)hits=h.issuers.filter(i=>lev(w,normN(i.n).split(' ')[0])<=(w.length>6?2:1))}
     hits=hits.sort((a,b)=>b.v-a.v).slice(0,10);
-    $('9res').innerHTML=hits.length?hits.map((c,i)=>`<a data-i="${i}">${esc(c.n)}${c.t?' · '+esc(c.t):''}</a>`).join(''):t('none');
+    $('9res').innerHTML=hits.length?hits.map((c,i)=>`<a data-i="${i}">${esc(c.n)}${c.t?' · '+esc(c.t):''}</a>`).join(''):t('none')+(why?` <span class="note">(${esc(why)})</span>`:'');
     $('9res').querySelectorAll('a').forEach(a=>a.onclick=()=>spShow(hits[a.dataset.i]))}catch(e){$('9res').innerHTML='<span class="err">'+esc(e.message)+'</span>'}}
 
 /* ===== Start ===== */
